@@ -13,27 +13,24 @@ print(f"DB NAME: {COSMOS_DB_NAME}")
 print(f"COLLECTION NAME: {COSMOS_DB_COLLECTION_NAME}")
 
 def get_modules():
-    modules = [
-        {
+    
+    modules = []
+
+    for i in range(1,10):
+        module = {
             "id": str(uuid.uuid4()),
-            "name": "module-1",
-            "description": "This is the first module",
-            "youtube_url": "https://www.youtube.com/watch?v=9bZkp7q19f0",
+            "name": f"module-{i}",
+            "title": f"Title {i}",
+            "description": f"This is the {i} module",
+            "youtube_url": f"https://www.youtube.com/watch?v={i}",
             "tags": ["python", "mongodb", "azure"],
-            "playlist": "Playlist 1",
-        },
-        {
-            "id": str(uuid.uuid4()),
-            "name": "module-2",
-            "description": "This is the 2nd module",
-            "youtube_url": "https://www.youtube.com/watch?v=foo",
-            "tags": ["python", "mongodb"],
-            "playlist": "Playlist 2",
+            "playlist": f"Playlist {i}",
         }
-    ]
+
+        modules.append(module)
 
     return modules
-    
+
 client = pymongo.MongoClient(COSMOS_CONNECTION_STRING)
 db = client['mtmcontent']
 

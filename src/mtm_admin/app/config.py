@@ -1,4 +1,5 @@
 import os
 
-# Get an environment variable
-COSMOS_CONNECTION_STRING = value = os.environ.get('COSMOS_CONNECTION_STRING')
+COSMOS_CONNECTION_STRING = os.environ.get("COSMOS_CONNECTION_STRING")
+COSMOS_DB_NAME = os.environ.get("COSMOS_DB_NAME")
+COSMOS_DB_COLLECTION_NAME = os.environ.get("COSMOS_DB_COLLECTION_NAME")
