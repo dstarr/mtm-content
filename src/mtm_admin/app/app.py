@@ -22,10 +22,15 @@ def home():
 @app.route('/modules/<module_id>')
 def module_detail(module_id):
     module = content_service.get_module(module_id)
-    return render_template('detail.html', module=module)
+    return render_template('modules/detail.html', module=module)
+
+@app.route('/tags')
+def tags():
+    tags = content_service.get_all_tags()
+    return render_template('tags.html', tags=tags)
 
 # @app.route('/modules/<int:module_id>/edit')
-# @app.route('/tags')
+# 
 # @app.route('/tags/<int:tag_id>')
 # @app.route('/tags/<int:tag_id>/delete')
 # @app.route('/playlists')
