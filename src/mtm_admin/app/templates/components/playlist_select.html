@@ -1,0 +1,22 @@
+{% set playlists = [
+    'Mastering Container for AKS offers',
+    'Mastering Kubernetes offers',
+    'Mastering Managed Application offers',
+    'Mastering Partner Center',
+    'Mastering Saas offers',
+    'Mastering Virtual Machine offers',
+    ] 
+%}
+
+<div>
+    <label for="playlists" class="form-label">Playlists</label>
+    <select id="playlists" class="form-select">
+        {% for playlist in playlists %}
+            {% if playlist == module.playlist %}
+                <option value="{{ playlist }}" selected>{{ playlist }}</option>
+            {% else %}
+                <option value="{{ playlist }}">{{ playlist }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+</div> 

@@ -1,3 +1,4 @@
+from datetime import datetime
 from dotenv import load_dotenv
 import os
 import pymongo
@@ -24,11 +25,12 @@ def get_modules():
             "description": f"This is the {i} module",
             "youtube_url": f"https://www.youtube.com/watch?v={i}",
             "tags": ["python", "mongodb", "azure"],
-            "playlist": f"Playlist {i}",
-            "date_created": "2024-01-01T00:00:00.000Z",
-            "date_updated": "2024-01-01T00:00:00.000Z",
+            "playlist": f"Mastering Saas offers",
+            "date_created": datetime.strptime(str(datetime(2024, 1, 1)), '%Y-%m-%d %H:%M:%S'),
+            "date_updated": datetime.strptime(str(datetime(2024, 2, 1)), '%Y-%m-%d %H:%M:%S'),
+            "created_by": "David Starr",
+            "updated_by": "Elle Starr",
             "is_active": True,
-            "last_updated_by": "David Starr"
             
         }
 
