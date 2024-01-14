@@ -1,0 +1,83 @@
+{% include 'head.html' %}
+
+<body>
+  {% include 'nav.html' %}
+
+  <div class="container main">
+    <form>
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" value="{{ module.title }}" />
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <input type="textarea" class="form-control" id="description" value="{{ module.description }}" />
+      </div>
+
+      {% include 'components/playlist_select.html' %}
+
+      <div class="row g-3 mb-3">
+        <div class="col-auto short_input">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" value="{{ module.name }}" />
+        </div>
+        <div class="col-auto short_input">
+          <label for="youtube_url" class="form-label">YoueTube URL</label>
+          <input type="text" class="form-control" id="description" value="{{ module.youtube_url }}" />
+        </div>
+      </div>
+
+      <div class="mb-3 form-check">
+        <label class="form-check-label" for="is_active">Is active</label>
+        <input type="checkbox" class="form-check-input" id="is_active" checked="{{ module.active }}" />
+      </div>
+
+      <div class="mb-3">
+        <label for="tags" class="form-label">Tags</label>
+        <div id="tags">
+          {% for tag in module.tags %}
+            <button type="button" class="btn btn-light">{{ tag }}</button>
+          {% endfor %}
+
+          <button type="button" class="btn btn-primary">Add tag</button>
+        </div>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-auto short_input">
+          <label for="id" class="form-label">ID</label>
+          <input type="text" class="form-control" id="id" value="{{ module.id }}" disabled />
+        </div>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-auto short_input">
+          <label for="date_createdadded" class="form-label">Date created</label>
+          <input type="text" class="form-control" id="date_created" value="{{ module.date_created }}" disabled />
+        </div>
+        <div class="col-auto short_input">
+          <label for="created_by" class="form-label">Updated by</label>
+          <input type="text" class="form-control" id="created_by" value="{{ module.created_by }}" disabled />
+        </div>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-auto short_input">
+            <label for="date_updated" class="form-label">Date last updated</label>
+            <input type="text" class="form-control" id="date_updated" value="{{ module.date_updated }}" disabled />
+        </div>
+        <div class="col-auto short_input">
+          <label for="updated_by" class="form-label">Updated by</label>
+          <input type="text" class="form-control" id="last_updated_by" value="{{ module.updated_by }}" disabled />
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+  </div>
+</body>
+
+{% include 'footer.html' %}
