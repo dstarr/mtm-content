@@ -25,6 +25,11 @@ def get_modules():
             "youtube_url": f"https://www.youtube.com/watch?v={i}",
             "tags": ["python", "mongodb", "azure"],
             "playlist": f"Playlist {i}",
+            "date_created": "2024-01-01T00:00:00.000Z",
+            "date_updated": "2024-01-01T00:00:00.000Z",
+            "is_active": True,
+            "last_updated_by": "David Starr"
+            
         }
 
         modules.append(module)

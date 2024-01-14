@@ -19,5 +19,21 @@ def home():
     modules = content_service.get_all_modules()
     return render_template('index.html', modules=modules)
 
+@app.route('/modules/<module_id>')
+def module_detail(module_id):
+    module = content_service.get_module(module_id)
+    return render_template('detail.html', module=module)
+
+# @app.route('/modules/<int:module_id>/edit')
+# @app.route('/tags')
+# @app.route('/tags/<int:tag_id>')
+# @app.route('/tags/<int:tag_id>/delete')
+# @app.route('/playlists')
+# @app.route('/playlists/<int:playlist_id>')
+# @app.route('/playlists/<int:playlist_id>')
+
+
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=3000)

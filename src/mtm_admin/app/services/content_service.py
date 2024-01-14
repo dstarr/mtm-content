@@ -16,6 +16,14 @@ class ComtentService:
     
         return modules
     
+    def get_module(self, module_id):
+        client = pymongo.MongoClient(self.connection_string)
+        collection = self.get_collection(client=client)
+    
+        module = collection.find_one({"id": module_id})
+    
+        return module
+    
     def get_collection(self, client):
         db = client[self.db_name]
         collection = db[self.collection_name]
