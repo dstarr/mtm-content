@@ -16,19 +16,25 @@
         <div class="container main">
          
             <form>
-                <div class="mb-3">
-                  <label for="title" class="form-label">Title</label>
-                  <input type="text" class="form-control" id="title" value="{{ title }}">
-                </div>
+              
+              <div class="mb-3">
+                <label for="title" class="form-label">ID: </label>
+                {{ module.id }}
+              </div>
 
+              <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" value="{{ module.title }}">
+              </div>  
+              
                 <div class="mb-3">
                   <label for="description" class="form-label">Description</label>
                   <input type="textarea" class="form-control" id="description" value="{{ module.description }}">
                 </div>
 
                 <div class="mb-3 form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                  <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                  <label class="form-check-label" for="is_active">Is active</label>
+                  <input type="checkbox" class="form-check-input" id="is_active" checked="{{ module.active }}">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>
