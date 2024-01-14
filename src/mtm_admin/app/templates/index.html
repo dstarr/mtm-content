@@ -1,29 +1,18 @@
-<!DOCTYPE html>
-<html>
 {% include 'head.html' %}
+
 <body>
+  {% include 'nav.html' %}
 
-    {% include 'nav.html' %}
-
-    <div class="container main">
-
-        <ol class="list-group list-group-numbered">
-            
-            {% for module in modules %}
-                <li class="list-group-item list-group-item-action">
-                    <a href="{{ url_for('module_detail', module_id=module.id) }}">{{ module.title }}</a>
-                </li>
-            {% 
-                endfor 
-            %}
-
-        </ol>
-        
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    
-    {% include 'footer.html' %}
+  <div class="container main">
+    <ol class="list-group list-group-numbered">
+      {% for module in modules %}
+        <li class="list-group-item list-group-item-action">
+          <a href="{{ url_for('module_detail', module_id = module.id) }}">{{ module.title }}</a>
+        </li>
+      {% endfor %}
+    </ol>
+  </div>
 
 </body>
-</html>
+
+{% include 'footer.html' %}
