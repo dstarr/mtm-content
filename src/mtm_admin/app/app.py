@@ -30,7 +30,7 @@ def module_detail(module_id):
 
 @app.route('/modules/<module_id>/edit')
 def module_edit(module_id):
-    module = content_service.get_module(module_id)
+    module = content_service.get_module(module_id)["module"]
     playlists = content_service.get_playlists()
     
     from edit_model import EditModel
@@ -54,9 +54,6 @@ def tags():
 # @app.route('/playlists/<int:playlist_id>')
 
 # @app.route('/playlists/<int:playlist_id>')
-
-
-
 
 if __name__ == '__main__':
     app.run(debug=True, port=3000)

@@ -8,6 +8,10 @@
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
         <input type="text" class="form-control" id="title" value="{{ model.content['title'] }}" />
+
+        {{ model.content["title"] }}
+  
+
       </div>
 
       <div class="mb-3">
@@ -16,9 +20,9 @@
       </div>
 
       <div>
-        <label for="playlists" class="form-label">Playlists</label>
+        <label for="playlists" class="form-label">Playlist</label>
         <select id="playlists" class="form-select">
-          {% for playlist in model.playlists['playlists'] %}
+          {% for playlist in model.playlists %}
             {% if playlist['id'] == model.content['playlist_id'] %}
               <option value="{{ playlist['id'] }}" selected>{{ playlist['name'] }}</option>
             {% else %}

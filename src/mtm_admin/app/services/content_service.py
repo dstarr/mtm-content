@@ -41,7 +41,7 @@ class ContentService:
 
         playlists = metadata_collection.find_one({"name": "playlists"})
         
-        return playlists
+        return playlists["playlists"]
     
     def get_collections(self):
         client = pymongo.MongoClient(self.connection_string)
