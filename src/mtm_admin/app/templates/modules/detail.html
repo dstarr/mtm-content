@@ -6,30 +6,28 @@
   <div class="container main">
     <div class="mb-3">
       <label for="title" class="form-label">Title</label>
-      <input type="text" class="form-control" id="title" value="{{ module.title }}" />
+      <div id="title">{{ module.title }}</div>
     </div>
 
     <div class="mb-3">
       <label for="description" class="form-label">Description</label>
-      <input type="textarea" class="form-control" id="description" value="{{ module.description }}" />
+      <div id="description">{{ module.description }}</div>
     </div>
-
-    {% include 'components/playlist_select.html' %}
 
     <div class="row g-3 mb-3">
       <div class="col-auto short_input">
         <label for="name" class="form-label">Name</label>
-        <input type="text" class="form-control" id="name" value="{{ module.name }}" />
+        <div id="name">{{ module.name }}</div>
       </div>
       <div class="col-auto short_input">
         <label for="youtube_url" class="form-label">YoueTube URL</label>
-        <input type="text" class="form-control" id="description" value="{{ module.youtube_url }}" />
+        <div id="youtube_url"><a href="{{ module.youtube_url }}" target="_blank">{{ module.youtube_url }}</a></div>
       </div>
     </div>
 
     <div class="mb-3 form-check">
       <label class="form-check-label" for="is_active">Is active</label>
-      <input type="checkbox" class="form-check-input" id="is_active" checked="{{ module.active }}" />
+      <input type="checkbox" class="form-check-input" id="is_active" checked="{{ module.active }}" disabled />
     </div>
 
     <div class="mb-3">
@@ -38,8 +36,6 @@
         {% for tag in module.tags %}
           <button type="button" class="btn btn-light">{{ tag }}</button>
         {% endfor %}
-
-        <button type="button" class="btn btn-primary">Add tag</button>
       </div>
     </div>
 
@@ -70,6 +66,10 @@
         <label for="updated_by" class="form-label">Updated by</label>
         <div id="updated_by">{{ module.updated_by }}</div>
       </div>
+    </div>
+
+    <div class="mb-3">
+      <button type="button" class="btn btn-primary" onclick="window.location.href='/modules/{{ module.id }}/edit'">Edit</button>
     </div>
 
   </div>

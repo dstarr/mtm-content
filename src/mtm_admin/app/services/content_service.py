@@ -1,7 +1,7 @@
 import os
 import pymongo
 
-class ComtentService:
+class ContentService:
     
     def __init__(self):
         self.connection_string = os.environ.get("COSMOS_DB_CONNECTION_STRING")

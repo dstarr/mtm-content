@@ -5,10 +5,11 @@ from dotenv import load_dotenv
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_dir, 'services'))
+sys.path.append(os.path.join(current_dir, 'models'))
 
-from content_service import ComtentService
+from content_service import ContentService
 
-content_service = ComtentService()
+content_service = ContentService()
 
 load_dotenv()
 
@@ -24,17 +25,25 @@ def module_detail(module_id):
     module = content_service.get_module(module_id)
     return render_template('modules/detail.html', module=module)
 
+@app.route('/modules/<module_id>/edit')
+def module_edit(module_id):
+    module = content_service.get_module(module_id)
+    return render_template('modules/edit.html', module=module)
+
 @app.route('/tags')
 def tags():
     tags = content_service.get_all_tags()
     return render_template('tags.html', tags=tags)
 
-# @app.route('/modules/<int:module_id>/edit')
-# 
+
 # @app.route('/tags/<int:tag_id>')
+
 # @app.route('/tags/<int:tag_id>/delete')
+
 # @app.route('/playlists')
+
 # @app.route('/playlists/<int:playlist_id>')
+
 # @app.route('/playlists/<int:playlist_id>')
 
 
