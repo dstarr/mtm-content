@@ -1,5 +1,6 @@
 {
     "python.analysis.extraPaths": [
-        "./src/mtm_admin/app/services"
+        "./src/mtm_admin/app/services",
+        "./src/mtm_admin/app/models/modules"
     ]
 }
