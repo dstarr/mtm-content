@@ -11,6 +11,7 @@
         <th scope="col">#</th>
         <th scope="col">Title</th>
         <th scope="col">Playlist</th>
+        <th scope="col">Tags</th>
       </tr>
     </thead>
     <tbody>
@@ -20,6 +21,12 @@
           <th scope="row">{{ loop.index }}</td>
             <td><a href="{{ url_for('module_detail', module_id = item.module.id) }}">{{ item.module.title }}</a></td>
             <td>{{ item.playlist.name }}</td>
+            <td>
+              {% for tag in item.module["tags"] %}
+                {{ tag }}, 
+              {% endfor %}
+            </td>
+
   
           </tr>
         </tr>
