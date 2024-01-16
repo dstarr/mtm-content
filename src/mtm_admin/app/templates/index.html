@@ -4,14 +4,31 @@
   {% include 'nav.html' %}
 
   <div class="container main">
-    <ol class="list-group list-group-numbered">
-      {% for module in modules %}
-        <li class="list-group-item list-group-item-action">
-          <a href="{{ url_for('module_detail', module_id = module.id) }}">{{ module.title }}</a>
-        </li>
+
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Playlist</th>
+      </tr>
+    </thead>
+    <tbody>
+  
+      {% for item in model.items %}
+        <tr>
+          <th scope="row">{{ loop.index }}</td>
+            <td><a href="{{ url_for('module_detail', module_id = item.module.id) }}">{{ item.module.title }}</a></td>
+            <td>{{ item.playlist.name }}</td>
+  
+          </tr>
+        </tr>
       {% endfor %}
-    </ol>
-  </div>
+
+</tbody>
+</table>
+
+</div>
 
 </body>
 
