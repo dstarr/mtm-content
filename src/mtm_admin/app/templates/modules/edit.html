@@ -4,24 +4,23 @@
   {% include 'nav.html' %}
 
   <div class="container main">
-    <form>
+    <form action="/modules/update" method="post">
+
+      <input type="hidden" name="id" value="{{ model.content['id'] }}" />
+
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
-        <input type="text" class="form-control" id="title" value="{{ model.content['title'] }}" />
-
-        {{ model.content["title"] }}
-  
-
+        <input type="text" class="form-control" name="title" id="title" value="{{ model.content['title'] }}" />
       </div>
 
       <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <input type="textarea" class="form-control" id="description" value="{{ model.content['description'] }}" />
+        <input type="textarea" class="form-control" name="description" id="description" value="{{ model.content['description'] }}" />
       </div>
 
       <div>
-        <label for="playlists" class="form-label">Playlist</label>
-        <select id="playlists" class="form-select">
+        <label for="playlist_id" class="form-label">Playlist</label>
+        <select name="playlist_id" id="playlist_id" class="form-select">
           {% for playlist in model.playlists %}
             {% if playlist['id'] == model.content['playlist_id'] %}
               <option value="{{ playlist['id'] }}" selected>{{ playlist['name'] }}</option>
@@ -35,64 +34,54 @@
       <div class="row g-3 mb-3">
         <div class="col-auto short_input">
           <label for="name" class="form-label">Name</label>
-          <input type="text" class="form-control" id="name" value="{{ model.content['name'] }}" />
+          <input type="text" class="form-control" name="name" id="name" value="{{ model.content['name'] }}" />
         </div>
         <div class="col-auto short_input">
           <label for="youtube_url" class="form-label">YoueTube URL</label>
-          <input type="text" class="form-control" id="description" value="{{ model.content['youtube_url'] }}" />
+          <input type="text" class="form-control" name="description" id="description" value="{{ model.content['youtube_url'] }}" />
         </div>
       </div>
 
       <div class="mb-3 form-check">
-        <label class="form-check-label" for="is_active">Is active</label>
-        <input type="checkbox" class="form-check-input" id="is_active" checked="{{ model.content['active'] }}" />
+        <label class="form-check-label" name="is_active" for="is_active">Is active</label>
+        <input type="checkbox" class="form-check-input" name="is_active" id="is_active" checked="{{ model.content['active'] }}" />
       </div>
-
-      <div class="mb-3">
-        <label for="tags" class="form-label">Tags</label>
-        <div id="tags">
-          {% for tag in model.content['tags'] %}
-            <button type="button" class="btn btn-light">{{ tag }}</button>
-          {% endfor %}
-
-          <button type="button" class="btn btn-primary">Add tag</button>
-        </div>
-      </div>
+ 
 
       <div class="row g-3 mb-3">
         <div class="col-auto short_input">
           <label for="id" class="form-label">ID</label>
-          <input type="text" class="form-control" id="id" value="{{ model.content['id'] }}" disabled />
+          <input type="text" class="form-control" name="id" id="id" value="{{ model.content['id'] }}" disabled />
         </div>
       </div>
 
       <div class="row g-3 mb-3">
         <div class="col-auto short_input">
           <label for="date_createdadded" class="form-label">Date created</label>
-          <input type="text" class="form-control" id="date_created" value="{{ model.content['date_created'] }}" disabled />
+          <input type="text" class="form-control" name="date_created" id="date_created" value="{{ model.content['date_created'] }}" disabled />
         </div>
         <div class="col-auto short_input">
           <label for="created_by" class="form-label">Updated by</label>
-          <input type="text" class="form-control" id="created_by" value="{{ model.content['created_by'] }}" disabled />
+          <input type="text" class="form-control" name="created_by" id="created_by" value="{{ model.content['created_by'] }}" disabled />
         </div>
       </div>
 
       <div class="row g-3 mb-3">
         <div class="col-auto short_input">
           <label for="date_updated" class="form-label">Date last updated</label>
-          <input type="text" class="form-control" id="date_updated" value="{{ model.content['date_updated'] }}" disabled />
+          <input type="text" class="form-control" name="date_updated" id="date_updated" value="{{ model.content['date_updated'] }}" disabled />
         </div>
         <div class="col-auto short_input">
           <label for="updated_by" class="form-label">Updated by</label>
-          <input type="text" class="form-control" id="last_updated_by" value="{{ model.content['updated_by'] }}" disabled />
+          <input type="text" class="form-control" name="last_updated_by" id="last_updated_by" value="{{ model.content['updated_by'] }}" disabled />
         </div>
       </div>
 
       <div class="mb-3">
         <button type="submit" class="btn btn-primary">Save</button>
       </div>
+
     </form>
   </div>
-</body>
 
 {% include 'footer.html' %}

@@ -36,6 +36,18 @@ class ContentService:
             "playlist": playlist
         }
     
+    def update_module(self, new_values):
+        _, content_collection = self.get_collections()
+        
+        module = content_collection.find_one({"id": new_values["id"]})
+        
+        module["title"] = new_values["title"]
+        module["description"] = new_values["description"]
+        module["playlist_id"] = new_values["playlist_id"]
+        module["active"] = new_values["is_active"]
+        
+        content_collection.update_one({"id": new_values["id"]}, {"$set": module})
+    
     def get_playlists(self):
         metadata_collection, _ = self.get_collections()
 

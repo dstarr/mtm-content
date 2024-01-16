@@ -1,6 +1,6 @@
 import os
 import sys
-from flask import Flask, render_template
+from flask import Flask, redirect, render_template, request, url_for
 from dotenv import load_dotenv
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -38,12 +38,17 @@ def module_edit(module_id):
     
     return render_template('modules/edit.html', model=model)
 
+@app.route('/modules/update', methods=['POST'])
+def module_update():
+    
+    print(request.form)
+    
+    content_service.update_module(new_values=request.form)
+    return redirect(url_for('module_detail', module_id=request.form["id"]))
+
 @app.route('/tags')
 def tags():
     pass
-    # tags = content_service.get_all_tags()
-    # return render_template('tags.html', tags=tags)
-
 
 # @app.route('/tags/<int:tag_id>')
 
