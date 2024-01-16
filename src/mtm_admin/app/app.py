@@ -3,10 +3,10 @@ import sys
 from flask import Flask, redirect, render_template, request, url_for
 from dotenv import load_dotenv
 
-
 current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_dir, 'services'))
 sys.path.append(os.path.join(current_dir, 'models/modules'))
+
 
 from list_model import ListItemModel, ListModel
 from content_service import ContentService
