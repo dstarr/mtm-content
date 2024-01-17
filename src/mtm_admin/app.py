@@ -41,9 +41,5 @@ def home():
     
     return render_template('index.html', model=list_model)
 
-@app.route('/tags')
-def tags():
-    pass
-
 if __name__ == '__main__':
     app.run(debug=True, port=3000)

@@ -17,19 +17,18 @@ def module_detail(module_id):
     
     return render_template('detail.html', model=model)
 
-@modules_bp.route('/modules/<module_id>/edit')
+@modules_bp.route('/modules/<module_id>/edit', methods=['GET', 'POST'])
 def module_edit(module_id):
-    module = content_service.get_module(module_id)["module"]
-    playlists = content_service.get_playlists()
-    
-    model = EditModel(playlists=playlists, content=module)
-    
-    return render_template('edit.html', model=model)
+    # update the module and redirect to the detail page
+    if request.method == 'POST':
+        content_service.update_module(new_values=request.form)
+        return redirect(url_for('modules.module_detail', module_id=request.form["id"]))
 
-@modules_bp.route('/modules/update', methods=['POST'])
-def module_update():
-    print(request.form)
+    # render the edit form
+    elif request.method == 'GET':
+        module = content_service.get_module(module_id)["module"]
+        playlists = content_service.get_playlists()
+        
+        model = EditModel(playlists=playlists, content=module)
     
-    content_service.update_module(new_values=request.form)
-    return redirect(url_for('modules.module_detail', module_id=request.form["id"]))
-
+        return render_template('edit.html', model=model)
