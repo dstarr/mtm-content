@@ -5,37 +5,35 @@
 
   <div class="container main">
 
-  <table class="table table-striped table-hover">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Title</th>
-        <th scope="col">Playlist</th>
-        <th scope="col">Tags</th>
-      </tr>
-    </thead>
-    <tbody>
-  
-      {% for item in model.items %}
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Playlist</th>
+          <th scope="col">Tags</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for item in model.items %}
         <tr>
           <th scope="row">{{ loop.index }}</td>
-            <td><a href="{{ url_for('module_detail', module_id = item.module.id) }}">{{ item.module.title }}</a></td>
-            <td>{{ item.playlist.name }}</td>
-            <td>
-              {% for tag in item.module["tags"] %}
-                {{ tag }}, 
-              {% endfor %}
-            </td>
-
-  
-          </tr>
+          <td><a href="{{ url_for('modules.module_detail', module_id = item.module.id) }}">{{ item.module.title }}</a></td>
+          <td>{{ item.playlist.name }}</td>
+          <td>
+            {% for tag in item.module["tags"] %}
+            {{ tag }},
+            {% endfor %}
+          </td>
         </tr>
-      {% endfor %}
+        </tr>
+        {% endfor %}
 
-</tbody>
-</table>
+      </tbody>
+    </table>
 
-</div>
+  </div>
 
 </body>
 

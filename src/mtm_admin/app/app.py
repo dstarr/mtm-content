@@ -6,12 +6,13 @@ from dotenv import load_dotenv
 current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_dir, 'services'))
 sys.path.append(os.path.join(current_dir, 'playlists'))
-sys.path.append(os.path.join(current_dir, 'models/modules'))
+sys.path.append(os.path.join(current_dir, 'modules/models'))
 
 
 # from playlists_blueprint import playlists_bp
 from playlists.views import playlists_bp
-from list_model import ListItemModel, ListModel
+from modules.views import modules_bp
+from modules.models.list_model import ListItemModel, ListModel
 from content_service import ContentService
 
 content_service = ContentService()
@@ -20,6 +21,7 @@ load_dotenv()
 
 app = Flask(__name__)
 app.register_blueprint(playlists_bp, url_prefix='/playlists')
+app.register_blueprint(modules_bp)
 
 print(app.url_map)
 
@@ -40,32 +42,6 @@ def home():
         list_model.items.append(list_item_model)
     
     return render_template('index.html', model=list_model)
-
-@app.route('/modules/<module_id>')
-def module_detail(module_id):
-    module = content_service.get_module(module_id)
-    
-    from detail_model import DetailModel
-    model = DetailModel(playlist=module["playlist"], content=module["module"])
-    
-    return render_template('modules/detail.html', model=model)
-
-@app.route('/modules/<module_id>/edit')
-def module_edit(module_id):
-    module = content_service.get_module(module_id)["module"]
-    playlists = content_service.get_playlists()
-    
-    from edit_model import EditModel
-    model = EditModel(playlists=playlists, content=module)
-    
-    return render_template('modules/edit.html', model=model)
-
-@app.route('/modules/update', methods=['POST'])
-def module_update():
-    print(request.form)
-    
-    content_service.update_module(new_values=request.form)
-    return redirect(url_for('module_detail', module_id=request.form["id"]))
 
 @app.route('/tags')
 def tags():
