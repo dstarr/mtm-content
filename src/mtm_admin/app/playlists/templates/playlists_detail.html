@@ -4,6 +4,9 @@
   {% include 'nav.html' %}
 
   <div class="container main">
+    
+    <h2>{{ model.name }}</h2>
+
     <table class="table table-striped table-hover">
       <thead>
         <tr>
@@ -13,17 +16,17 @@
       </thead>
       <tbody>
     
-        {% for playlist in model %}
+        {% for module in model.modules %}
           <tr>
             <th scope="row">{{ loop.index }}</td>
-              <td><a href="{{ url_for('playlists.playlists_detail', playlist_id = playlist.id) }}">{{ playlist.name }}</a></td>
+              <td><a href="{{ url_for('module_detail', module_id = module.id) }}">{{ module.title }}</a></a></td>
             </tr>
           </tr>
         {% endfor %}
   
   </tbody>
   </table>
-  </div>
 
-</body> 
-{% include 'footer.html' %}
+    {% include 'footer.html' %}
+  </div>
+</body>

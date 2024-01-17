@@ -55,6 +55,25 @@ class ContentService:
         
         return playlists["playlists"]
     
+    def get_playlist(self, id):
+        metadata_collection, _ = self.get_collections()
+
+        playlist = metadata_collection.find_one(
+            { "name": "playlists" },
+            { "playlists": { "$elemMatch": { "id": id } } }
+        )["playlists"][0]
+
+        playlist["modules"] = self.get_modules_for_playlist(playlist["id"])
+
+        return playlist
+    
+    def get_modules_for_playlist(self, playlist_id):
+        _, content_collection = self.get_collections()
+
+        modules = content_collection.find({ "playlist_id": playlist_id })
+
+        return modules
+
     def get_collections(self):
         client = pymongo.MongoClient(self.connection_string)
         db = client[self.db_name]
