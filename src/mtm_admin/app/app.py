@@ -5,9 +5,12 @@ from dotenv import load_dotenv
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_dir, 'services'))
+sys.path.append(os.path.join(current_dir, 'playlists'))
 sys.path.append(os.path.join(current_dir, 'models/modules'))
 
 
+# from playlists_blueprint import playlists_bp
+from playlists.views import playlists_bp
 from list_model import ListItemModel, ListModel
 from content_service import ContentService
 
@@ -16,6 +19,9 @@ content_service = ContentService()
 load_dotenv()
 
 app = Flask(__name__)
+app.register_blueprint(playlists_bp, url_prefix='/playlists')
+
+print(app.url_map)
 
 @app.route('/')
 def home():
@@ -64,16 +70,6 @@ def module_update():
 @app.route('/tags')
 def tags():
     pass
-
-# @app.route('/tags/<int:tag_id>')
-
-# @app.route('/tags/<int:tag_id>/delete')
-
-# @app.route('/playlists')
-
-# @app.route('/playlists/<int:playlist_id>')
-
-# @app.route('/playlists/<int:playlist_id>')
 
 if __name__ == '__main__':
     app.run(debug=True, port=3000)

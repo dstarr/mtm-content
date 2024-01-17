@@ -1,13 +1,17 @@
 from flask import Blueprint, render_template
 from content_service import ContentService
 
+playlists_bp = Blueprint(
+    "playlists", 
+    __name__, 
+    template_folder="templates", 
+    static_folder="static"
+)
+
 content_service = ContentService()
 
-from . import playlists
-
-@playlists.route('/playlists')
-def playlists():
-    playlists = ContentService.get_playlists()
+@playlists_bp.route('/')
+def playlists_index():
+    playlists = content_service.get_playlists()
     
-    return render_template('index.html', model=playlists["playlists"])
-    
+    return render_template('playlists_index.html', model=playlists)
