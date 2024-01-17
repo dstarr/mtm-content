@@ -1,5 +1,5 @@
 from flask import Blueprint, redirect, render_template, request, url_for
-from content_service import ContentService
+from services.content_service import ContentService
 from modules.models.detail_model import DetailModel
 from modules.models.edit_model import EditModel
 
@@ -8,6 +8,17 @@ modules_bp = Blueprint(
 )
 
 content_service = ContentService()
+
+@modules_bp.route('/modules/add', methods=['GET','POST'])
+def module_add():
+    if request.method == 'GET':
+        playlists=content_service.get_playlists()
+        return render_template('add.html', playlists=playlists)
+    
+    elif request.method == 'POST':
+        module = content_service.add_module(new_values=request.form)
+        model = DetailModel(playlist=module["playlist"], content=module["module"])
+        return redirect(url_for('modules.module_detail', module_id=model.content["id"]))
 
 @modules_bp.route('/modules/<module_id>')
 def module_detail(module_id):

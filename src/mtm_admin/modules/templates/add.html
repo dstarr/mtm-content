@@ -1,0 +1,51 @@
+{% include 'head.html' %}
+
+<body>
+  {% include 'nav.html' %}
+
+  <div class="container main">
+    <form action="{{ url_for('modules.module_add') }}" method="post">
+
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" name="title" id="title" />
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <input type="textarea" class="form-control" name="description" id="description" />
+      </div>
+
+      <div>
+        <label for="playlist_id" class="form-label">Playlist</label>
+        <select name="playlist_id" id="playlist_id" class="form-select">
+          {% for playlist in playlists %}
+            <option value="{{ playlist['id'] }}">{{ playlist['name'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-auto short_input">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" name="name" id="name" />
+        </div>
+        <div class="col-auto short_input">
+          <label for="youtube_url" class="form-label">YoueTube URL</label>
+          <input type="text" class="form-control" name="description" id="description" />
+        </div>
+      </div>
+
+      <div class="mb-3 form-check">
+        <label class="form-check-label" name="is_active" for="is_active">Is active</label>
+        <input type="checkbox" class="form-check-input" name="is_active" id="is_active" checked="true" />
+      </div>
+      
+      <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+
+    </form>
+  </div>
+
+{% include 'footer.html' %}

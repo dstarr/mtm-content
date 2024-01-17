@@ -1,4 +1,6 @@
+from datetime import datetime
 import os
+import uuid
 import pymongo
 
 class ContentService:
@@ -74,6 +76,27 @@ class ContentService:
 
         return modules
 
+    def add_module(self, new_values):
+        _, content_collection = self.get_collections()
+        
+        module = {
+            "id": str(uuid.uuid4()),
+            "title": new_values["title"],
+            "description": new_values["description"],
+            "playlist_id": new_values["playlist_id"],
+            "active": new_values["is_active"],
+            "date_created": datetime.utcnow(),
+            "date_updated": datetime.utcnow(),
+            "created_by": "David",
+            "updated_by": "Julio"
+            
+        }
+        
+        # add the module to the collection
+        content_collection.insert_one(module)
+        
+        return self.get_module(module["id"])
+    
     def get_collections(self):
         client = pymongo.MongoClient(self.connection_string)
         db = client[self.db_name]
