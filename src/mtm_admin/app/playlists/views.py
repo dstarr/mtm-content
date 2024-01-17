@@ -14,7 +14,7 @@ def playlists_index():
     return render_template("playlists_index.html", model=playlists)
 
 
-@playlists_bp.route("/detail/<playlist_id>")
+@playlists_bp.route("detail/<playlist_id>")
 def playlists_detail(playlist_id):
     playlist = content_service.get_playlist(id=playlist_id)
     
