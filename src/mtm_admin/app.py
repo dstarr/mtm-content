@@ -8,12 +8,10 @@ sys.path.append(os.path.join(current_dir, 'services'))
 sys.path.append(os.path.join(current_dir, 'playlists'))
 sys.path.append(os.path.join(current_dir, 'modules/models'))
 
-
-# from playlists_blueprint import playlists_bp
 from playlists.views import playlists_bp
 from modules.views import modules_bp
 from modules.models.list_model import ListItemModel, ListModel
-from content_service import ContentService
+from services.content_service import ContentService
 
 content_service = ContentService()
 
