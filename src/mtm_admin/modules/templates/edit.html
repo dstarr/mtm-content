@@ -10,17 +10,17 @@
 
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
-        <input type="text" class="form-control" name="title" id="title" value="{{ model.content['title'] }}" />
+        <input type="text" class="form-control" name="title" id="title" value="{{ model.content['title'] }}" required />
       </div>
 
       <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <input type="textarea" class="form-control" name="description" id="description" value="{{ model.content['description'] }}" />
+        <input type="textarea" class="form-control" name="description" id="description" value="{{ model.content['description'] }}" required />
       </div>
 
       <div>
         <label for="playlist_id" class="form-label">Playlist</label>
-        <select name="playlist_id" id="playlist_id" class="form-select">
+        <select name="playlist_id" id="playlist_id" class="form-select" required>
           {% for playlist in model.playlists %}
             {% if playlist['id'] == model.content['playlist_id'] %}
               <option value="{{ playlist['id'] }}" selected>{{ playlist['name'] }}</option>
@@ -34,11 +34,11 @@
       <div class="row g-3 mb-3">
         <div class="col-auto short_input">
           <label for="name" class="form-label">Name</label>
-          <input type="text" class="form-control" name="name" id="name" value="{{ model.content['name'] }}" />
+          <input type="text" class="form-control" name="name" id="name" value="{{ model.content['name'] }}"  required />
         </div>
         <div class="col-auto short_input">
           <label for="youtube_url" class="form-label">YoueTube URL</label>
-          <input type="text" class="form-control" name="youtube_url" id="youtube_url" value="{{ model.content['youtube_url'] }}" />
+          <input type="text" class="form-control" name="youtube_url" id="youtube_url" value="{{ model.content['youtube_url'] }}" required />
         </div>
       </div>
 
