@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from content_service import ContentService
+from services.content_service import ContentService
 
 playlists_bp = Blueprint(
     "playlists", __name__, template_folder="templates", static_folder="static"

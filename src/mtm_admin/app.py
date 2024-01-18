@@ -19,7 +19,7 @@ load_dotenv()
 
 app = Flask(__name__)
 app.register_blueprint(playlists_bp, url_prefix='/playlists')
-app.register_blueprint(modules_bp)
+app.register_blueprint(modules_bp, url_prefix='/modules')
 
 print(app.url_map)
 
