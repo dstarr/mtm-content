@@ -13,7 +13,7 @@
           <th scope="col">#</th>
           <th scope="col">Title</th>
           <th scope="col">Playlist</th>
-          <th scope="col">Tags</th>
+          <th scope="col">Active</th>
         </tr>
       </thead>
       <tbody>
@@ -24,9 +24,7 @@
           <td><a href="{{ url_for('modules.module_detail', module_id = item.module.id) }}">{{ item.module.title }}</a></td>
           <td>{{ item.playlist.name }}</td>
           <td>
-            {% for tag in item.module["tags"] %}
-            {{ tag }},
-            {% endfor %}
+            {{ item.module.is_active }}  
           </td>
         </tr>
         </tr>

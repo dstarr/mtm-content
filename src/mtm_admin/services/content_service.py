@@ -42,11 +42,17 @@ class ContentService:
         _, content_collection = self.get_collections()
         
         module = content_collection.find_one({"id": new_values["id"]})
+
+        is_active = False
+        if new_values.get("is_active") == "True":
+            is_active = True
         
         module["title"] = new_values["title"]
         module["description"] = new_values["description"]
         module["playlist_id"] = new_values["playlist_id"]
-        module["active"] = new_values["is_active"]
+        module["is_active"] = is_active
+        module["date_updated"] = datetime.utcnow()
+        module["updated_by"] = "Julio Colon"
         
         content_collection.update_one({"id": new_values["id"]}, {"$set": module})
     
@@ -84,7 +90,7 @@ class ContentService:
             "title": new_values["title"],
             "description": new_values["description"],
             "playlist_id": new_values["playlist_id"],
-            "active": new_values["is_active"],
+            "is_active": new_values["is_active"],
             "date_created": datetime.utcnow(),
             "date_updated": datetime.utcnow(),
             "created_by": "David",

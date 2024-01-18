@@ -44,7 +44,7 @@
 
       <div class="mb-3 form-check">
         <label class="form-check-label" name="is_active" for="is_active">Is active</label>
-        <input type="checkbox" class="form-check-input" name="is_active" id="is_active" checked="{{ model.content['active'] }}" />
+        <input type="checkbox" class="form-check-input" name="is_active" id="is_active" value="True" {% if model.content['is_active'] %}checked{% endif %}  />
       </div>
  
 
