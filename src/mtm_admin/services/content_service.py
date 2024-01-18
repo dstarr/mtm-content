@@ -11,7 +11,6 @@ class ContentService:
         self.content_collection_name = os.environ.get("COSMOS_DB_CONTENT_COLLECTION_NAME")
         self.metadata_collection_name = os.environ.get("COSMOS_DB_METADATA_COLLECTION_NAME")
 
-    def get_module(self, module_id):
     def get_all_modules(self):
         _, content_collection = self.get_collections()
     
@@ -19,6 +18,7 @@ class ContentService:
         
         return modules
     
+    def get_module(self, module_id):
         metadata_collection, content_collection = self.get_collections()
 
         # get the module
@@ -38,30 +38,6 @@ class ContentService:
             "playlist": playlist
         }
     
-    def add_module(self, new_values):
-
-        return modules
-
-        _, content_collection = self.get_collections()
-        
-        module = {
-            "id": str(uuid.uuid4()),
-            "title": new_values["title"],
-            "description": new_values["description"],
-            "playlist_id": new_values["playlist_id"],
-            "is_active": new_values["is_active"],
-            "date_created": datetime.utcnow(),
-            "date_updated": datetime.utcnow(),
-            "created_by": "David",
-            "updated_by": "Julio"
-            
-        }
-        
-        # add the module to the collection
-        content_collection.insert_one(module)
-        
-        return self.get_module(module["id"])
-    
     def update_module(self, new_values):
         _, content_collection = self.get_collections()
         
@@ -78,12 +54,7 @@ class ContentService:
         module["date_updated"] = datetime.utcnow()
         module["updated_by"] = "Julio Colon"
         
-    def get_modules_for_playlist(self, playlist_id):
         content_collection.update_one({"id": new_values["id"]}, {"$set": module})
-    
-        _, content_collection = self.get_collections()
-
-        modules = content_collection.find({ "playlist_id": playlist_id })
     
     def get_playlists(self):
         metadata_collection, _ = self.get_collections()
@@ -103,6 +74,34 @@ class ContentService:
         playlist["modules"] = self.get_modules_for_playlist(playlist["id"])
 
         return playlist
+    
+    def get_modules_for_playlist(self, playlist_id):
+        _, content_collection = self.get_collections()
+
+        modules = content_collection.find({ "playlist_id": playlist_id })
+
+        return modules
+
+    def add_module(self, new_values):
+        _, content_collection = self.get_collections()
+        
+        module = {
+            "id": str(uuid.uuid4()),
+            "title": new_values["title"],
+            "description": new_values["description"],
+            "playlist_id": new_values["playlist_id"],
+            "is_active": new_values["is_active"],
+            "date_created": datetime.utcnow(),
+            "date_updated": datetime.utcnow(),
+            "created_by": "David",
+            "updated_by": "Julio"
+            
+        }
+        
+        # add the module to the collection
+        content_collection.insert_one(module)
+        
+        return self.get_module(module["id"])
     
     def get_collections(self):
         client = pymongo.MongoClient(self.connection_string)
