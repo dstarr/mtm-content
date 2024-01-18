@@ -38,6 +38,32 @@ class ContentService:
             "playlist": playlist
         }
     
+    def add_module(self, new_values):
+        _, content_collection = self.get_collections()
+        
+        is_active = False
+        if new_values.get("is_active") == "True":
+            is_active = True
+        
+        module = {
+            "id": str(uuid.uuid4()),
+            "created_by": "David",
+            "date_created": datetime.utcnow(),
+            "date_updated": datetime.utcnow(),
+            "description": new_values["description"],
+            "is_active": is_active,
+            "name": new_values["name"],
+            "playlist_id": new_values["playlist_id"],
+            "title": new_values["title"],
+            "updated_by": "Julio",
+            "youtube_url": new_values["youtube_url"],
+        }
+        
+        # add the module to the collection
+        content_collection.insert_one(module)
+        
+        return self.get_module(module["id"])
+    
     def update_module(self, new_values):
         _, content_collection = self.get_collections()
         
@@ -47,12 +73,14 @@ class ContentService:
         if new_values.get("is_active") == "True":
             is_active = True
         
-        module["title"] = new_values["title"]
-        module["description"] = new_values["description"]
-        module["playlist_id"] = new_values["playlist_id"]
-        module["is_active"] = is_active
         module["date_updated"] = datetime.utcnow()
+        module["description"] = new_values["description"]
+        module["is_active"] = is_active
+        module["name"] = new_values["name"]
+        module["playlist_id"] = new_values["playlist_id"]
+        module["title"] = new_values["title"]
         module["updated_by"] = "Julio Colon"
+        module["youtube_url"] = new_values["youtube_url"]
         
         content_collection.update_one({"id": new_values["id"]}, {"$set": module})
     
@@ -82,27 +110,6 @@ class ContentService:
 
         return modules
 
-    def add_module(self, new_values):
-        _, content_collection = self.get_collections()
-        
-        module = {
-            "id": str(uuid.uuid4()),
-            "title": new_values["title"],
-            "description": new_values["description"],
-            "playlist_id": new_values["playlist_id"],
-            "is_active": new_values["is_active"],
-            "date_created": datetime.utcnow(),
-            "date_updated": datetime.utcnow(),
-            "created_by": "David",
-            "updated_by": "Julio"
-            
-        }
-        
-        # add the module to the collection
-        content_collection.insert_one(module)
-        
-        return self.get_module(module["id"])
-    
     def get_collections(self):
         client = pymongo.MongoClient(self.connection_string)
         db = client[self.db_name]
