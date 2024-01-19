@@ -15,7 +15,6 @@ from services.content_service import ContentService
 
 content_service = ContentService()
 
-
 app = Flask(__name__)
 app.register_blueprint(playlists_bp, url_prefix='/playlists')
 app.register_blueprint(modules_bp, url_prefix='/modules')
@@ -43,5 +42,7 @@ if __name__ == '__main__':
         print('Running in debug mode')
         print(app.url_map)
         app.run(debug=True, port=3000)
+
     else:
-        app.run(port=3000)
+        print('Running in production mode')
+        app.run()
