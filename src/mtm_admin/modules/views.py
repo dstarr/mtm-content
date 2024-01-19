@@ -15,7 +15,7 @@ content_service = ContentService()
 def module_add():
     if request.method == 'GET':
         playlists=content_service.get_playlists()
-        return render_template('add.html', playlists=playlists)
+        return render_template('modules_add.html', playlists=playlists)
     
     elif request.method == 'POST':
         module = content_service.add_module(new_values=request.form)
@@ -28,7 +28,7 @@ def module_detail(module_id):
     
     model = DetailModel(playlist=module["playlist"], content=module["module"])
     
-    return render_template('detail.html', model=model)
+    return render_template('modules_detail.html', model=model)
 
 @modules_bp.route('edit/<module_id>', methods=['GET', 'POST'])
 def module_edit(module_id):
@@ -43,4 +43,4 @@ def module_edit(module_id):
         playlists = content_service.get_playlists()
         model = EditModel(playlists=playlists, content=module)
     
-        return render_template('edit.html', model=model)
+        return render_template('modules_edit.html', model=model)
