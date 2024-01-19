@@ -3,13 +3,15 @@ import os
 import uuid
 import pymongo
 
+import config
+
 class ContentService:
     
     def __init__(self):
-        self.connection_string = os.environ.get("COSMOS_DB_CONNECTION_STRING")
-        self.db_name = os.environ.get("COSMOS_DB_NAME")
-        self.content_collection_name = os.environ.get("COSMOS_DB_CONTENT_COLLECTION_NAME")
-        self.metadata_collection_name = os.environ.get("COSMOS_DB_METADATA_COLLECTION_NAME")
+        self.connection_string = config.COSMOS_DB_CONNECTION_STRING
+        self.db_name = config.COSMOS_DB_NAME
+        self.content_collection_name = config.COSMOS_DB_CONTENT_COLLECTION_NAME
+        self.metadata_collection_name = config.COSMOS_DB_METADATA_COLLECTION_NAME
 
     def get_all_modules(self):
         _, content_collection = self.get_collections()

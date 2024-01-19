@@ -1,7 +1,7 @@
 import os
 import sys
 from flask import Flask, redirect, render_template, request, url_for
-from dotenv import load_dotenv
+import config
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_dir, 'services'))
@@ -15,13 +15,10 @@ from services.content_service import ContentService
 
 content_service = ContentService()
 
-load_dotenv()
 
 app = Flask(__name__)
 app.register_blueprint(playlists_bp, url_prefix='/playlists')
 app.register_blueprint(modules_bp, url_prefix='/modules')
-
-print(app.url_map)
 
 @app.route('/')
 def home():
@@ -42,4 +39,9 @@ def home():
     return render_template('index.html', model=list_model)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=3000)
+    if config.FLASK_DEBUG == '1':
+        print('Running in debug mode')
+        print(app.url_map)
+        app.run(debug=True, port=3000)
+    else:
+        app.run(port=3000)
