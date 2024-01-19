@@ -45,8 +45,7 @@ if __name__ == '__main__':
     if config.FLASK_DEBUG == '1':
         print('Running in debug mode')
         print(app.url_map)
-        app.run(debug=True)
-
+        app.run(debug=True, port=config.FLASK_PORT)
     else:
         print('Running in production mode')
-        app.run()
+        app.run(port=config.FLASK_PORT)

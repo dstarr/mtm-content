@@ -18,7 +18,7 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Expose the port on which the web server will listen
-EXPOSE 8000
+EXPOSE 3000
 
 # Set the ownership of the working directory to the non-root user
 RUN chown -R app_user:app_group /app
@@ -33,5 +33,6 @@ USER app_user
 
 ENV FLASK_APP app.py
 ENV FLASK_DEBUG 0
+ENV FLASK_PORT 8000
 
 CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=8000"]
