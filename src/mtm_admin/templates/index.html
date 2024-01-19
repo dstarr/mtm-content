@@ -20,7 +20,7 @@
 
         {% for item in model.items %}
         <tr>
-          <th scope="row">{{ loop.index }}</td>
+          <th scope="row">{{ loop.index }}</th>
           <td><a href="{{ url_for('modules.module_detail', module_id = item.module.id) }}">{{ item.module.title }}</a></td>
           <td>{{ item.playlist.name }}</td>
           <td>

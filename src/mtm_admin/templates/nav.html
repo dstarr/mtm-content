@@ -1,25 +1,48 @@
 <div class="container main">
 
-    <h1>Mastering the Marketplace</h1>
-    
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('playlists.playlists_index') }}">Playlists</a>
-              </li>
-            </ul>
-            <form class="d-flex" method="post" action="/search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-          </div>
-        </div>
-      </nav>
-    
-    
+  <h1>Mastering the Marketplace</h1>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('playlists.playlists_index') }}">Playlists</a>
+          </li>
+        </ul>
+        <form class="d-flex" method="post" action="{{ url_for('search.search_results') }}">
+          <input class="form-control me-2" type="search" placeholder="Search titles" aria-label="Search"
+            name="search_term">
+          <button id="search_button" class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      const searchInput = document.querySelector('input[type="search"]');
+      const searchButton = document.getElementById('search_button');
+
+      // Function to update the button's disabled state
+      const toggleSearchButton = () => {
+        if (searchInput.value.trim() === '') {
+          searchButton.disabled = true;
+        } else {
+          searchButton.disabled = false;
+        }
+      };
+
+      // Initially disable the button
+      toggleSearchButton();
+
+      // Add event listener for input changes
+      searchInput.addEventListener('input', toggleSearchButton);
+    });
+  </script>
+
+
 </div>

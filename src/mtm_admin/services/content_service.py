@@ -8,10 +8,7 @@ import config
 class ContentService:
     
     def __init__(self):
-        self.connection_string = config.COSMOS_DB_CONNECTION_STRING
-        self.db_name = config.COSMOS_DB_NAME
-        self.content_collection_name = config.COSMOS_DB_CONTENT_COLLECTION_NAME
-        self.metadata_collection_name = config.COSMOS_DB_METADATA_COLLECTION_NAME
+        pass
 
     def get_all_modules(self):
         _, content_collection = self.get_collections()
@@ -135,22 +132,22 @@ class ContentService:
         metadata_collection.update_one({"name": "playlists"}, {"$set": playlists_doc})
 
     def get_collections(self):
-        client = pymongo.MongoClient(self.connection_string)
-        db = client[self.db_name]
+        client = pymongo.MongoClient(config.COSMOS_DB_CONNECTION_STRING)
+        db = client[config.COSMOS_DB_NAME]
         
-        content_collection = db[self.content_collection_name]
-        metadata_collection = db[self.metadata_collection_name]
+        content_collection = db[config.COSMOS_DB_CONTENT_COLLECTION_NAME]
+        metadata_collection = db[config.COSMOS_DB_METADATA_COLLECTION_NAME]
         
         # create the collection if it does not exist
-        if db[self.content_collection_name] is None:
-            content_collection = db.create_collection(name=self.content_collection_name)
+        if db[config.COSMOS_DB_CONTENT_COLLECTION_NAME] is None:
+            content_collection = db.create_collection(name=config.COSMOS_DB_CONTENT_COLLECTION_NAME)
         else:
-            content_collection = db[self.content_collection_name]
+            content_collection = db[config.COSMOS_DB_CONTENT_COLLECTION_NAME]
             
         # create the collection if it does not exist
-        if db[self.metadata_collection_name] is None:
-            metadata_collection = db.create_collection(name=self.metadata_collection_name)
+        if db[config.COSMOS_DB_METADATA_COLLECTION_NAME] is None:
+            metadata_collection = db.create_collection(name=config.COSMOS_DB_METADATA_COLLECTION_NAME)
         else:
-            metadata_collection = db[self.metadata_collection_name]
+            metadata_collection = db[config.COSMOS_DB_METADATA_COLLECTION_NAME]
             
         return metadata_collection, content_collection
