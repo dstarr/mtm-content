@@ -11,7 +11,7 @@
 
     <div class="mb-3">
       <label for="description" class="form-label">Description</label>
-      <div id="description">{{ model.content["description"] }}</div>
+      <div id="description">{{ model.content["description"]|safe }}</div>
     </div>
 
     <div class="mb-3">

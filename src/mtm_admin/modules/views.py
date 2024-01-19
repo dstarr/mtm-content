@@ -41,7 +41,6 @@ def module_edit(module_id):
     elif request.method == 'GET':
         module = content_service.get_module(module_id)["module"]
         playlists = content_service.get_playlists()
-        
         model = EditModel(playlists=playlists, content=module)
     
         return render_template('edit.html', model=model)

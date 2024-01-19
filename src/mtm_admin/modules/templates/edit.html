@@ -4,8 +4,7 @@
   {% include 'nav.html' %}
 
   <div class="container main">
-    <form action="{{ model.content['id'] }}" method="post">
-
+    <form action="{{ url_for('modules.module_edit', module_id=model.content['id']) }}" method="post">
       <input type="hidden" name="id" value="{{ model.content['id'] }}" />
 
       <div class="mb-3">
@@ -14,8 +13,8 @@
       </div>
 
       <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <input type="textarea" class="form-control" name="description" id="description" value="{{ model.content['description'] }}" required />
+        <div><label for="description" class="form-label">Description</label></div>
+        <textarea class="description" id="description" name="description" required>{{ model.content['description'] }}</textarea>
       </div>
 
       <div>
@@ -34,19 +33,21 @@
       <div class="row g-3 mb-3">
         <div class="col-auto short_input">
           <label for="name" class="form-label">Name</label>
-          <input type="text" class="form-control" name="name" id="name" value="{{ model.content['name'] }}"  required />
+          <input type="text" class="form-control" name="name" id="name" value="{{ model.content['name'] }}" required />
         </div>
         <div class="col-auto short_input">
           <label for="youtube_url" class="form-label">YoueTube URL</label>
-          <input type="text" class="form-control" name="youtube_url" id="youtube_url" value="{{ model.content['youtube_url'] }}" required />
+          <input type="text" class="form-control" name="youtube_url" id="youtube_url"
+            value="{{ model.content['youtube_url'] }}" required />
         </div>
       </div>
 
       <div class="mb-3 form-check">
         <label class="form-check-label" name="is_active" for="is_active">Is active</label>
-        <input type="checkbox" class="form-check-input" name="is_active" id="is_active" value="True" {% if model.content['is_active'] %}checked{% endif %}  />
+        <input type="checkbox" class="form-check-input" name="is_active" id="is_active" value="True" {% if
+          model.content['is_active'] %}checked{% endif %} />
       </div>
- 
+
 
       <div class="row g-3 mb-3">
         <div class="col-auto short_input">
@@ -58,22 +59,26 @@
       <div class="row g-3 mb-3">
         <div class="col-auto short_input">
           <label for="date_createdadded" class="form-label">Date created</label>
-          <input type="text" class="form-control" name="date_created" id="date_created" value="{{ model.content['date_created'] }}" disabled />
+          <input type="text" class="form-control" name="date_created" id="date_created"
+            value="{{ model.content['date_created'] }}" disabled />
         </div>
         <div class="col-auto short_input">
           <label for="created_by" class="form-label">Created by</label>
-          <input type="text" class="form-control" name="created_by" id="created_by" value="{{ model.content['created_by'] }}" disabled />
+          <input type="text" class="form-control" name="created_by" id="created_by"
+            value="{{ model.content['created_by'] }}" disabled />
         </div>
       </div>
 
       <div class="row g-3 mb-3">
         <div class="col-auto short_input">
           <label for="date_updated" class="form-label">Date last updated</label>
-          <input type="text" class="form-control" name="date_updated" id="date_updated" value="{{ model.content['date_updated'] }}" disabled />
+          <input type="text" class="form-control" name="date_updated" id="date_updated"
+            value="{{ model.content['date_updated'] }}" disabled />
         </div>
         <div class="col-auto short_input">
           <label for="updated_by" class="form-label">Updated by</label>
-          <input type="text" class="form-control" name="last_updated_by" id="last_updated_by" value="{{ model.content['updated_by'] }}" disabled />
+          <input type="text" class="form-control" name="last_updated_by" id="last_updated_by"
+            value="{{ model.content['updated_by'] }}" disabled />
         </div>
       </div>
 
@@ -82,6 +87,10 @@
       </div>
 
     </form>
+
+    {% include 'editor_script.html' %}
+
   </div>
+</body>
 
 {% include 'footer.html' %}
