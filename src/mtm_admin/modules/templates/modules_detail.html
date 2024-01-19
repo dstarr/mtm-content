@@ -35,15 +35,6 @@
       <input type="checkbox" class="form-check-input" id="is_active" {% if model.content['is_active'] %}checked{% endif %} disabled />
     </div>
 
-    <div class="mb-3">
-      <label for="tags" class="form-label">Tags</label>
-      <div id="tags">
-        {% for tag in model.content["tags"] %}
-          <button type="button" class="btn btn-light">{{ tag }}</button>
-        {% endfor %}
-      </div>
-    </div>
-
     <div class="row g-3 mb-3">
       <div class="col-auto short_input">
         <label for="id" class="form-label">ID</label>
