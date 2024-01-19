@@ -7,14 +7,12 @@ import uuid
 
 load_dotenv()
 
-COSMOS_CONNECTION_STRING = os.environ.get("COSMOS_CONNECTION_STRING")
+COSMOS_DB_CONNECTION_STRING = os.environ.get("COSMOS_DB_CONNECTION_STRING")
 COSMOS_DB_NAME = os.environ.get("COSMOS_DB_NAME")
 COSMOS_DB_CONTENT_COLLECTION_NAME = os.environ.get("COSMOS_DB_CONTENT_COLLECTION_NAME")
 COSMOS_DB_METADATA_COLLECTION_NAME = os.environ.get("COSMOS_DB_METADATA_COLLECTION_NAME")
 
 print(f"DB NAME: {COSMOS_DB_NAME}")
-print(f"COLLECTION NAME: {COSMOS_DB_CONTENT_COLLECTION_NAME}")
-
 
 def get_playlists():
     playlists = {
@@ -79,7 +77,7 @@ def get_modules(playists):
 
 if __name__ == "__main__":
 
-    client = pymongo.MongoClient(COSMOS_CONNECTION_STRING)
+    client = pymongo.MongoClient(COSMOS_DB_CONNECTION_STRING)
     db = client[COSMOS_DB_NAME]
 
     playlist_collection, content_collection = get_collections(db)
