@@ -38,6 +38,13 @@ class ContentService:
             "playlist": playlist
         }
     
+    def get_modules_for_playlist(self, playlist_id):
+        _, content_collection = self.get_collections()
+
+        modules = content_collection.find({ "playlist_id": playlist_id })
+
+        return modules
+
     def add_module(self, new_values):
         _, content_collection = self.get_collections()
         
@@ -85,30 +92,45 @@ class ContentService:
         content_collection.update_one({"id": new_values["id"]}, {"$set": module})
     
     def get_playlists(self):
-        metadata_collection, _ = self.get_collections()
+            metadata_collection, _ = self.get_collections()
 
-        playlists = metadata_collection.find_one({"name": "playlists"})
+            playlists = metadata_collection.find_one({"name": "playlists"})
+            
+            return playlists["playlists"]
         
-        return playlists["playlists"]
-    
     def get_playlist(self, id):
+            metadata_collection, _ = self.get_collections()
+
+            playlist = metadata_collection.find_one(
+                { "name": "playlists" },
+                { "playlists": { "$elemMatch": { "id": id } } }
+            )["playlists"][0]
+
+            return playlist
+        
+    def get_playlist_with_modules(self, id):
+            metadata_collection, _ = self.get_collections()
+
+            playlist = metadata_collection.find_one(
+                { "name": "playlists" },
+                { "playlists": { "$elemMatch": { "id": id } } }
+            )["playlists"][0]
+
+            playlist["modules"] = self.get_modules_for_playlist(playlist["id"])
+
+            return playlist
+        
+    def update_playlist(self, id, name):
         metadata_collection, _ = self.get_collections()
 
-        playlist = metadata_collection.find_one(
-            { "name": "playlists" },
-            { "playlists": { "$elemMatch": { "id": id } } }
-        )["playlists"][0]
+        playlists_doc = metadata_collection.find_one({"name": "playlists"})
 
-        playlist["modules"] = self.get_modules_for_playlist(playlist["id"])
+        for playlist in playlists_doc["playlists"]:
+            if str(playlist["id"]) == id:
+                playlist["name"] = name
+                break
 
-        return playlist
-    
-    def get_modules_for_playlist(self, playlist_id):
-        _, content_collection = self.get_collections()
-
-        modules = content_collection.find({ "playlist_id": playlist_id })
-
-        return modules
+        metadata_collection.update_one({"name": "playlists"}, {"$set": playlists_doc})
 
     def get_collections(self):
         client = pymongo.MongoClient(self.connection_string)

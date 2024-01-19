@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, redirect, render_template, request, url_for
 from services.content_service import ContentService
 
 playlists_bp = Blueprint(
@@ -15,10 +15,25 @@ def playlists_index():
 
     return render_template("playlists_index.html", model=playlists)
 
-
 @playlists_bp.route("detail/<playlist_id>")
 def playlists_detail(playlist_id):
-    playlist = content_service.get_playlist(id=playlist_id)
+    playlist = content_service.get_playlist_with_modules(id=playlist_id)
     
     return render_template("playlists_detail.html", model=playlist)
+
+@playlists_bp.route("edit/<playlist_id>", methods=["GET", "POST"])
+def playlists_edit(playlist_id):
+    if request.method == "POST":
+
+        content_service.update_playlist(
+            id=playlist_id,
+            name=request.form["name"],
+        )
+
+        return redirect(url_for('playlists.playlists_detail', playlist_id=playlist_id))
+    
+    elif request.method == "GET":
+        playlist = content_service.get_playlist(id=playlist_id)
+
+        return render_template("playlists_edit.html", model=playlist)
 

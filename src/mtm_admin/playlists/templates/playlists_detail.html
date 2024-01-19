@@ -7,6 +7,10 @@
     
     <h2>{{ model.name }}</h2>
 
+    <div class="mb-3">
+      <button type="button" class="btn btn-primary" onclick="window.location.href='{{ url_for('playlists.playlists_edit', playlist_id=model['id']) }}'">Edit</button>
+    </div>
+
     <table class="table table-striped table-hover">
       <thead>
         <tr>
@@ -19,7 +23,7 @@
         {% for module in model.modules %}
           <tr>
             <th scope="row">{{ loop.index }}</td>
-              <td><a href="{{ url_for('modules.module_detail', module_id = module.id) }}">{{ module.title }}</a></a></td>
+              <td><a href="{{ url_for('modules.module_detail', module_id = module.id) }}">{{ module.title }}</a></td>
             </tr>
           </tr>
         {% endfor %}
@@ -27,6 +31,7 @@
   </tbody>
   </table>
 
-    {% include 'footer.html' %}
-  </div>
+</div>
 </body>
+
+{% include 'footer.html' %}

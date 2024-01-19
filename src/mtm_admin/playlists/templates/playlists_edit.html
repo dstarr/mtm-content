@@ -1,0 +1,26 @@
+{% include 'head.html' %}
+
+<body>
+  {% include 'nav.html' %}
+
+  <div class="container main">
+    
+    <h2>Edit playlist</h2>
+
+    <form action="{{ url_for('playlists.playlists_edit', playlist_id=model['id']) }}" method="post">
+
+      <div class="mb-3">
+        <label for="name" class="form-label">Title</label>
+        <input type="text" class="form-control" name="name" id="name" value="{{ model['name'] }}" required />
+      </div>
+
+      <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+
+    </form>
+
+  </div>
+</body>
+    
+{% include 'footer.html' %}
