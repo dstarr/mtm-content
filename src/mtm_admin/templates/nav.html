@@ -21,28 +21,4 @@
       </div>
     </div>
   </nav>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-      const searchInput = document.querySelector('input[type="search"]');
-      const searchButton = document.getElementById('search_button');
-
-      // Function to update the button's disabled state
-      const toggleSearchButton = () => {
-        if (searchInput.value.trim() === '') {
-          searchButton.disabled = true;
-        } else {
-          searchButton.disabled = false;
-        }
-      };
-
-      // Initially disable the button
-      toggleSearchButton();
-
-      // Add event listener for input changes
-      searchInput.addEventListener('input', toggleSearchButton);
-    });
-  </script>
-
-
 </div>
