@@ -1,0 +1,1109 @@
+WEBVTT
+
+433100e9-c1f2-4c87-b408-4362c742cffc-0
+00:00:02.590 --> 00:00:05.674
+Welcome to this module offering
+an overview of managed
+
+433100e9-c1f2-4c87-b408-4362c742cffc-1
+00:00:05.674 --> 00:00:09.263
+applications. Hello, my name is
+David Starr, and in this module
+
+433100e9-c1f2-4c87-b408-4362c742cffc-2
+00:00:09.263 --> 00:00:12.403
+we're going to walk through the
+fundamentals of managed
+
+433100e9-c1f2-4c87-b408-4362c742cffc-3
+00:00:12.403 --> 00:00:15.992
+applications and help Orient you
+to the rest of the course. Now
+
+433100e9-c1f2-4c87-b408-4362c742cffc-4
+00:00:15.992 --> 00:00:19.469
+don't worry, this won't be a
+module to tell you what's in all
+
+433100e9-c1f2-4c87-b408-4362c742cffc-5
+00:00:19.469 --> 00:00:22.610
+the other modules. Let's see
+what we're about to cover.
+
+18c5a270-4f1c-492c-bfe2-96681b15b61a-0
+00:00:23.410 --> 00:00:27.425
+Here's a quick overview of what
+you'll find in this module of
+
+18c5a270-4f1c-492c-bfe2-96681b15b61a-1
+00:00:27.425 --> 00:00:31.571
+the course. We'll take a quick
+look at Azure as and see some of
+
+18c5a270-4f1c-492c-bfe2-96681b15b61a-2
+00:00:31.571 --> 00:00:35.716
+the different flavors of Azure
+applications. Next you'll get an
+
+18c5a270-4f1c-492c-bfe2-96681b15b61a-3
+00:00:35.716 --> 00:00:39.149
+overview of Managed
+applications, which is a type of
+
+18c5a270-4f1c-492c-bfe2-96681b15b61a-4
+00:00:39.149 --> 00:00:42.906
+Azure application and it's the
+one we'll focus on in this
+
+18c5a270-4f1c-492c-bfe2-96681b15b61a-5
+00:00:42.906 --> 00:00:43.359
+course.
+
+cd9eb23a-c6ba-48ef-86b9-898265add464-0
+00:00:44.050 --> 00:00:48.269
+Finally, we'll see how managed
+applications are integrated into
+
+cd9eb23a-c6ba-48ef-86b9-898265add464-1
+00:00:48.269 --> 00:00:49.720
+the Azure Marketplace.
+
+dac3d541-2fce-44d0-82ab-529a8b2d3a23-0
+00:00:50.660 --> 00:00:54.547
+Let's kick off with what an
+Azure application is. At their
+
+dac3d541-2fce-44d0-82ab-529a8b2d3a23-1
+00:00:54.547 --> 00:00:58.566
+core, Azure Apps are simply a
+way to package and deploy your
+
+dac3d541-2fce-44d0-82ab-529a8b2d3a23-2
+00:00:58.566 --> 00:01:02.256
+software solution for your
+customers. As you'll come to
+
+dac3d541-2fce-44d0-82ab-529a8b2d3a23-3
+00:01:02.256 --> 00:01:06.077
+understand, throughout this
+course, they offer a powerful
+
+dac3d541-2fce-44d0-82ab-529a8b2d3a23-4
+00:01:06.077 --> 00:01:09.965
+deployment architecture. 1
+attribute is that it's a way to
+
+dac3d541-2fce-44d0-82ab-529a8b2d3a23-5
+00:01:09.965 --> 00:01:13.786
+package existing software
+solutions and it's a deployment
+
+dac3d541-2fce-44d0-82ab-529a8b2d3a23-6
+00:01:13.786 --> 00:01:17.344
+architecture for installing
+software to the customers
+
+dac3d541-2fce-44d0-82ab-529a8b2d3a23-7
+00:01:17.344 --> 00:01:20.837
+tenant, not your own. Azure
+applications can contain
+
+dac3d541-2fce-44d0-82ab-529a8b2d3a23-8
+00:01:20.837 --> 00:01:21.430
+anything.
+
+0bd0efd5-4de1-42c5-af85-f3476c63bb22-0
+00:01:21.510 --> 00:01:25.871
+In an ARM template can deploy.
+If you could deploy a service
+
+0bd0efd5-4de1-42c5-af85-f3476c63bb22-1
+00:01:25.871 --> 00:01:29.946
+fee in an ARM template, you can
+include it in your Azure
+
+0bd0efd5-4de1-42c5-af85-f3476c63bb22-2
+00:01:29.946 --> 00:01:34.092
+application. Also, it'll contain
+the proprietary software
+
+0bd0efd5-4de1-42c5-af85-f3476c63bb22-3
+00:01:34.092 --> 00:01:38.525
+solution that you've written to
+run atop those armed deployed
+
+0bd0efd5-4de1-42c5-af85-f3476c63bb22-4
+00:01:38.525 --> 00:01:39.240
+resources.
+
+a56c9ab6-c98e-4ce9-bb53-624000346610-0
+00:01:39.880 --> 00:01:42.889
+For these and other reasons,
+publishers often choose Azure
+
+a56c9ab6-c98e-4ce9-bb53-624000346610-1
+00:01:42.889 --> 00:01:44.420
+Apps to deploy their solution.
+
+b7b6437f-455c-42c9-a03c-fbdd6cf9cbda-0
+00:01:45.920 --> 00:01:49.907
+Now there are two types of Azure
+as one can create solution
+
+b7b6437f-455c-42c9-a03c-fbdd6cf9cbda-1
+00:01:49.907 --> 00:01:52.300
+templates and managed
+applications.
+
+9462822c-725c-4180-ade3-aaf2b1243cf5-0
+00:01:53.190 --> 00:01:56.931
+The biggest difference between
+these two Azure application
+
+9462822c-725c-4180-ade3-aaf2b1243cf5-1
+00:01:56.931 --> 00:01:58.580
+types is transact ability.
+
+8fe9e8e6-2e7e-4f13-9d6d-4d336dc161c6-0
+00:01:59.910 --> 00:02:03.269
+Solution templates are not
+transactional in the Azure
+
+8fe9e8e6-2e7e-4f13-9d6d-4d336dc161c6-1
+00:02:03.269 --> 00:02:06.504
+Marketplace. This means they
+cannot be sold through
+
+8fe9e8e6-2e7e-4f13-9d6d-4d336dc161c6-2
+00:02:06.504 --> 00:02:10.548
+Microsoft. This also means that
+solution template offers are not
+
+8fe9e8e6-2e7e-4f13-9d6d-4d336dc161c6-3
+00:02:10.548 --> 00:02:14.281
+eligible for most marketplace
+benefits afforded to Transact
+
+8fe9e8e6-2e7e-4f13-9d6d-4d336dc161c6-4
+00:02:14.281 --> 00:02:15.090
+table offers.
+
+61a04342-0c6f-4dfc-8967-18244a99c6ef-0
+00:02:16.160 --> 00:02:20.229
+Managed applications on the
+other hand are transactional.
+
+61a04342-0c6f-4dfc-8967-18244a99c6ef-1
+00:02:20.229 --> 00:02:24.158
+This means that Microsoft can
+sell the solution on your
+
+61a04342-0c6f-4dfc-8967-18244a99c6ef-2
+00:02:24.158 --> 00:02:28.648
+company's behalf and deploying
+managed application offers comes
+
+61a04342-0c6f-4dfc-8967-18244a99c6ef-3
+00:02:28.648 --> 00:02:32.718
+with many business benefits
+which are beyond the scope of
+
+61a04342-0c6f-4dfc-8967-18244a99c6ef-4
+00:02:32.718 --> 00:02:37.068
+this video now because of their
+transact ability. The rest of
+
+61a04342-0c6f-4dfc-8967-18244a99c6ef-5
+00:02:37.068 --> 00:02:41.558
+this course focuses on managed
+applications, so don't expect to
+
+61a04342-0c6f-4dfc-8967-18244a99c6ef-6
+00:02:41.558 --> 00:02:45.838
+hear too much about solution
+template offers that other type
+
+61a04342-0c6f-4dfc-8967-18244a99c6ef-7
+00:02:45.838 --> 00:02:46.470
+of Azure.
+
+31507660-2b6c-4ab8-b6a1-0e17e80ec0d1-0
+00:02:46.550 --> 00:02:47.390
+Application.
+
+aa1adee1-df20-4f65-b681-99e3a53e76c8-0
+00:02:48.320 --> 00:02:51.610
+All right, so let's dig into
+managed applications.
+
+01a970a1-4d5b-44aa-8cea-f92170874c7e-0
+00:02:52.840 --> 00:02:56.759
+Managed apps have some very
+unique characteristics. Now, as
+
+01a970a1-4d5b-44aa-8cea-f92170874c7e-1
+00:02:56.759 --> 00:03:00.678
+we've mentioned, managed apps
+are transactional through the
+
+01a970a1-4d5b-44aa-8cea-f92170874c7e-2
+00:03:00.678 --> 00:03:04.532
+Azure Marketplace and Microsoft
+will build the customer on
+
+01a970a1-4d5b-44aa-8cea-f92170874c7e-3
+00:03:04.532 --> 00:03:06.099
+behalf of the publisher.
+
+92f7c8f7-9337-46b7-87c2-3979864c8dc4-0
+00:03:07.400 --> 00:03:11.490
+Resources deploy into a special
+resource group called a Managed
+
+92f7c8f7-9337-46b7-87c2-3979864c8dc4-1
+00:03:11.490 --> 00:03:15.325
+Resource Group, or IMRG, in the
+customer's tenant. We'll be
+
+92f7c8f7-9337-46b7-87c2-3979864c8dc4-2
+00:03:15.325 --> 00:03:19.287
+talking a lot about the MRG in
+this course, and the fact that
+
+92f7c8f7-9337-46b7-87c2-3979864c8dc4-3
+00:03:19.287 --> 00:03:23.250
+the MRG exists on the customer's
+tenant means the customer is
+
+92f7c8f7-9337-46b7-87c2-3979864c8dc4-4
+00:03:23.250 --> 00:03:27.084
+paying for running the Azure
+resources that are part of the
+
+92f7c8f7-9337-46b7-87c2-3979864c8dc4-5
+00:03:27.084 --> 00:03:27.660
+solution.
+
+65c71a53-e726-4cf6-8806-833e4d9a504a-0
+00:03:28.940 --> 00:03:32.770
+Different deployment models
+dictate who will maintain the
+
+65c71a53-e726-4cf6-8806-833e4d9a504a-1
+00:03:32.770 --> 00:03:36.601
+solution. Overtime, we can
+specify what access rights the
+
+65c71a53-e726-4cf6-8806-833e4d9a504a-2
+00:03:36.601 --> 00:03:40.828
+customer and the publisher have
+to the MRG. We'll cover this in
+
+65c71a53-e726-4cf6-8806-833e4d9a504a-3
+00:03:40.828 --> 00:03:44.791
+much greater depth in the next
+module of this course on the
+
+65c71a53-e726-4cf6-8806-833e4d9a504a-4
+00:03:44.791 --> 00:03:49.018
+different deployment modes. Now
+Speaking of that MRG or managed
+
+65c71a53-e726-4cf6-8806-833e4d9a504a-5
+00:03:49.018 --> 00:03:53.047
+resource group, let's have a
+look at the managed application
+
+65c71a53-e726-4cf6-8806-833e4d9a504a-6
+00:03:53.047 --> 00:03:54.169
+deployment model.
+
+07ef44da-d026-4543-8163-ba80f2c332fc-0
+00:03:55.110 --> 00:03:59.193
+Let's walk through a visual on
+what's deployed with a managed
+
+07ef44da-d026-4543-8163-ba80f2c332fc-1
+00:03:59.193 --> 00:04:03.277
+app and how to make the MRG ID
+more concrete. When a customer
+
+07ef44da-d026-4543-8163-ba80f2c332fc-2
+00:04:03.277 --> 00:04:06.570
+purchases the managed
+application, two things are
+
+07ef44da-d026-4543-8163-ba80f2c332fc-3
+00:04:06.570 --> 00:04:10.193
+deployed into the customer's
+tenant under the customer
+
+07ef44da-d026-4543-8163-ba80f2c332fc-4
+00:04:10.193 --> 00:04:11.050
+subscription.
+
+1de253d7-8718-429c-92bf-ccd6059e9cc2-0
+00:04:12.290 --> 00:04:16.398
+A managed Application instance
+is created which essentially
+
+1de253d7-8718-429c-92bf-ccd6059e9cc2-1
+00:04:16.398 --> 00:04:20.575
+represents the subscription to
+the application and I'll find
+
+1de253d7-8718-429c-92bf-ccd6059e9cc2-2
+00:04:20.575 --> 00:04:24.752
+this on my tenant. If I'm the
+customer, I can search for and
+
+1de253d7-8718-429c-92bf-ccd6059e9cc2-3
+00:04:24.752 --> 00:04:28.723
+find my managed Application
+instances that I've purchased
+
+1de253d7-8718-429c-92bf-ccd6059e9cc2-4
+00:04:28.723 --> 00:04:32.900
+next in a special resource group
+called the Managed Resource
+
+1de253d7-8718-429c-92bf-ccd6059e9cc2-5
+00:04:32.900 --> 00:04:36.050
+Group, the MRG that we've been
+talking about.
+
+6fea571f-446b-46b8-9614-87709f5d7646-0
+00:04:36.690 --> 00:04:40.250
+This contains all of the
+resources deployed by the Azure
+
+6fea571f-446b-46b8-9614-87709f5d7646-1
+00:04:40.250 --> 00:04:44.060
+application and as I said, we'll
+visit the MRG over and over
+
+6fea571f-446b-46b8-9614-87709f5d7646-2
+00:04:44.060 --> 00:04:47.557
+again throughout this course,
+what it contains, how the
+
+6fea571f-446b-46b8-9614-87709f5d7646-3
+00:04:47.557 --> 00:04:51.617
+resources in it are managed, et
+cetera. Now you can see that the
+
+6fea571f-446b-46b8-9614-87709f5d7646-4
+00:04:51.617 --> 00:04:55.052
+MRG has some data storage
+services and app service and
+
+6fea571f-446b-46b8-9614-87709f5d7646-5
+00:04:55.052 --> 00:04:58.487
+even a custom VM in this
+particular instance. But as I
+
+6fea571f-446b-46b8-9614-87709f5d7646-6
+00:04:58.487 --> 00:05:02.422
+said, anything deployable by an
+ARM template can be created in
+
+6fea571f-446b-46b8-9614-87709f5d7646-7
+00:05:02.422 --> 00:05:06.170
+this MRG when deployment of the
+managed application occurs.
+
+da15d554-b94c-4f7c-b953-d0388c0f6641-0
+00:05:07.150 --> 00:05:11.110
+Depending on how you configure
+the application to be managed,
+
+da15d554-b94c-4f7c-b953-d0388c0f6641-1
+00:05:11.110 --> 00:05:14.880
+the publisher may have access to
+the MRG and its contents.
+
+74aa7ad5-d610-4655-b8cd-50371ad5ca21-0
+00:05:15.980 --> 00:05:20.283
+The same is true for customers
+whose configuration to the MRG
+
+74aa7ad5-d610-4655-b8cd-50371ad5ca21-1
+00:05:20.283 --> 00:05:24.170
+and its resources is also
+configurable. Thus, customers
+
+74aa7ad5-d610-4655-b8cd-50371ad5ca21-2
+00:05:24.170 --> 00:05:28.404
+may have different types of
+access to the MRG. We'll explore
+
+74aa7ad5-d610-4655-b8cd-50371ad5ca21-3
+00:05:28.404 --> 00:05:32.708
+this concept of access modes
+again in the next module of this
+
+74aa7ad5-d610-4655-b8cd-50371ad5ca21-4
+00:05:32.708 --> 00:05:36.664
+course, and it's a pretty
+important module for you to go
+
+74aa7ad5-d610-4655-b8cd-50371ad5ca21-5
+00:05:36.664 --> 00:05:37.219
+through.
+
+f96d2608-e44e-4b92-b688-6f7bb7af6be8-0
+00:05:37.930 --> 00:05:41.205
+So please don't be tempted to
+skip through that one now.
+
+f96d2608-e44e-4b92-b688-6f7bb7af6be8-1
+00:05:41.205 --> 00:05:44.652
+That's the managed application
+deployment architecture in a
+
+f96d2608-e44e-4b92-b688-6f7bb7af6be8-2
+00:05:44.652 --> 00:05:45.170
+nutshell.
+
+9bada453-3144-4c14-a7d9-934754bd3300-0
+00:05:45.950 --> 00:05:50.273
+Managed apps can also be used
+internally to an organization or
+
+9bada453-3144-4c14-a7d9-934754bd3300-1
+00:05:50.273 --> 00:05:54.254
+through the Azure Marketplace.
+Let's take a look at those
+
+9bada453-3144-4c14-a7d9-934754bd3300-2
+00:05:54.254 --> 00:05:55.969
+differences first of all.
+
+d1ecc335-3a32-49d0-9076-aa73f1c12a72-0
+00:05:57.000 --> 00:06:00.665
+One can build managed
+applications that are meant to
+
+d1ecc335-3a32-49d0-9076-aa73f1c12a72-1
+00:06:00.665 --> 00:06:04.468
+deploy only within an
+organization. Of course, this is
+
+d1ecc335-3a32-49d0-9076-aa73f1c12a72-2
+00:06:04.468 --> 00:06:08.133
+meant to provide managed apps
+that are available for
+
+d1ecc335-3a32-49d0-9076-aa73f1c12a72-3
+00:06:08.133 --> 00:06:12.005
+installation within an
+organization only. And we use an
+
+d1ecc335-3a32-49d0-9076-aa73f1c12a72-4
+00:06:12.005 --> 00:06:16.085
+Azure service called Service
+Catalog to create the managed
+
+d1ecc335-3a32-49d0-9076-aa73f1c12a72-5
+00:06:16.085 --> 00:06:20.096
+apps available inside the
+organization. Now as we'll see,
+
+d1ecc335-3a32-49d0-9076-aa73f1c12a72-6
+00:06:20.096 --> 00:06:24.107
+we can use the Service Catalog
+service for development of
+
+d1ecc335-3a32-49d0-9076-aa73f1c12a72-7
+00:06:24.107 --> 00:06:27.150
+managed applications in general
+during our.
+
+6350b531-2b59-49bc-b596-54c2f3ce4eb8-0
+00:06:27.250 --> 00:06:32.581
+Development process managed as
+are also offered for sale to
+
+6350b531-2b59-49bc-b596-54c2f3ce4eb8-1
+00:06:32.581 --> 00:06:34.270
+external customers.
+
+131423cd-0dd4-4464-8b9e-b197715a728d-0
+00:06:35.140 --> 00:06:38.472
+This is done by publishing the
+offer inside the Azure
+
+131423cd-0dd4-4464-8b9e-b197715a728d-1
+00:06:38.472 --> 00:06:42.545
+Marketplace. This has nothing to
+do with Service Catalog which is
+
+131423cd-0dd4-4464-8b9e-b197715a728d-2
+00:06:42.545 --> 00:06:43.410
+internal only.
+
+3544bb1a-54f1-4f0d-998e-376e366e9cb4-0
+00:06:45.040 --> 00:06:48.752
+This makes the product sellable
+and transactional. Now let's
+
+3544bb1a-54f1-4f0d-998e-376e366e9cb4-1
+00:06:48.752 --> 00:06:52.343
+take a moment to learn just a
+little bit about the service
+
+3544bb1a-54f1-4f0d-998e-376e366e9cb4-2
+00:06:52.343 --> 00:06:56.299
+catalog and how we might use it.
+Let's look at a simple model of
+
+3544bb1a-54f1-4f0d-998e-376e366e9cb4-3
+00:06:56.299 --> 00:06:59.646
+what it means to publish and
+deploy an app through the
+
+3544bb1a-54f1-4f0d-998e-376e366e9cb4-4
+00:06:59.646 --> 00:07:02.872
+service catalog. First, a
+deployment package file is
+
+3544bb1a-54f1-4f0d-998e-376e366e9cb4-5
+00:07:02.872 --> 00:07:06.706
+created and uploaded to a BLOB
+storage account. We're going to
+
+3544bb1a-54f1-4f0d-998e-376e366e9cb4-6
+00:07:06.706 --> 00:07:10.419
+talk a little bit more in a
+moment about what goes into this
+
+3544bb1a-54f1-4f0d-998e-376e366e9cb4-7
+00:07:10.419 --> 00:07:13.280
+deployment package file. It's
+just a zip file.
+
+4694926e-6c1e-40c0-9d0d-59c286571511-0
+00:07:13.960 --> 00:07:17.762
+That contains certain assets
+you're going to need that define
+
+4694926e-6c1e-40c0-9d0d-59c286571511-1
+00:07:17.762 --> 00:07:21.748
+the behavior of your deployment.
+Then in the service catalog, we
+
+4694926e-6c1e-40c0-9d0d-59c286571511-2
+00:07:21.748 --> 00:07:25.304
+create an application definition
+and that references that
+
+4694926e-6c1e-40c0-9d0d-59c286571511-3
+00:07:25.304 --> 00:07:28.861
+deployment package file.
+Finally, we can deploy from that
+
+4694926e-6c1e-40c0-9d0d-59c286571511-4
+00:07:28.861 --> 00:07:32.111
+app definition to create the
+actual application. And
+
+4694926e-6c1e-40c0-9d0d-59c286571511-5
+00:07:32.111 --> 00:07:34.810
+remember, this is all happening
+internally.
+
+80a89fb1-7dcc-45a0-a520-abf2e5104fab-0
+00:07:35.890 --> 00:07:39.862
+Now, the Service Catalog can be
+very useful in the development
+
+80a89fb1-7dcc-45a0-a520-abf2e5104fab-1
+00:07:39.862 --> 00:07:44.023
+of new apps. It gives developers
+an opportunity to test out their
+
+80a89fb1-7dcc-45a0-a520-abf2e5104fab-2
+00:07:44.023 --> 00:07:47.870
+deployments before needing to
+test in the Azure Marketplace,
+
+80a89fb1-7dcc-45a0-a520-abf2e5104fab-3
+00:07:47.870 --> 00:07:51.653
+which would take longer in
+between iterations. So there are
+
+80a89fb1-7dcc-45a0-a520-abf2e5104fab-4
+00:07:51.653 --> 00:07:55.688
+several assets needed to package
+and deploy an application. For
+
+80a89fb1-7dcc-45a0-a520-abf2e5104fab-5
+00:07:55.688 --> 00:07:59.408
+example, you'll need an ARM
+template. So the first step is
+
+80a89fb1-7dcc-45a0-a520-abf2e5104fab-6
+00:07:59.408 --> 00:08:03.570
+to create these assets that will
+deploy your solution, and that's
+
+80a89fb1-7dcc-45a0-a520-abf2e5104fab-7
+00:08:03.570 --> 00:08:05.840
+what goes in to that packaged
+file.
+
+f382ba0a-edbc-4727-9991-7cc112af47f8-0
+00:08:06.170 --> 00:08:08.511
+That deployment package file
+that we were talking about just
+
+f382ba0a-edbc-4727-9991-7cc112af47f8-1
+00:08:08.511 --> 00:08:09.010
+a moment ago.
+
+29e9e73f-9ede-4601-9175-e8a6227954a0-0
+00:08:09.690 --> 00:08:14.122
+Next, the deployment assets are
+loaded into the service catalog.
+
+29e9e73f-9ede-4601-9175-e8a6227954a0-1
+00:08:14.122 --> 00:08:18.008
+This makes the solution
+available for deployment. Deploy
+
+29e9e73f-9ede-4601-9175-e8a6227954a0-2
+00:08:18.008 --> 00:08:22.508
+the a as an internal application
+to check the deployment process.
+
+29e9e73f-9ede-4601-9175-e8a6227954a0-3
+00:08:22.508 --> 00:08:25.918
+This gives developers an
+opportunity to try their
+
+29e9e73f-9ede-4601-9175-e8a6227954a0-4
+00:08:25.918 --> 00:08:29.600
+deployment package before
+integrating into our formal
+
+29e9e73f-9ede-4601-9175-e8a6227954a0-5
+00:08:29.600 --> 00:08:33.896
+offer in the Azure Marketplace.
+The basic idea here is that we
+
+29e9e73f-9ede-4601-9175-e8a6227954a0-6
+00:08:33.896 --> 00:08:37.918
+can use the service catalog
+during our process of building
+
+29e9e73f-9ede-4601-9175-e8a6227954a0-7
+00:08:37.918 --> 00:08:39.760
+up our managed application.
+
+1d903b93-1c43-48da-9678-bfbfeda61d48-0
+00:08:40.010 --> 00:08:42.750
+Assets that we ultimately will
+publish into the marketplace.
+
+cf5c0e99-540b-4575-b7fd-7769ef39f798-0
+00:08:45.950 --> 00:08:49.205
+We discussed how the Service
+Catalog in Azure can be helpful
+
+cf5c0e99-540b-4575-b7fd-7769ef39f798-1
+00:08:49.205 --> 00:08:52.620
+to our development process, and
+it's important to remember that
+
+cf5c0e99-540b-4575-b7fd-7769ef39f798-2
+00:08:52.620 --> 00:08:55.982
+it's a great tool, but does not
+make our application available
+
+cf5c0e99-540b-4575-b7fd-7769ef39f798-3
+00:08:55.982 --> 00:08:58.009
+as an offer in the Azure
+Marketplace.
+
+40fcce06-e4b4-4cda-9558-6a5ea7939963-0
+00:08:58.740 --> 00:09:02.604
+Now we spent a little time here
+on service catalog because it
+
+40fcce06-e4b4-4cda-9558-6a5ea7939963-1
+00:09:02.604 --> 00:09:06.592
+will be used in labs and in some
+later demos, so it's useful to
+
+40fcce06-e4b4-4cda-9558-6a5ea7939963-2
+00:09:06.592 --> 00:09:07.590
+know what it is.
+
+e9cb68eb-5e5a-4128-bb24-659bf3547402-0
+00:09:09.260 --> 00:09:13.171
+Now that we've seen a bit about
+managed apps and the fact that
+
+e9cb68eb-5e5a-4128-bb24-659bf3547402-1
+00:09:13.171 --> 00:09:17.020
+we can use them in the context
+of a service catalog in Azure,
+
+e9cb68eb-5e5a-4128-bb24-659bf3547402-2
+00:09:17.020 --> 00:09:20.931
+let's focus on how managed apps
+work in the Azure Marketplace.
+
+e9cb68eb-5e5a-4128-bb24-659bf3547402-3
+00:09:20.931 --> 00:09:24.656
+At the time of this recording,
+There are four transactional
+
+e9cb68eb-5e5a-4128-bb24-659bf3547402-4
+00:09:24.656 --> 00:09:28.444
+offer types one may choose from
+when creating offers for the
+
+e9cb68eb-5e5a-4128-bb24-659bf3547402-5
+00:09:28.444 --> 00:09:31.920
+Azure Marketplace, and these
+differ based on deployment
+
+e9cb68eb-5e5a-4128-bb24-659bf3547402-6
+00:09:31.920 --> 00:09:32.790
+architectures.
+
+22166c33-0565-47ca-8dd6-24e3383b965b-0
+00:09:33.630 --> 00:09:37.648
+Offers that integrate with the
+Publisher Software as a service
+
+22166c33-0565-47ca-8dd6-24e3383b965b-1
+00:09:37.648 --> 00:09:39.690
+product architecture our offers.
+
+90d2b76b-dbad-4904-a2bf-42d115620819-0
+00:09:40.740 --> 00:09:44.898
+Container offers allow packaging
+your solution into containers
+
+90d2b76b-dbad-4904-a2bf-42d115620819-1
+00:09:44.898 --> 00:09:49.189
+and deploying to the customers.
+Azure Kubernetes Service Virtual
+
+90d2b76b-dbad-4904-a2bf-42d115620819-2
+00:09:49.189 --> 00:09:53.347
+Machine Offers allow packaging
+solutions onto virtual machines
+
+90d2b76b-dbad-4904-a2bf-42d115620819-3
+00:09:53.347 --> 00:09:56.780
+and deploying those VMS into the
+customer's tenant.
+
+d506601b-4152-4136-9293-bbe93050ad05-0
+00:09:58.730 --> 00:10:02.100
+Managed applications of course,
+which are the focus of this
+
+d506601b-4152-4136-9293-bbe93050ad05-1
+00:10:02.100 --> 00:10:05.528
+course. Just know that there are
+different deployment models
+
+d506601b-4152-4136-9293-bbe93050ad05-2
+00:10:05.528 --> 00:10:08.674
+based on different solution
+architecture needs. But all
+
+d506601b-4152-4136-9293-bbe93050ad05-3
+00:10:08.674 --> 00:10:11.989
+managed A offers deploy into the
+customer's tenant. That's
+
+d506601b-4152-4136-9293-bbe93050ad05-4
+00:10:11.989 --> 00:10:13.450
+something to keep in mind.
+
+6fb4fe68-2025-45bb-aa31-9c47b58fad95-0
+00:10:14.740 --> 00:10:18.184
+And you've already seen that
+it's deployed into the
+
+6fb4fe68-2025-45bb-aa31-9c47b58fad95-1
+00:10:18.184 --> 00:10:22.159
+customer's tenant. So now let's
+see how that works with the
+
+6fb4fe68-2025-45bb-aa31-9c47b58fad95-2
+00:10:22.159 --> 00:10:26.134
+Azure marketplace. Here's a
+public marketplace offer that's
+
+6fb4fe68-2025-45bb-aa31-9c47b58fad95-3
+00:10:26.134 --> 00:10:29.976
+been defined and has three
+associated plans, Silver, Gold
+
+6fb4fe68-2025-45bb-aa31-9c47b58fad95-4
+00:10:29.976 --> 00:10:33.686
+and Platinum, say just for
+example purposes. And when a
+
+6fb4fe68-2025-45bb-aa31-9c47b58fad95-5
+00:10:33.686 --> 00:10:37.330
+customer subscribes to the Gold
+plan, for example, the
+
+6fb4fe68-2025-45bb-aa31-9c47b58fad95-6
+00:10:37.330 --> 00:10:41.702
+deployment occurs. The Gold plan
+has a deployment package for the
+
+6fb4fe68-2025-45bb-aa31-9c47b58fad95-7
+00:10:41.702 --> 00:10:45.810
+managed app and it deploys the
+required elements or services.
+
+53c859a6-4146-4f7b-9be0-f6f21ef16229-0
+00:10:45.900 --> 00:10:51.098
+Into the customer's tenant into
+that MRG. Note that each plan
+
+53c859a6-4146-4f7b-9be0-f6f21ef16229-1
+00:10:51.098 --> 00:10:55.961
+has its own definition of the
+managed A and can therefore
+
+53c859a6-4146-4f7b-9be0-f6f21ef16229-2
+00:10:55.961 --> 00:11:00.069
+deploy different resources into
+an MRG per plan.
+
+095dca3f-b70a-4e92-8eeb-7e0e2a712a18-0
+00:11:01.080 --> 00:11:05.348
+So my silver plan might include
+a particular database, whereas
+
+095dca3f-b70a-4e92-8eeb-7e0e2a712a18-1
+00:11:05.348 --> 00:11:09.210
+my gold plan may include a
+different one or none at all.
+
+b4721591-93f7-40d6-8a09-192e9a055555-0
+00:11:10.220 --> 00:11:13.638
+Each plan has an associated
+deployment package that's held
+
+b4721591-93f7-40d6-8a09-192e9a055555-1
+00:11:13.638 --> 00:11:16.130
+in that zip file. We've talked
+about that.
+
+af230359-f4b4-4567-85b0-f9a8b2db6ad0-0
+00:11:17.080 --> 00:11:21.902
+Just a little bit and note that
+they associate 2 plans O these
+
+af230359-f4b4-4567-85b0-f9a8b2db6ad0-1
+00:11:21.902 --> 00:11:26.494
+deployment packages contain
+artifacts like the ARM template
+
+af230359-f4b4-4567-85b0-f9a8b2db6ad0-2
+00:11:26.494 --> 00:11:31.087
+that does the deployment and the
+file that defines the user
+
+af230359-f4b4-4567-85b0-f9a8b2db6ad0-3
+00:11:31.087 --> 00:11:35.450
+interface a customer sees when
+subscribing to the offer.
+
+3fe0a19c-9c3f-4438-abaf-b40c1a0afc2a-0
+00:11:36.170 --> 00:11:39.892
+There are some considerations
+for how to set U your offer such
+
+3fe0a19c-9c3f-4438-abaf-b40c1a0afc2a-1
+00:11:39.892 --> 00:11:42.610
+that the customer is billed for
+the solution.
+
+0e5ae382-fa35-41da-9195-648c59c72369-0
+00:11:43.300 --> 00:11:46.631
+At the time of this recording,
+only monthly billing is
+
+0e5ae382-fa35-41da-9195-648c59c72369-1
+00:11:46.631 --> 00:11:49.782
+supported for managed
+applications. This may change
+
+0e5ae382-fa35-41da-9195-648c59c72369-2
+00:11:49.782 --> 00:11:52.690
+with time as more billing
+options are explored.
+
+9b122e7e-8e32-4bfd-bd0d-3bdb9d41c6a9-0
+00:11:54.270 --> 00:11:58.346
+For example, annual billing.
+That's a possible billing model,
+
+9b122e7e-8e32-4bfd-bd0d-3bdb9d41c6a9-1
+00:11:58.346 --> 00:12:02.488
+it's just not supported today.
+For managed applications today,
+
+9b122e7e-8e32-4bfd-bd0d-3bdb9d41c6a9-2
+00:12:02.488 --> 00:12:06.236
+a publisher may for example set
+the monthly price of the
+
+9b122e7e-8e32-4bfd-bd0d-3bdb9d41c6a9-3
+00:12:06.236 --> 00:12:10.509
+solution. It's even possible to
+set the monthly charge as $0.00.
+
+cd95db2e-1b87-4906-aced-98f2b91ea996-0
+00:12:11.570 --> 00:12:14.150
+It also supports metered
+billing.
+
+bf396819-3e26-41a2-8457-7de161bacddf-0
+00:12:14.800 --> 00:12:18.344
+In addition to flat rate
+pricing, metered billing is
+
+bf396819-3e26-41a2-8457-7de161bacddf-1
+00:12:18.344 --> 00:12:22.089
+available on managed apps and
+we'll go much deeper into
+
+bf396819-3e26-41a2-8457-7de161bacddf-2
+00:12:22.089 --> 00:12:26.035
+metered billing later in the
+course. But for now, think of
+
+bf396819-3e26-41a2-8457-7de161bacddf-3
+00:12:26.035 --> 00:12:30.115
+this as billing per transaction.
+The managed application can
+
+bf396819-3e26-41a2-8457-7de161bacddf-4
+00:12:30.115 --> 00:12:33.860
+charge for specific transactions
+that take place in the
+
+bf396819-3e26-41a2-8457-7de161bacddf-5
+00:12:33.860 --> 00:12:38.074
+application. For example, take
+the case of a document scanning
+
+bf396819-3e26-41a2-8457-7de161bacddf-6
+00:12:38.074 --> 00:12:42.421
+service, the solution may charge
+some amount per month as a flat
+
+bf396819-3e26-41a2-8457-7de161bacddf-7
+00:12:42.421 --> 00:12:45.029
+fee and an additional amount per
+scan.
+
+d86f27e8-2746-48b7-a7fb-f609f1250959-0
+00:12:45.180 --> 00:12:48.741
+One penny, for example. With
+these billing capabilities,
+
+d86f27e8-2746-48b7-a7fb-f609f1250959-1
+00:12:48.741 --> 00:12:52.178
+publishers can construct
+different ways to price their
+
+d86f27e8-2746-48b7-a7fb-f609f1250959-2
+00:12:52.178 --> 00:12:53.990
+solutions in the marketplace.
+
+31be3fc2-a093-4413-baef-90b0dbf9b123-0
+00:12:54.860 --> 00:12:58.495
+All right, let's have a quick
+look at what we talked about in
+
+31be3fc2-a093-4413-baef-90b0dbf9b123-1
+00:12:58.495 --> 00:13:02.248
+this module. We got a high level
+overview of Azure applications
+
+31be3fc2-a093-4413-baef-90b0dbf9b123-2
+00:13:02.248 --> 00:13:06.060
+and saw that there are two types
+of them, Solution templates and
+
+31be3fc2-a093-4413-baef-90b0dbf9b123-3
+00:13:06.060 --> 00:13:09.578
+managed apps. Managed apps being
+the transactional type and
+
+31be3fc2-a093-4413-baef-90b0dbf9b123-4
+00:13:09.578 --> 00:13:11.690
+therefore the focus of this
+course.
+
+ab9bbbb9-2370-4daf-ab92-e9261a1c33ec-0
+00:13:12.550 --> 00:13:16.385
+You got an overview of managed
+applications to include the
+
+ab9bbbb9-2370-4daf-ab92-e9261a1c33ec-1
+00:13:16.385 --> 00:13:20.090
+basic deployment architecture
+and we saw that we can use
+
+ab9bbbb9-2370-4daf-ab92-e9261a1c33ec-2
+00:13:20.090 --> 00:13:23.405
+managed apps with the Azure
+Marketplace to deliver
+
+ab9bbbb9-2370-4daf-ab92-e9261a1c33ec-3
+00:13:23.405 --> 00:13:27.565
+transactional solutions to our
+customers. This means publishers
+
+ab9bbbb9-2370-4daf-ab92-e9261a1c33ec-4
+00:13:27.565 --> 00:13:31.335
+can package and sell their
+software solutions through the
+
+ab9bbbb9-2370-4daf-ab92-e9261a1c33ec-5
+00:13:31.335 --> 00:13:35.235
+Azure marketplace using this
+very powerful deployment model
+
+ab9bbbb9-2370-4daf-ab92-e9261a1c33ec-6
+00:13:35.235 --> 00:13:36.340
+and architecture.
+
+1a038425-6481-477e-a949-240490b8f19a-0
+00:13:39.040 --> 00:13:42.317
+Thank you for joining us for
+another video from Mastering the
+
+1a038425-6481-477e-a949-240490b8f19a-1
+00:13:42.317 --> 00:13:45.330
+Marketplace, the learning
+library where technologists go
+
+1a038425-6481-477e-a949-240490b8f19a-2
+00:13:45.330 --> 00:13:47.920
+to get their offer on the
+Microsoft Marketplace.
+
+b4716fbc-7f1f-443f-ac0e-62dade925401-0
+00:13:48.590 --> 00:13:53.955
+For more videos, hands on labs,
+and sample code, find us at AKA
+
+b4716fbc-7f1f-443f-ac0e-62dade925401-1
+00:13:53.955 --> 00:13:56.470
+Ms. Mastering the Marketplace.

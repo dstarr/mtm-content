@@ -48,4 +48,4 @@ if __name__ == '__main__':
         app.run(debug=True, port=config.FLASK_PORT)
     else:
         print('Running in production mode')
-        app.run(port=config.FLASK_PORT)
+        app.run(port=config.FLASK_PORT, use_reloader=False)
