@@ -176,6 +176,7 @@ def upload_file_to_blob(file_path, container_name):
     blob_client = blob_service_client.get_blob_client(container=container_name, blob=file_name)
     
     blob_url = f"https://{blob_service_client.account_name}.blob.core.windows.net/{container_name}/{file_name}"
+    # https://dsmtmcontentmgmtstore.blob.core.windows.net/test-pdfs/02.0-ma-overview.pdf
 
     # create the container if it doesn't exist
     if not container_client.exists():
@@ -196,6 +197,8 @@ if __name__ == "__main__":
     transcript_url = upload_transcript()
     slides_url = upload_slides()
     pdf_url = upload_pdf()
+
+    print(f"PDF URL: {pdf_url}")
 
     write_mongo_data(video_url, transcript_url, slides_url, pdf_url)
 
