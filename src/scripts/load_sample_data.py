@@ -33,6 +33,8 @@ def get_playlists():
             {"id": str(uuid.uuid4()), "name": "Mastering Partner Center"},
             {"id": str(uuid.uuid4()), "name": "Mastering SaaS Offers"},
             {"id": str(uuid.uuid4()), "name": "Mastering Virtual Machine offers"},
+            {"id": str(uuid.uuid4()), "name": "The marketplace for customers"},
+            {"id": str(uuid.uuid4()), "name": "Business in the marketplace"},
         ],
     }
 
