@@ -1,48 +1,48 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<form action="{{ url_for('modules.module_add') }}" method="post">
+  <form action="{{ url_for('modules.module_add') }}" method="post">
 
-  <div class="mb-3">
-    <label for="title" class="form-label">Title</label>
-    <input type="text" class="form-control" name="title" id="title" required />
-  </div>
-
-  <div class="mb-3">
-    <div><label for="description" class="form-label">Description</label></div>
-    <textarea class="description" id="description" name="description" required></textarea>
-  </div>
-
-  <div>
-    <label for="playlist_id" class="form-label">Playlist</label>
-    <select name="playlist_id" id="playlist_id" class="form-select" required>
-      {% for playlist in playlists %}
-        <option value="{{ playlist['id'] }}">{{ playlist['name'] }}</option>
-      {% endfor %}
-    </select>
-  </div>
-
-  <div class="row g-3 mb-3">
-    <div class="col-auto short_input">
-      <label for="name" class="form-label">Name</label>
-      <input type="text" class="form-control" name="name" id="name" required />
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" class="form-control" name="title" id="title" required />
     </div>
-    <div class="col-auto short_input">
-      <label for="youtube_url" class="form-label">YouTube URL</label>
-      <input type="text" class="form-control" name="youtube_url" id="youtube_url" required />
+
+    <div class="mb-3">
+      <div><label for="description" class="form-label">Description</label></div>
+      <textarea class="description" id="description" name="description" required></textarea>
     </div>
-  </div>
 
-  <div class="mb-3 form-check">
-    <label class="form-check-label" name="is_active" for="is_active">Is active</label>
-    <input type="checkbox" class="form-check-input" name="is_active" id="is_active" value="True" checked />
-  </div>
-  
-  <div class="mb-3">
-    <button type="submit" class="btn btn-primary">Save</button>
-  </div>
+    <div>
+      <label for="playlist_id" class="form-label">Playlist</label>
+      <select name="playlist_id" id="playlist_id" class="form-select" required>
+        {% for playlist in playlists %}
+          <option value="{{ playlist['id'] }}">{{ playlist['name'] }}</option>
+        {% endfor %}
+      </select>
+    </div>
 
-</form>
+    <div class="row g-3 mb-3">
+      <div class="col-auto short_input">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" name="name" id="name" required />
+      </div>
+      <div class="col-auto short_input">
+        <label for="youtube_url" class="form-label">YouTube URL</label>
+        <input type="text" class="form-control" name="youtube_url" id="youtube_url" required />
+      </div>
+    </div>
 
-    {% include 'editor_script.html' %}
+    <div class="mb-3 form-check">
+      <label class="form-check-label" name="is_active" for="is_active">Is active</label>
+      <input type="checkbox" class="form-check-input" name="is_active" id="is_active" value="True" checked />
+    </div>
+    
+    <div class="mb-3">
+      <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+
+  </form>
+
+  {% include 'editor_script.html' %}
 {% endblock %}

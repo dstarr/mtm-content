@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-  <form action="{{ url_for('modules.module_edit', module_id=model.content['id']) }}" method="post">
+  <form id="module_edit" action="{{ url_for('modules.module_edit', module_id=model.content['id']) }}" method="post">
+    
     <input type="hidden" name="id" value="{{ model.content['id'] }}" />
 
     <div class="mb-3">
@@ -28,8 +29,20 @@
 
     <div class="row mb-3">
       <div class="col-auto short_input">
-        <label class="form-check-label" for="is_active">Is active</label>
-        <div><input type="checkbox" class="form-check-input" name="is_active" id="is_active" value="True" {% if model.content['is_active'] %}checked{% endif %} /></div>
+        <label class="form-check-label form-label" for="is_active">Is active</label>
+        <div id="is_active">{{ model.content['is_active'] }}</div>
+      </div>
+      <div class="col-auto short_input">
+        <label for="transcript_url" class="form-label">Transcript</label>
+        <input type="text" class="form-control" name="transcript_url" id="transcript_url" value="{{ model.content['transcript_url'] }}" required />
+      </div>
+    </div>
+
+
+    <div class="row mb-3">
+      <div class="col-auto short_input">
+        <label for="video" class="form-label">Video</label>
+        <input type="text" class="form-control" name="video" id="video" value="{{ model.content['video'] }}" required />
       </div>
       <div class="col-auto short_input">
         <label for="youtube_url" class="form-label">YouTube URL</label>
@@ -37,6 +50,55 @@
       </div>
     </div>
 
+    <div class="row mb-3">
+      <div class="col-auto short_input">
+        <label for="slide_url" class="form-label">Slides</label>
+        <div id="slide_url">
+          {% if model.content['slide_url'] == None %}
+            <div>None</div>
+          {% else %}
+            <a href="{{ model.content['slide_url'] }}">Download</a>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-auto short_input">
+        <label for="pdf_url" class="form-label">PDF</label>
+        <div id="pdf_url">
+          {% if model.content['pdf_url'] == None %}
+            <div>None</div>
+          {% else %}
+            <a href="{{ model.content['pdf_url'] }}">Download</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+  </form>
+
+  <div>
+    <form class="dropzone" 
+        id="slide_upload" 
+        action="{{ url_for('modules.module_file_upload', module_id=model.content['id']) }}" 
+        method="post" 
+        enctype="multipart/form-data"
+        accept=".pptx, .zip, ,pdf, .txt, .vtt, .mp4">
+
+      <div class="row mb-3">
+        <div class="col-auto">
+          <label class="form-label" for="file_upload">Upload file</label>
+          <div><input type="file" name="file" id="file_upload" /></div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Upload</button>
+      </div>
+    </form>
+  </div>
+
+
+  <div>
     <div class="row mb-3">
       <div class="col-auto">
         <label for="id" class="form-label">ID</label>
@@ -69,10 +131,7 @@
           value="{{ model.content['updated_by'] }}" disabled />
       </div>
     </div>
+  </div>
 
-    <div class="mb-3">
-      <button type="submit" class="btn btn-primary">Save</button>
-    </form>
-
-    {% include 'editor_script.html' %}
+  {% include 'editor_script.html' %}
 {% endblock %}
