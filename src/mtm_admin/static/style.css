@@ -11,3 +11,14 @@
 .form-label {
     font-weight: bold;
 }
+
+.data-container {
+    border: 1px solid rgba(0,0,0,.8);
+    border-radius: 5px;
+    padding: 20px 20px;
+}
+
+.dropzone {
+    border: 0px;
+    border-radius: 0px;
+}

@@ -1,137 +1,138 @@
 {% extends 'base.html' %}
 {% block content %}
-  <form id="module_edit" action="{{ url_for('modules.module_edit', module_id=model.content['id']) }}" method="post">
-    
-    <input type="hidden" name="id" value="{{ model.content['id'] }}" />
+  
+<div style="padding-top: 30px;">
+  <h3>Content information</h3>
+  <div class="data-container">
+    <form id="module_edit" action="{{ url_for('modules.module_edit', module_id = model.content['id']) }}" method="post">
+      <input type="hidden" name="id" value="{{ model.content['id'] }}" />
 
-    <div class="mb-3">
-      <label for="title" class="form-label">Title</label>
-      <input type="text" class="form-control" name="title" id="title" value="{{ model.content['title'] }}" required />
-    </div>
-
-    <div class="mb-3">
-      <label for="description" class="form-label">Description</label>
-      <textarea class="description" id="description" name="description" required>{{ model.content['description'] }}</textarea>
-    </div>
-
-    <div class="mb-3">
-      <label for="playlist_id" class="form-label">Playlist</label>
-      <select name="playlist_id" id="playlist_id" class="form-select" required>
-        {% for playlist in model.playlists %}
-          {% if playlist['id'] == model.content['playlist_id'] %}
-            <option value="{{ playlist['id'] }}" selected>{{ playlist['name'] }}</option>
-          {% else %}
-            <option value="{{ playlist['id'] }}">{{ playlist['name'] }}</option>
-          {% endif %}
-        {% endfor %}
-      </select>
-    </div>
-
-    <div class="row mb-3">
-      <div class="col-auto short_input">
-        <label class="form-check-label form-label" for="is_active">Is active</label>
-        <div id="is_active">{{ model.content['is_active'] }}</div>
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" name="title" id="title" value="{{ model.content['title'] }}" required />
       </div>
-      <div class="col-auto short_input">
-        <label for="transcript_url" class="form-label">Transcript</label>
-        <input type="text" class="form-control" name="transcript_url" id="transcript_url" value="{{ model.content['transcript_url'] }}" required />
-      </div>
-    </div>
 
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="description" id="description" name="description" required>{{ model.content['description'] }}</textarea>
+      </div>
 
-    <div class="row mb-3">
-      <div class="col-auto short_input">
-        <label for="video" class="form-label">Video</label>
-        <input type="text" class="form-control" name="video" id="video" value="{{ model.content['video'] }}" required />
+      <div class="mb-3">
+        <label for="playlist_id" class="form-label">Playlist</label>
+        <select name="playlist_id" id="playlist_id" class="form-select" required>
+          {% for playlist in model.playlists %}
+            {% if playlist['id'] == model.content['playlist_id'] %}
+              <option value="{{ playlist['id'] }}" selected>{{ playlist['name'] }}</option>
+            {% else %}
+              <option value="{{ playlist['id'] }}">{{ playlist['name'] }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
       </div>
-      <div class="col-auto short_input">
-        <label for="youtube_url" class="form-label">YouTube URL</label>
-        <input type="text" class="form-control" name="youtube_url" id="youtube_url" value="{{ model.content['youtube_url'] }}" required />
-      </div>
-    </div>
-
-    <div class="row mb-3">
-      <div class="col-auto short_input">
-        <label for="slide_url" class="form-label">Slides</label>
-        <div id="slide_url">
-          {% if model.content['slide_url'] == None %}
-            <div>None</div>
-          {% else %}
-            <a href="{{ model.content['slide_url'] }}">Download</a>
-          {% endif %}
-        </div>
-      </div>
-      <div class="col-auto short_input">
-        <label for="pdf_url" class="form-label">PDF</label>
-        <div id="pdf_url">
-          {% if model.content['pdf_url'] == None %}
-            <div>None</div>
-          {% else %}
-            <a href="{{ model.content['pdf_url'] }}">Download</a>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-    <div class="mb-3">
-      <button type="submit" class="btn btn-primary">Save</button>
-    </div>
-  </form>
-
-  <div>
-    <form class="dropzone" 
-        id="slide_upload" 
-        action="{{ url_for('modules.module_file_upload', module_id=model.content['id']) }}" 
-        method="post" 
-        enctype="multipart/form-data"
-        accept=".pptx, .zip, ,pdf, .txt, .vtt, .mp4">
 
       <div class="row mb-3">
-        <div class="col-auto">
-          <label class="form-label" for="file_upload">Upload file</label>
-          <div><input type="file" name="file" id="file_upload" /></div>
+        <div class="col-auto short_input">
+          <label class="form-check-label form-label" for="is_active">Is active</label>
+          <input type="checkbox" class="form-check-input" name="is_active" id="is_active" {% if model.content['is_active'] %}checked{% endif %} />
+        </div>
+        <div class="col-auto short_input">
+          <label for="youtube_url" class="form-label">YouTube URL</label>
+          <input type="text" class="form-control" name="youtube_url" id="youtube_url" value="{{ model.content['youtube_url'] }}" required />
         </div>
       </div>
+
       <div class="mb-3">
-        <button type="submit" class="btn btn-primary">Upload</button>
+        <button type="submit" class="btn btn-primary">Save</button>
       </div>
     </form>
   </div>
+</div>
 
+<div style="padding-top: 30px;">
 
-  <div>
+  <h3>Attachments</h3>
+
+  <div class="data-container">
+    
+    {% if model.content["attachments"] %}
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">File name</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for attachment in model.content["attachments"] %}
+            <tr>
+              <td>{{ attachment['file_name'] }}</td>
+              <td>
+                <a href="{{ url_for('modules.module_file_download', module_id = model.content['id'], file_id = attachment['id']) }}" class="btn btn-primary btn-sm">Download</a>
+                <a href="{{ url_for('modules.module_file_delete', module_id = model.content['id'], file_id = attachment['id']) }}" class="btn btn-danger btn-sm">Delete</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <div>
+        <p>No attachments. Upload some!</p>
+      </div>
+    {% endif %}
+
+  <form class="dropzone" id="attachment_upload" method="post"
+        enctype="multipart/form-data" 
+        action="{{ url_for('modules.module_file_upload', module_id = model.content['id']) }}">
+        
     <div class="row mb-3">
       <div class="col-auto">
-        <label for="id" class="form-label">ID</label>
-        <input type="text" class="form-control" name="id" id="id" value="{{ model.content['id'] }}" disabled />
+      <label class="form-label" for="file_upload">Upload file</label>
+        <div>
+          <div class="fallback">
+            <input name="file" type="file" accept=".pptx, .zip, ,pdf, .txt, .vtt, .mp4" />
+            <button type="submit" class="btn btn-primary">Upload</button>
+          </div>
+        </div>
       </div>
     </div>
+  </form>
+</div>
 
-    <div class="row mb-3">
-      <div class="col-auto short_input">
-        <label for="date_createdadded" class="form-label">Date created</label>
-        <input type="text" class="form-control" name="date_created" id="date_created"
-          value="{{ model.content['date_created'] }}" disabled />
-      </div>
-      <div class="col-auto short_input">
-        <label for="created_by" class="form-label">Created by</label>
-        <input type="text" class="form-control" name="created_by" id="created_by"
-          value="{{ model.content['created_by'] }}" disabled />
-      </div>
-    </div>
+<div style="padding-top: 30px;">
+  <h3>More information</h3>
+  <div class="data-container" style="margin-bottom: 30px;">
 
-    <div class="row mb-3">
-      <div class="col-auto short_input">
-        <label for="date_updated" class="form-label">Date last updated</label>
-        <input type="text" class="form-control" name="date_updated" id="date_updated"
-          value="{{ model.content['date_updated'] }}" disabled />
+    <div>
+      <div class="row mb-3">
+        <div class="col-auto">
+          <label for="id" class="form-label">ID</label>
+          <input type="text" class="form-control" name="id" id="id" value="{{ model.content['id'] }}" disabled />
+        </div>
       </div>
-      <div class="col-auto short_input">
-        <label for="updated_by" class="form-label">Updated by</label>
-        <input type="text" class="form-control" name="last_updated_by" id="last_updated_by"
-          value="{{ model.content['updated_by'] }}" disabled />
+
+      <div class="row mb-3">
+        <div class="col-auto short_input">
+          <label for="date_createdadded" class="form-label">Date created</label>
+          <input type="text" class="form-control" name="date_created" id="date_created" value="{{ model.content['date_created'] }}" disabled />
+        </div>
+        <div class="col-auto short_input">
+          <label for="created_by" class="form-label">Created by</label>
+          <input type="text" class="form-control" name="created_by" id="created_by" value="{{ model.content['created_by'] }}" disabled />
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-auto short_input">
+          <label for="date_updated" class="form-label">Date last updated</label>
+          <input type="text" class="form-control" name="date_updated" id="date_updated" value="{{ model.content['date_updated'] }}" disabled />
+        </div>
+        <div class="col-auto short_input">
+          <label for="updated_by" class="form-label">Updated by</label>
+          <input type="text" class="form-control" name="last_updated_by" id="last_updated_by" value="{{ model.content['updated_by'] }}" disabled />
+        </div>
       </div>
     </div>
   </div>
-
-  {% include 'editor_script.html' %}
+</div>
+{% include 'editor_script.html' %}
 {% endblock %}
