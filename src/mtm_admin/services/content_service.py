@@ -68,10 +68,10 @@ class ContentService:
 
         return self.get_module(module["id"])
 
-    def update_whole_module(self, module_to_update):
+    def update_module(self, module_to_update):
         _, content_collection = self.get_collections()
 
-        content_collection.update_one({"id": module_to_update["id"]}, {"$set": module_to_update})``
+        content_collection.update_one({"id": module_to_update["id"]}, {"$set": module_to_update})
 
     def get_playlists(self):
         metadata_collection, _ = self.get_collections()
