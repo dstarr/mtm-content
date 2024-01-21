@@ -40,7 +40,8 @@ def get_playlists():
 
     return playlists
 
-def get_modules(playlists, video_url, transcript_url, slides_url, pdf_url):
+# def get_modules(playlists, video_url, transcript_url, slides_url, pdf_url):
+def get_modules(playlists):
     modules = []
 
     for i in range(1, 10):
@@ -63,10 +64,6 @@ def get_modules(playlists, video_url, transcript_url, slides_url, pdf_url):
             "created_by": "David Starr",
             "updated_by": "Elle Starr",
             "is_active": True,
-            "video_url": video_url,
-            "transcript_url": transcript_url,
-            "slides_url": slides_url,
-            "pdf_url": pdf_url,
         }
 
         modules.append(module)
@@ -89,7 +86,8 @@ def get_mongo_collections(db):
     
     return metadata_collection, content_collection
 
-def write_mongo_data(video_url, transcript_url, slides_url, pdf_url):
+# def write_mongo_data(video_url, transcript_url, slides_url, pdf_url):
+def write_mongo_data():
     client = pymongo.MongoClient(COSMOS_DB_CONNECTION_STRING)
     db = client[COSMOS_DB_NAME]
 
@@ -106,7 +104,8 @@ def write_mongo_data(video_url, transcript_url, slides_url, pdf_url):
     
     # content modules
     print("Creating content modules...")
-    modules = get_modules(playlists, video_url, transcript_url, slides_url, pdf_url)
+    # modules = get_modules(playlists, video_url, transcript_url, slides_url, pdf_url)
+    modules = get_modules(playlists)
     content_collection.insert_many(modules)
 
 
@@ -193,14 +192,13 @@ def upload_file_to_blob(file_path, container_name):
 
 if __name__ == "__main__":
 
-    video_url = upload_video()
-    transcript_url = upload_transcript()
-    slides_url = upload_slides()
-    pdf_url = upload_pdf()
+    # video_url = upload_video()
+    # transcript_url = upload_transcript()
+    # slides_url = upload_slides()
+    # pdf_url = upload_pdf()
 
-    print(f"PDF URL: {pdf_url}")
-
-    write_mongo_data(video_url, transcript_url, slides_url, pdf_url)
+    # write_mongo_data(video_url, transcript_url, slides_url, pdf_url)
+    write_mongo_data()
 
     
     
