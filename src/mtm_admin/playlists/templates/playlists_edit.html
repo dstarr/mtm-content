@@ -1,9 +1,5 @@
-{% include 'head.html' %}
-
-<body>
-  {% include 'nav.html' %}
-
-  <div class="container main">
+{% extends 'base.html' %}
+{% block content %}
     
     <h2>Edit playlist</h2>
 
@@ -20,7 +16,4 @@
 
     </form>
 
-  </div>
-</body>
-    
-{% include 'footer.html' %}
+{% endblock %}

@@ -1,29 +1,22 @@
-{% include 'head.html' %}
-
-<body>
-  {% include 'nav.html' %}
-
-  <div class="container main">
-    <table class="table table-striped table-hover">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Title</th>
-        </tr>
-      </thead>
-      <tbody>
-    
-        {% for playlist in model %}
-          <tr>
-            <th scope="row">{{ loop.index }}</td>
-              <td><a href="{{ url_for('playlists.playlists_detail', playlist_id = playlist.id) }}">{{ playlist.name }}</a></td>
-            </tr>
-          </tr>
-        {% endfor %}
+{% extends 'base.html' %}
+{% block content %}
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+      </tr>
+    </thead>
+    <tbody>
   
-      </tbody>
-    </table>
-  </div>
-</body> 
+      {% for playlist in model %}
+        <tr>
+          <th scope="row">{{ loop.index }}</td>
+            <td><a href="{{ url_for('playlists.playlists_detail', playlist_id = playlist.id) }}">{{ playlist.name }}</a></td>
+          </tr>
+        </tr>
+      {% endfor %}
 
-{% include 'footer.html' %}
+    </tbody>
+  </table>
+{% endblock %}

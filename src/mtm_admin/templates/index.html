@@ -1,40 +1,27 @@
-{% include 'head.html' %}
+{% extends 'base.html' %}
+{% block content %}
 
-<body>
-  {% include 'nav.html' %}
+  <button type="button" class="btn btn-primary" onclick="window.location.href='{{ url_for('modules.module_add') }}'">Add module</button>
 
-  <div class="container main">
-
-    <button type="button" class="btn btn-primary" onclick="window.location.href='/modules/add'">Add module</button>
-
-    <table class="table table-striped table-hover">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Title</th>
-          <th scope="col">Playlist</th>
-          <th scope="col">Active</th>
-        </tr>
-      </thead>
-      <tbody>
-
-        {% for item in model.items %}
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Playlist</th>
+        <th scope="col">Active</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in model.items %}
         <tr>
           <th scope="row">{{ loop.index }}</th>
           <td><a href="{{ url_for('modules.module_detail', module_id = item.module.id) }}">{{ item.module.title }}</a></td>
           <td>{{ item.playlist.name }}</td>
-          <td>
-            {{ item.module.is_active }}  
-          </td>
+          <td>{{ item.module.is_active }}</td>
         </tr>
-        </tr>
-        {% endfor %}
-
-      </tbody>
-    </table>
-
-  </div>
-
-</body>
-
-{% include 'footer.html' %}
+      {% endfor %}
+    </tbody>
+  </table>
+  
+{% endblock %}

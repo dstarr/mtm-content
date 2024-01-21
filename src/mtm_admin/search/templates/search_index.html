@@ -1,28 +1,21 @@
-{% include 'head.html' %}
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Results for "{{ model.get_search_term()}}"</h2>
 
-<body>
-  {% include 'nav.html' %}
-    <div class="container main">
-    
-        <h2>Results for "{{ model.get_search_term()}}"</h2>
-
-        <table class="table table-striped">
-            <thead>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in model.get_search_results() %}
                 <tr>
-                    <th>#</th>
-                    <th>Title</th>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td><a href="{{ url_for('modules.module_detail', module_id=result['id']) }}">{{ result['title'] }}</a></td>
                 </tr>
-            </thead>
-            <tbody>
-                {% for result in model.get_search_results() %}
-                    <tr>
-                        <th scope="row">{{ loop.index }}</th>
-                        <td><a href="{{ url_for('modules.module_detail', module_id=result['id']) }}">{{ result['title'] }}</a></td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</body>
-    
-{% include 'footer.html' %}
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
