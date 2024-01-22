@@ -87,7 +87,8 @@
 
     <form class="dropzone" id="attachment_upload" method="post"
           enctype="multipart/form-data" 
-          action="{{ url_for('modules.module_file_upload', module_id=model.content['id']) }}">
+          action="{{ url_for('modules.module_attachment_add') }}">
+      <input type="hidden" name="module_id" value="{{ model.content['id'] }}" />
           
       <div class="row mb-3">
         <div class="col-auto">

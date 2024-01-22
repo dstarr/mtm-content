@@ -90,13 +90,14 @@ def module_edit(module_id):
     
         return render_template('modules_edit.html', model=model)
     
-@modules_bp.route('file_upload/<module_id>', methods=['POST'])
-def module_file_upload(module_id):
-    
+@modules_bp.route('add_attachment', methods=['POST'])
+def module_attachment_add():
     # Check if the 'file' key is present in request.files
     if not request.files['file']:
         print('No file in the request')
         raise Exception('No file in the request')
+    
+    module_id = request.form["module_id"]
     
     # get the files from the request and upload them to blob storage
     file_info_items = []
@@ -109,7 +110,6 @@ def module_file_upload(module_id):
 
         file_info_items.append(
             {
-                "file_name": file_name, 
                 "blob_url": blob_url,
                 "file_type": file_type.value["display_name"]
             }
@@ -122,11 +122,12 @@ def module_file_upload(module_id):
         module["attachments"] = []
     
     for item in file_info_items:
-        # get rid of any existing attachments with the same blob_url, we are replacing them
+        # remove any existing attachments with the same blob_url, we are replacing them
         for existing_attachment in module["attachments"]:
             if existing_attachment["blob_url"] == item["blob_url"]:
                 module["attachments"].remove(existing_attachment)
         
+        # add the file info to the module
         module["attachments"].append(item)
 
     content_service.update_module(module_id=module_id, module_to_update=module)
