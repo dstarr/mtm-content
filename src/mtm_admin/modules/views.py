@@ -1,4 +1,5 @@
 from datetime import datetime
+import uuid
 from flask import Blueprint, redirect, render_template, request, url_for
 from services.file_service import FileService, FileType
 from services.content_service import ContentService
@@ -22,9 +23,29 @@ def module_add():
         return render_template('modules_add.html', playlists=playlists)
     
     elif request.method == 'POST':
-        module = content_service.add_module(property_values=request.form)
 
-        print("module_add - " + module)
+        property_values=request.form
+
+        is_active = False
+        if property_values.get("is_active") == "True":
+            is_active = True
+
+        module = {
+            "id": str(uuid.uuid4()),
+
+            "created_by": "David",
+            "date_created": datetime.utcnow(),
+            "date_updated": datetime.utcnow(),
+            "updated_by": "Julio",
+
+            "description": property_values["description"],
+            "is_active": is_active,
+            "playlist_id": property_values["playlist_id"],
+            "title": property_values["title"],
+            "youtube_url": property_values["youtube_url"],
+        }
+
+        content_service.add_module(module=module)
 
         return redirect(url_for('modules.module_detail', module_id=module["id"]))
 
@@ -57,7 +78,7 @@ def module_edit(module_id):
         module["title"] = property_values["title"]
         module["updated_by"] = "Test user"
 
-        content_service.update_module(module_to_update=module)
+        content_service.update_module(module_id=module_id, module_to_update=module)
 
         return redirect(url_for('modules.module_detail', module_id=module["id"]))
 

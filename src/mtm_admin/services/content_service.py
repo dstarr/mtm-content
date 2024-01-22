@@ -44,32 +44,10 @@ class ContentService:
 
         return modules
 
-    def add_module(self, property_values):
+    def add_module(self, module):
         _, content_collection = self.get_collections()
 
-        is_active = False
-        if property_values.get("is_active") == "True":
-            is_active = True
-
-        module = {
-            "id": str(uuid.uuid4()),
-            "created_by": "David",
-            "date_created": datetime.utcnow(),
-            "date_updated": datetime.utcnow(),
-            "updated_by": "Julio",
-
-            "is_active": is_active,
-            "description": property_values["description"],
-            "name": property_values["name"],
-            "playlist_id": property_values["playlist_id"],
-            "title": property_values["title"],
-            "youtube_url": property_values["youtube_url"],
-        }
-
-        # add the module to the collection
         content_collection.insert_one(module)
-
-        return self.get_module(module["id"])
 
     def update_module(self, module_id, module_to_update):
 
