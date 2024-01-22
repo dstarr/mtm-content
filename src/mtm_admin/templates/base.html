@@ -5,7 +5,10 @@
 <body>
     <div class="container main">
         {% include 'nav.html' %}
-        {% block content %}{% endblock %}
+
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
     </div>
     {% include 'scripts.html' %}
 </body>

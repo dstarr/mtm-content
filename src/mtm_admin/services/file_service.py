@@ -5,24 +5,29 @@ import config
 class FileType(Enum):
     PDF = {
         "container_name": config.BLOB_STORAGE_CONTAINER_NAME_PDFS,
-        "content_key": "pdf_url"
+        "content_key": "pdf_url",
+        "display_name": "PDF"
     }
     SLIDE = {
         "container_name": config.BLOB_STORAGE_CONTAINER_NAME_SLIDES,
-        "content_key": "slide_url"
+        "content_key": "slide_url",
+        "display_name": "Slide"
     }
     TRANSCRIPT = {
         "container_name": config.BLOB_STORAGE_CONTAINER_NAME_TRANSCRIPTS,
-        "content_key": "transcript_url"
+        "content_key": "transcript_url",
+        "display_name": "Transcript"
     }
     VIDEO = {
         "container_name": config.BLOB_STORAGE_CONTAINER_NAME_VIDEO,
-        "content_key": "video_url"
+        "content_key": "video_url",
+        "display_name": "Video"
     }
 
     OTHER = {
         "container_name": config.BLOB_STORAGE_CONTAINER_NAME_OTHER,
-        "content_key": "other_url"
+        "content_key": "other_url",
+        "display_name": "Other"
     }
 
 class FileService():

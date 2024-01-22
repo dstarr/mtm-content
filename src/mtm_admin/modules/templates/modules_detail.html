@@ -21,62 +21,14 @@
         <div id="is_active">{{ model.content['is_active'] }}</div>
       </div>
       <div class="col-auto short_input">
-        <label for="transcript_url" class="form-label">Transcript</label>
-        <div id="transcript_url">
-          {% if not model.content['transcript_url'] %}
-            None
-          {% else %}
-            <a href="{{ model.content['transcript_url'] }}">Download</a>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-
-    <div class="row mb-3">
-      <div class="col-auto short_input">
-        <label for="video" class="form-label">Video</label>
-        <div id="name">
-          {% if not model.content['video_url'] %}
-            None
-          {% else %}
-            <a href="{{ model.content['video_url'] }}">Download</a>
-          {% endif %}
-        </div>
-      </div>
-      <div class="col-auto short_input">
-        <label for="youtube_url" class="form-label">YouTube video</label>
+        <label for="youtube_url" class="form-label">YouTube URL</label>
         <div id="youtube_url">
-          {% if not model.content['youtube_url'] %}
-            None
-          {% else %}
-            <a href="{{ model.content['youtube_url'] }}" target="_blank">{{ model.content['youtube_url'] }}"</a>
-          {% endif %}
+            <a href="{{ model.content['youtube_url'] }}" target="_blank">{{ model.content['youtube_url'] }}</a>
         </div>
       </div>
     </div>
 
-    <div class="row mb-3">
-      <div class="col-auto short_input">
-        <label for="slide_url" class="form-label">Slides</label>
-        <div id="slide_url">
-          {% if not model.content['slide_url'] %}
-            <div>None</div>
-          {% else %}
-            <a href="{{ model.content['slide_url'] }}">Download</a>
-          {% endif %}
-        </div>
-      </div>
-      <div class="col-auto short_input">
-        <label for="pdf_url" class="form-label">PDF</label>
-        <div id="pdf_url">
-          {% if not model.content['pdf_url'] %}
-            <div>None</div>
-          {% else %}
-            <a href="{{ model.content['pdf_url'] }}">Download</a>
-          {% endif %}
-        </div>
-      </div>
-    </div>
+
 
     <div class="row mb-3">
       <div class="col-auto short_input">

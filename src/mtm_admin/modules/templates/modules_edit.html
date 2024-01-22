@@ -49,9 +49,7 @@
 </div>
 
 <div style="padding-top: 30px;">
-
   <h3>Attachments</h3>
-
   <div class="data-container">
     
     {% if model.content["attachments"] %}
@@ -59,6 +57,7 @@
         <thead>
           <tr>
             <th scope="col">File name</th>
+            <th scope="col">File type</th>
             <th scope="col">Actions</th>
           </tr>
         </thead>
@@ -66,9 +65,10 @@
           {% for attachment in model.content["attachments"] %}
             <tr>
               <td>{{ attachment['file_name'] }}</td>
+              <td>{{ attachment['file_type'] }}</td>
               <td>
-                <a href="{{ url_for('modules.module_file_download', module_id = model.content['id'], file_id = attachment['id']) }}" class="btn btn-primary btn-sm">Download</a>
-                <a href="{{ url_for('modules.module_file_delete', module_id = model.content['id'], file_id = attachment['id']) }}" class="btn btn-danger btn-sm">Delete</a>
+                <a href="{{ attachment['blob_url'] }}" class="btn btn-primary btn-sm">Download</a>
+                <a href="{{ url_for('modules.module_attachment_delete', module_id = model.content['id'], blob_url = attachment['blob_url']) }}" class="btn btn-danger btn-sm">Delete</a>
               </td>
             </tr>
           {% endfor %}
@@ -80,22 +80,21 @@
       </div>
     {% endif %}
 
-  <form class="dropzone" id="attachment_upload" method="post"
-        enctype="multipart/form-data" 
-        action="{{ url_for('modules.module_file_upload', module_id = model.content['id']) }}">
-        
-    <div class="row mb-3">
-      <div class="col-auto">
-      <label class="form-label" for="file_upload">Upload file</label>
-        <div>
-          <div class="fallback">
-            <input name="file" type="file" accept=".pptx, .zip, ,pdf, .txt, .vtt, .mp4" />
-            <button type="submit" class="btn btn-primary">Upload</button>
-          </div>
+    <form class="dropzone" id="attachment_upload" method="post"
+          enctype="multipart/form-data" 
+          action="{{ url_for('modules.module_file_upload', module_id = model.content['id']) }}">
+          
+      <div class="row mb-3">
+        <div class="col-auto">
+            <label class="form-label" for="file_upload">Upload file</label>
+            <div>
+              <input id="file_upload" name="file" type="file" accept=".pptx, .zip, .pdf, .txt, .vtt, .mp4" multiple/>
+              <button id="file_upload_button" type="submit" class="btn btn-primary">Upload</button>
+            </div>
         </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>
 
 <div style="padding-top: 30px;">
@@ -104,10 +103,8 @@
 
     <div>
       <div class="row mb-3">
-        <div class="col-auto">
-          <label for="id" class="form-label">ID</label>
-          <input type="text" class="form-control" name="id" id="id" value="{{ model.content['id'] }}" disabled />
-        </div>
+        <label for="id" class="form-label">ID</label>
+        <input type="text" class="form-control" name="id" id="id" value="{{ model.content['id'] }}" disabled />
       </div>
 
       <div class="row mb-3">
@@ -134,5 +131,29 @@
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+      const fileInput = document.getElementById('file_upload');
+      const uploadButton = document.getElementById('file_upload_button');
+
+      // Initially disable the upload button
+      uploadButton.disabled = true;
+
+      // Event listener for file input change
+      fileInput.addEventListener('change', () => {
+          if (fileInput.files.length > 0) {
+              // Enable the button if a file is selected
+              uploadButton.disabled = false;
+          } else {
+              // Disable the button if no file is selected
+              uploadButton.disabled = true;
+          }
+      });
+  });
+</script>
+
+
 {% include 'editor_script.html' %}
+
 {% endblock %}

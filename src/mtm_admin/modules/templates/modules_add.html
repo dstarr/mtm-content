@@ -1,19 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
 
-  <form action="{{ url_for('modules.module_add') }}" method="post">
+  <h3>Add a new module</h3>
 
-    <div class="mb-3">
+  <div class="data-container">
+
+  <form action="{{ url_for('modules.module_add') }}" method="post">
+    
+    <div class="row mb-3">
       <label for="title" class="form-label">Title</label>
       <input type="text" class="form-control" name="title" id="title" required />
     </div>
 
-    <div class="mb-3">
-      <div><label for="description" class="form-label">Description</label></div>
+    <div class="row mb-3">
+      <div>
+        <label for="description" class="form-label">Description</label>
+      </div>
       <textarea class="description" id="description" name="description" required></textarea>
     </div>
 
-    <div>
+    <div class="row mb-3">
       <label for="playlist_id" class="form-label">Playlist</label>
       <select name="playlist_id" id="playlist_id" class="form-select" required>
         {% for playlist in playlists %}
@@ -22,10 +28,12 @@
       </select>
     </div>
 
-    <div class="row g-3 mb-3">
+    <div class="row mb-3">
       <div class="col-auto short_input">
-        <label for="name" class="form-label">Name</label>
-        <input type="text" class="form-control" name="name" id="name" required />
+        <div class="mb-3 form-check">
+          <label class="form-check-label" name="is_active" for="is_active">Is active</label>
+          <input type="checkbox" class="form-check-input" name="is_active" id="is_active" value="True" checked />
+        </div>
       </div>
       <div class="col-auto short_input">
         <label for="youtube_url" class="form-label">YouTube URL</label>
@@ -33,16 +41,12 @@
       </div>
     </div>
 
-    <div class="mb-3 form-check">
-      <label class="form-check-label" name="is_active" for="is_active">Is active</label>
-      <input type="checkbox" class="form-check-input" name="is_active" id="is_active" value="True" checked />
-    </div>
-    
     <div class="mb-3">
       <button type="submit" class="btn btn-primary">Save</button>
     </div>
-
   </form>
+
+  </div>
 
   {% include 'editor_script.html' %}
 {% endblock %}

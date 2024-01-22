@@ -18,21 +18,24 @@ class ContentService:
         return modules
 
     def get_module(self, module_id):
-        metadata_collection, content_collection = self.get_collections()
+        _, content_collection = self.get_collections()
 
-        # get the module
         module = content_collection.find_one({"id": module_id})
 
-        # get the playlist for the module
-        playlists_doc = metadata_collection.find_one({"name": "playlists"})
+        return module
 
-        playlist = None
-        for playlist_doc in playlists_doc["playlists"]:
-            if str(playlist_doc["id"]) == module["playlist_id"]:
-                playlist = playlist_doc
-                break
+        # # get the playlist for the module
+        # playlist = None
+        # playlists_doc = metadata_collection.find_one({"name": "playlists"})
+        # for playlist_doc in playlists_doc["playlists"]:
+        #     if str(playlist_doc["id"]) == module["playlist_id"]:
+        #         playlist = playlist_doc
+        #         break
 
-        return {"module": module, "playlist": playlist}
+        # return {
+        #     "module": module, 
+        #     "playlist": playlist
+        #     }
 
     def get_modules_for_playlist(self, playlist_id):
         _, content_collection = self.get_collections()
@@ -41,11 +44,11 @@ class ContentService:
 
         return modules
 
-    def add_module(self, new_values):
+    def add_module(self, property_values):
         _, content_collection = self.get_collections()
 
         is_active = False
-        if new_values.get("is_active") == "True":
+        if property_values.get("is_active") == "True":
             is_active = True
 
         module = {
@@ -56,11 +59,11 @@ class ContentService:
             "updated_by": "Julio",
 
             "is_active": is_active,
-            "description": new_values["description"],
-            "name": new_values["name"],
-            "playlist_id": new_values["playlist_id"],
-            "title": new_values["title"],
-            "youtube_url": new_values["youtube_url"],
+            "description": property_values["description"],
+            "name": property_values["name"],
+            "playlist_id": property_values["playlist_id"],
+            "title": property_values["title"],
+            "youtube_url": property_values["youtube_url"],
         }
 
         # add the module to the collection
@@ -68,10 +71,11 @@ class ContentService:
 
         return self.get_module(module["id"])
 
-    def update_module(self, module_to_update):
+    def update_module(self, module_id, module_to_update):
+
         _, content_collection = self.get_collections()
 
-        content_collection.update_one({"id": module_to_update["id"]}, {"$set": module_to_update})
+        content_collection.update_one({"id": module_id}, {"$set": module_to_update})
 
     def get_playlists(self):
         metadata_collection, _ = self.get_collections()
@@ -84,8 +88,16 @@ class ContentService:
         metadata_collection, _ = self.get_collections()
 
         playlist = metadata_collection.find_one(
-            {"name": "playlists"}, {"playlists": {"$elemMatch": {"id": id}}}
+            {
+                "name": "playlists"
+            }, 
+            {
+                "playlists": { "$elemMatch": {"id": id} }
+            }
         )["playlists"][0]
+
+        if playlist is None:
+            raise Exception(f"Playlist with id {id} not found")
 
         return playlist
 
