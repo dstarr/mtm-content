@@ -94,10 +94,11 @@ def module_edit(module_id):
 def module_file_upload(module_id):
     
     # Check if the 'file' key is present in request.files
-    if not request.files:
+    if not request.files['file']:
         print('No file in the request')
         raise Exception('No file in the request')
     
+    # get the files from the request and upload them to blob storage
     file_info_items = []
     for file in request.files.getlist('file'):
         file_name = file.filename
@@ -114,14 +115,14 @@ def module_file_upload(module_id):
             }
         )
 
-    # add the data about the files to the module
+    # add the data about the uploaded files to the module
     module = content_service.get_module(module_id)
 
     if module.get("attachments") == None:
         module["attachments"] = []
     
     for item in file_info_items:
-        # get rid of any existing attachments with the same blob_url
+        # get rid of any existing attachments with the same blob_url, we are replacing them
         for existing_attachment in module["attachments"]:
             if existing_attachment["blob_url"] == item["blob_url"]:
                 module["attachments"].remove(existing_attachment)
@@ -132,11 +133,31 @@ def module_file_upload(module_id):
     
     return redirect(request.referrer)
 
-@modules_bp.route('attachment_delete/<module_id>/<blob_url>', methods=['POST'])
-def module_attachment_delete(module_id, blob_url):
-    # module = content_service.get_module(module_id)["module"]
-    pass
+@modules_bp.route('delete_attachment', methods=['POST'])
+def module_attachment_delete():
+    module_id = request.form["module_id"]
+    blob_url = request.form["blob_url"]
 
+    # remove the attachment from the module
+    module = content_service.get_module(module_id)
+
+    for attachment in module["attachments"]:
+        if attachment["blob_url"] == blob_url:
+            module["attachments"].remove(attachment)
+            break
+
+    content_service.update_module(module_id=module_id, module_to_update=module)
+    
+    # delete the blob storing the file
+    container_name = blob_url.split("/")[-2]
+    blob_name=blob_url.split("/")[-1]
+
+    print(f"Container name: {container_name}")
+    print(f"Blob name: {blob_name}")
+
+    file_service.delete_blob_in_storage(container_name=container_name, blob_name=blob_name)
+
+    return redirect(request.referrer)
 
 def get_file_type(file_name):
     if file_name.endswith(".pdf"):

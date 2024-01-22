@@ -63,14 +63,19 @@
         </thead>
         <tbody>
           {% for attachment in model.content["attachments"] %}
+          <form action="{{ url_for('modules.module_attachment_delete') }}" method="post">
+            <input type="hidden" name="module_id" value="{{ model.content['id'] }}" />
+            <input type="hidden" name="blob_url" value="{{ attachment['blob_url'] }}" />
+
             <tr>
               <td>{{ attachment['file_name'] }}</td>
               <td>{{ attachment['file_type'] }}</td>
               <td>
                 <a href="{{ attachment['blob_url'] }}" class="btn btn-primary btn-sm">Download</a>
-                <a href="{{ url_for('modules.module_attachment_delete', module_id = model.content['id'], blob_url = attachment['blob_url']) }}" class="btn btn-danger btn-sm">Delete</a>
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
               </td>
             </tr>
+          </form>
           {% endfor %}
         </tbody>
       </table>
@@ -82,7 +87,7 @@
 
     <form class="dropzone" id="attachment_upload" method="post"
           enctype="multipart/form-data" 
-          action="{{ url_for('modules.module_file_upload', module_id = model.content['id']) }}">
+          action="{{ url_for('modules.module_file_upload', module_id=model.content['id']) }}">
           
       <div class="row mb-3">
         <div class="col-auto">

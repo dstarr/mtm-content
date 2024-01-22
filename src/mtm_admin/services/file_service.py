@@ -24,6 +24,12 @@ class FileType(Enum):
         "display_name": "Video"
     }
 
+    SAMPLE_CODE = {
+        "container_name": config.BLOB_STORAGE_CONTAINER_NAME_SAMPLE_CODE,
+        "content_key": "sample_code_url",
+        "display_name": "Sample code"
+    },
+
     OTHER = {
         "container_name": config.BLOB_STORAGE_CONTAINER_NAME_OTHER,
         "content_key": "other_url",
@@ -33,7 +39,7 @@ class FileType(Enum):
 class FileService():
     def upload_to_blob(self, blob_name, content, file_type: FileType):
         try:
-            blob_service_client = BlobServiceClient.from_connection_string(config.BLOB_STORAGE_CONNCECTION_STRING)
+            blob_service_client = BlobServiceClient.from_connection_string(config.BLOB_STORAGE_CONNECTION_STRING)
 
             blob_client = blob_service_client.get_blob_client(container=file_type.value["container_name"], blob=blob_name)
 
@@ -47,7 +53,7 @@ class FileService():
 
     def get_blob_from_storage(self, blob_name, file_type: FileType):
         try:
-            blob_client = BlobServiceClient.from_connection_string(config.BLOB_STORAGE_CONNCECTION_STRING).get_blob_client(container=file_type, blob=blob_name)
+            blob_client = BlobServiceClient.from_connection_string(config.BLOB_STORAGE_CONNECTION_STRING).get_blob_client(container=file_type, blob=blob_name)
 
             print(f"Downloading blob: {blob_name} from Azure Storage")
             blob_data = blob_client.download_blob().readall()
@@ -59,10 +65,10 @@ class FileService():
             print('Exception:')
             print(ex)
 
-    def delete_blob_in_storage(self, blob_name, file_type: FileType):
+    def delete_blob_in_storage(self, container_name, blob_name):
         try:
-            blob_client = BlobServiceClient.from_connection_string(config.BLOB_STORAGE_CONNCECTION_STRING).get_blob_client(container=file_type, blob=blob_name)
-
+            blob_service_client = BlobServiceClient.from_connection_string(config.BLOB_STORAGE_CONNECTION_STRING)
+            blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
             print(f"Deleting blob: {blob_name} from Azure Storage")
             blob_client.delete_blob()
             print("Deletion successful")
