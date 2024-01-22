@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
   
-<div style="padding-top: 30px;">
+<div>
   <h3>Content information</h3>
   <div class="data-container">
     <form id="module_edit" action="{{ url_for('modules.module_edit', module_id = model.content['id']) }}" method="post">

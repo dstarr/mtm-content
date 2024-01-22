@@ -27,7 +27,7 @@ def module_add():
         property_values=request.form
 
         is_active = False
-        if property_values.get("is_active") == "True":
+        if property_values.get("is_active"):
             is_active = True
 
         module = {
@@ -67,9 +67,9 @@ def module_edit(module_id):
 
         # map new values to entity 
         is_active = False
-        if property_values.get("is_active") == "True":
+        if property_values.get("is_active"):
             is_active = True
-
+            
         module["title"] = property_values["title"]
         module["date_updated"] = datetime.utcnow()
         module["description"] = property_values["description"]
