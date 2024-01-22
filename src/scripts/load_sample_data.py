@@ -53,17 +53,12 @@ def get_modules(playlists):
             "title": f"Title {i}",
             "description": f"This is the {i} module",
             "youtube_url": f"https://www.youtube.com/watch?v={i}",
-            "tags": ["tag1", "tag2", "tag3"],
             "playlist_id": playlist["id"],
-            "date_created": datetime.strptime(
-                str(datetime(2024, 1, 1)), "%Y-%m-%d %H:%M:%S"
-            ),
-            "date_updated": datetime.strptime(
-                str(datetime(2024, 2, 1)), "%Y-%m-%d %H:%M:%S"
-            ),
-            "created_by": "David Starr",
-            "updated_by": "Elle Starr",
             "is_active": True,
+            "date_created": datetime.utcnow(),
+            "date_updated": datetime.utcnow(),
+            "created_by": "David Starr",
+            "updated_by": "David Starr",
         }
 
         modules.append(module)
