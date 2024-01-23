@@ -113,6 +113,66 @@
       </div>
     </div>
   </div>
+  <div class="row mb-3">
+    <div class="col-auto short_input">
+      <label for="slides" class="form-label">Slides</label>
+      <div id="slides">
+        
+        {% if model.content["slides_url"] and model.content["slides_url"] != None %}
+          <!-- show a delete button -->
+          <form action="{{ url_for('modules.module_attachment_delete') }}" method="post">
+            <a href="{{ model.content['slides_url'] }}" class="btn btn-primary btn-sm">Download</a>
+            <input type="hidden" name="module_id" value="{{ model.content['id'] }}" />
+            <input type="hidden" name="blob_url" value="{{ model.content['slides_url'] }}" />
+            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+          </form>
+        {% else %}
+          <!-- show an upload form -->
+          <form class="dropzone" 
+                method="post"
+                enctype="multipart/form-data" 
+                action="{{ url_for('modules.module_attachment_add') }}">
+            <input type="hidden" name="module_id" value="{{ model.content['id'] }}" />
+            <input type="hidden" name="attachment_type" value="slides" />
+            <label class="form-label" for="file_upload">Upload file</label>
+            <div>
+              <input id="file_upload" name="file" type="file" accept=".pptx"/>
+              <button id="file_upload_button" type="submit" class="btn btn-primary">Upload</button>
+            </div>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-auto short_input">
+      <label for="pdf" class="form-label">PDF</label>
+      <div id="pdf">
+        
+        {% if model.content["pdf_url"] and model.content["pdf_url"] != None %}
+          <!-- show a delete button -->
+          <form action="{{ url_for('modules.module_attachment_delete') }}" method="post">
+            <a href="{{ model.content['pdf_url'] }}" class="btn btn-primary btn-sm">Download</a>
+            <input type="hidden" name="module_id" value="{{ model.content['id'] }}" />
+            <input type="hidden" name="blob_url" value="{{ model.content['pdf_url'] }}" />
+            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+          </form>
+        {% else %}
+          <!-- show an upload form -->
+          <form class="dropzone" 
+                method="post"
+                enctype="multipart/form-data" 
+                action="{{ url_for('modules.module_attachment_add') }}">
+            <input type="hidden" name="module_id" value="{{ model.content['id'] }}" />
+            <input type="hidden" name="attachment_type" value="pdf" />
+            <label class="form-label" for="file_upload">Upload file</label>
+            <div>
+              <input id="file_upload" name="file" type="file" accept=".pdf"/>
+              <button id="file_upload_button" type="submit" class="btn btn-primary">Upload</button>
+            </div>
+          </form>
+        {% endif %}
+    </div>
+  </div>
+</div>
 </div>
 
 <div style="padding-top: 30px; margin-bottom: 30px;">

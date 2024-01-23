@@ -104,13 +104,15 @@ def module_attachment_add():
     file = request.files['file']
     file_name = file.filename
     file_contents = file.read()
-
-    file_type = find_enum_by_content_type(content_type=attachment_type)
+    file_type = find_enum_by_container_key_value(key='content_type', value=attachment_type)
 
     blob_url = file_service.upload_to_blob(blob_name=file_name, content=file_contents, file_type=file_type)
 
     # add the data about the uploaded files to the module
     module = content_service.get_module(module_id)
+    print("======   module   ======")           
+    print(file_type.value["content_key"])
+
     module[file_type.value["content_key"]] = blob_url
     content_service.update_module(module_id=module_id, module_to_update=module)
     
@@ -122,7 +124,7 @@ def module_attachment_delete():
     blob_url = request.form["blob_url"]
     container_name = blob_url.split("/")[-2]
     blob_name=blob_url.split("/")[-1]
-    file_type = find_enum_by_container_name(container_name=container_name)
+    file_type = find_enum_by_container_key_value(key='container_name', value=container_name)
 
     # remove the attachment from the module
     module = content_service.get_module(module_id)
@@ -134,16 +136,9 @@ def module_attachment_delete():
 
     return redirect(request.referrer)
 
-def find_enum_by_content_type(content_type):
+def find_enum_by_container_key_value(key, value):
     for file_type in FileType:
-        if file_type.value['content_type'] == content_type:
-            return file_type
-    
-    return None
-
-def find_enum_by_container_name(container_name):
-    for file_type in FileType:
-        if file_type.value['container_name'] == container_name:
+        if file_type.value[key] == value:
             return file_type
     
     return None

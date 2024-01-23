@@ -11,7 +11,7 @@ class FileType(Enum):
     }
     SLIDE = {
         "container_name": config.BLOB_STORAGE_CONTAINER_NAME_SLIDES,
-        "content_key": "slide_url",
+        "content_key": "slides_url",
         "display_name": "Slides",
         "content_type": "slides"
     }
@@ -69,7 +69,7 @@ class FileService():
             print('Exception:')
             print(ex)
 
-    def delete_blob_in_storage(self, file_type, blob_name):
+    def delete_blob_in_storage(self, blob_name, file_type: FileType):
         container_name = file_type.value["container_name"]
         try:
             blob_service_client = BlobServiceClient.from_connection_string(config.BLOB_STORAGE_CONNECTION_STRING)
