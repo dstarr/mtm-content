@@ -60,6 +60,27 @@
     </div>
 
     <div class="mb-3">
+      <label for="tags" class="form-label">Attachments</label>
+      <div class="list-group">
+        {% if model.content['video_url'] %}
+          <a href="{{ model.content['video_url'] }}" class="list-group-item list-group-item-action">Video</a>
+        {% endif %}
+        {% if model.content['slides_url'] %}
+          <a href="{{ model.content['slides_url'] }}" class="list-group-item list-group-item-action">Slides</a>
+        {% endif %}
+        {% if model.content['pdf_url'] %}
+          <a href="{{ model.content['pdf_url'] }}" class="list-group-item list-group-item-action">PDF</a>
+        {% endif %}
+        {% if model.content['transcript_url'] %}
+          <a href="{{ model.content['transcript_url'] }}" class="list-group-item list-group-item-action">Transcript</a>
+        {% endif %}
+        {% if model.content['sample_code_url'] %}
+          <a href="{{ model.content['sample_code_url'] }}" class="list-group-item list-group-item-action">Sample code</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="mb-3">
       <button type="button" class="btn btn-primary" onclick="window.location.href='{{ url_for('modules.module_edit', module_id = model.content['id']) }}'">Edit</button>
     </div>
 {% endblock %}
