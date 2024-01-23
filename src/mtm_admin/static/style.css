@@ -19,8 +19,12 @@
 .data-container {
     border: 1px solid rgba(0,0,0,.8);
     border-radius: 5px;
-    padding: 20px 20px;
-    margin-bottom: 20px;
+    padding: 10px 10px;
+    margin-bottom: 15px;
+}
+
+.short_input {
+    padding: 10px;
 }
 
 .dropzone {
