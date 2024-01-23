@@ -98,38 +98,20 @@ def module_attachment_add():
         raise Exception('No file in the request')
     
     module_id = request.form["module_id"]
+    attachment_type = request.form["attachment_type"]
     
     # get the files from the request and upload them to blob storage
-    file_info_items = []
-    for file in request.files.getlist('file'):
-        file_name = file.filename
-        file_type = get_file_type(file_name)
-        file_contents = file.read()
-        
-        blob_url = file_service.upload_to_blob(blob_name=file_name, content=file_contents, file_type=file_type)
+    file = request.files['file']
+    file_name = file.filename
+    file_contents = file.read()
 
-        file_info_items.append(
-            {
-                "blob_url": blob_url,
-                "file_type": file_type.value["display_name"]
-            }
-        )
+    file_type = find_enum_by_content_type(content_type=attachment_type)
+
+    blob_url = file_service.upload_to_blob(blob_name=file_name, content=file_contents, file_type=file_type)
 
     # add the data about the uploaded files to the module
     module = content_service.get_module(module_id)
-
-    if module.get("attachments") == None:
-        module["attachments"] = []
-    
-    for item in file_info_items:
-        # remove any existing attachments with the same blob_url, we are replacing them
-        for existing_attachment in module["attachments"]:
-            if existing_attachment["blob_url"] == item["blob_url"]:
-                module["attachments"].remove(existing_attachment)
-        
-        # add the file info to the module
-        module["attachments"].append(item)
-
+    module[file_type.value["content_key"]] = blob_url
     content_service.update_module(module_id=module_id, module_to_update=module)
     
     return redirect(request.referrer)
@@ -138,36 +120,31 @@ def module_attachment_add():
 def module_attachment_delete():
     module_id = request.form["module_id"]
     blob_url = request.form["blob_url"]
+    container_name = blob_url.split("/")[-2]
+    blob_name=blob_url.split("/")[-1]
+    file_type = find_enum_by_container_name(container_name=container_name)
 
     # remove the attachment from the module
     module = content_service.get_module(module_id)
-
-    for attachment in module["attachments"]:
-        if attachment["blob_url"] == blob_url:
-            module["attachments"].remove(attachment)
-            break
-
+    module[file_type.value["content_key"]] = None
     content_service.update_module(module_id=module_id, module_to_update=module)
-    
-    # delete the blob storing the file
-    container_name = blob_url.split("/")[-2]
-    blob_name=blob_url.split("/")[-1]
 
-    print(f"Container name: {container_name}")
-    print(f"Blob name: {blob_name}")
-
-    file_service.delete_blob_in_storage(container_name=container_name, blob_name=blob_name)
+    # delete the attachment from blob storage
+    file_service.delete_blob_in_storage(file_type=file_type, blob_name=blob_name)
 
     return redirect(request.referrer)
 
-def get_file_type(file_name):
-    if file_name.endswith(".pdf"):
-        return FileType.PDF
-    elif file_name.endswith(".pptx"):
-        return FileType.SLIDE
-    elif file_name.endswith(".txt"):
-        return FileType.TRANSCRIPT
-    elif file_name.endswith(".mp4"):
-        return FileType.VIDEO
-    else:
-        return FileType.OTHER
+def find_enum_by_content_type(content_type):
+    for file_type in FileType:
+        if file_type.value['content_type'] == content_type:
+            return file_type
+    
+    return None
+
+def find_enum_by_container_name(container_name):
+    for file_type in FileType:
+        if file_type.value['container_name'] == container_name:
+            return file_type
+    
+    return None
+
