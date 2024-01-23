@@ -33,11 +33,12 @@ def module_add():
         module = {
             "id": str(uuid.uuid4()),
 
-            "created_by": "David",
+            "created_by": "",
             "date_created": datetime.utcnow(),
             "date_updated": datetime.utcnow(),
-            "updated_by": "Julio",
+            "updated_by": "",
 
+            "notes": property_values["notes"],
             "description": property_values["description"],
             "is_active": is_active,
             "playlist_id": property_values["playlist_id"],
@@ -70,13 +71,13 @@ def module_edit(module_id):
         if property_values.get("is_active"):
             is_active = True
             
-        module["title"] = property_values["title"]
         module["date_updated"] = datetime.utcnow()
         module["description"] = property_values["description"]
         module["is_active"] = is_active
+        module["notes"] = property_values["notes"]
         module["playlist_id"] = property_values["playlist_id"]
         module["title"] = property_values["title"]
-        module["updated_by"] = "Test user"
+        module["updated_by"] = ""
 
         content_service.update_module(module_id=module_id, module_to_update=module)
 
