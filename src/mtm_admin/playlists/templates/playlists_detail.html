@@ -15,15 +15,17 @@
     </thead>
     <tbody>
 
-      {% for module in model.modules %}
+       {% for module in model.modules %}
         <tr>
-          <th scope="row">{{ loop.index }}</td>
-            <td><a href="{{ url_for('modules.module_detail', module_id = module.id) }}">{{ module.title }}</a></td>
-          </tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td><a href="{{ url_for('modules.module_detail', module_id=module.id) }}">{{ module.title }}</a></td>
         </tr>
       {% endfor %}
 
     </tbody>
   </table>
+
+
+
 
 {% endblock %}
