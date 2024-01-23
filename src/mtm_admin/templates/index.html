@@ -17,7 +17,7 @@
         <tr>
           <th scope="row">{{ loop.index }}</th>
           <td><a href="{{ url_for('modules.module_detail', module_id = item.module.id) }}">{{ item.module.title }}</a></td>
-          <td>{{ item.playlist.name }}</td>
+          <td><a href="{{ url_for('playlists.playlists_detail', playlist_id=item.playlist.id) }}">{{ item.playlist.name }}</a></td>
           <td>{{ item.module.is_active }}</td>
         </tr>
       {% endfor %}
