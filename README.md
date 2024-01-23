@@ -1,3 +1,1 @@
-# Headline 
-
-[Link text](./temp.md)
+# Content manager
