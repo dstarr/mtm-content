@@ -6,13 +6,17 @@
     </div>
 
     <div class="mb-3">
-      <label for="description" class="form-label">Description</label>
-      <div id="description">{{ model.content['description']|safe }}</div>
+      <div class="col-auto">
+        <label for="description" class="form-label">Description</label>
+        <div class="form-control" id="description">{{ model.content['description']|safe }}</div>
+      </div>
     </div>
 
     <div class="mb-3">
-      <label for="playlist" class="form-label">Playlist</label>
-      <div id="playlist">{{ model.playlist['name'] }}</div>
+      <div class="col-auto">
+        <label for="playlist" class="form-label">Playlist</label>
+        <div id="playlist">{{ model.playlist['name'] }}</div>
+      </div>
     </div>
 
     <div class="row mb-3">
@@ -28,6 +32,37 @@
       </div>
     </div>
 
+    <div class="mb-3">
+      <div class="col-auto">
+        <label for="attachments" class="form-label">Attachments</label>
+        <ul id="attachments">
+          {% if model.content['video_url'] %}
+            <li><a href="{{ model.content['video_url'] }}">Video</a></li>
+          {% endif %}
+          {% if model.content['slides_url'] %}
+          <li><a href="{{ model.content['slides_url'] }}">Slides</a></li>
+          {% endif %}
+          {% if model.content['pdf_url'] %}
+            <li><a href="{{ model.content['pdf_url'] }}">PDF</a></li>
+          {% endif %}
+          {% if model.content['transcript_url'] %}
+            <li><a href="{{ model.content['transcript_url'] }}">Transcript</a></li>
+          {% endif %}
+          {% if model.content['sample_code_url'] %}
+            <li><a href="{{ model.content['sample_code_url'] }}">Sample code</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+
+    {% if model.content['notes'] %}
+    <div class="row mb-3 col-auto">
+      <div class="col-auto">
+        <label for="notes" class="form-label">Notes</label>
+        <div class="form-control" id="notes">{{ model.content['notes']|safe }}</div>
+      </div>
+    </div>
+    {% endif %}
 
 
     <div class="row mb-3">
@@ -59,28 +94,6 @@
       </div>
     </div>
 
-    <div class="mb-3">
-      <label for="tags" class="form-label">Attachments</label>
-      <div class="col-auto short_input">
-        <div class="list-group">
-          {% if model.content['video_url'] %}
-            <a href="{{ model.content['video_url'] }}" class="list-group-item list-group-item-action">Video</a>
-          {% endif %}
-          {% if model.content['slides_url'] %}
-            <a href="{{ model.content['slides_url'] }}" class="list-group-item list-group-item-action">Slides</a>
-          {% endif %}
-          {% if model.content['pdf_url'] %}
-            <a href="{{ model.content['pdf_url'] }}" class="list-group-item list-group-item-action">PDF</a>
-          {% endif %}
-          {% if model.content['transcript_url'] %}
-            <a href="{{ model.content['transcript_url'] }}" class="list-group-item list-group-item-action">Transcript</a>
-          {% endif %}
-          {% if model.content['sample_code_url'] %}
-            <a href="{{ model.content['sample_code_url'] }}" class="list-group-item list-group-item-action">Sample code</a>
-          {% endif %}
-        </div>
-      </div>
-    </div>
     <div class="mb-3">
       <button type="button" class="btn btn-primary" onclick="window.location.href='{{ url_for('modules.module_edit', module_id = model.content['id']) }}'">Edit</button>
     </div>

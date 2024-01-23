@@ -1,34 +1,39 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<form action="{{ url_for('modules.module_add') }}" method="post">
   <h3>Add a new module</h3>
 
   <div class="data-container">
 
-  <form action="{{ url_for('modules.module_add') }}" method="post">
-    
-    <div class="row mb-3">
-      <label for="title" class="form-label">Title</label>
-      <input type="text" class="form-control" name="title" id="title" required />
-    </div>
-
-    <div class="row mb-3">
-      <div>
-        <label for="description" class="form-label">Description</label>
+    <div>
+      <div class="col-auto">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" name="title" id="title" required />
       </div>
-      <textarea class="description" id="description" name="description" required></textarea>
     </div>
 
-    <div class="row mb-3">
-      <label for="playlist_id" class="form-label">Playlist</label>
-      <select name="playlist_id" id="playlist_id" class="form-select" required>
-        {% for playlist in playlists %}
-          <option value="{{ playlist['id'] }}">{{ playlist['name'] }}</option>
-        {% endfor %}
-      </select>
+    <div>
+      <div class="col-auto">
+        <div>
+          <label for="description" class="form-label">Description</label>
+        </div>
+        <textarea class="text-box" id="description" name="description" required></textarea>
+      </div>
     </div>
 
-    <div class="row mb-3">
+    <div>
+      <div class="col-auto">
+        <label for="playlist_id" class="form-label">Playlist</label>
+        <select name="playlist_id" id="playlist_id" class="form-select" required>
+          {% for playlist in playlists %}
+            <option value="{{ playlist['id'] }}">{{ playlist['name'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-auto short_input">
         <div class="mb-3 form-check">
           <label class="form-check-label" name="is_active" for="is_active">Is active</label>
@@ -40,13 +45,23 @@
         <input type="text" class="form-control" name="youtube_url" id="youtube_url" required />
       </div>
     </div>
-
-    <div class="mb-3">
-      <button type="submit" class="btn btn-primary">Save</button>
-    </div>
-  </form>
-
   </div>
+  
+    <div class="mb-3">
+      <h3>Notes</h3>
+      <p>Notes are used to provide additional information about the module. They are not displayed to the user.</p>
+      <div>
+        <textarea id="notes" name="notes" cols="80" rows="6"></textarea>
+      </div>      
+    </div>
+    
+    <div class="mb-3">
+      <div class="col-auto short_input">
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+
+  </form>
 
   {% include 'editor_script.html' %}
 {% endblock %}

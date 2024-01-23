@@ -1,52 +1,62 @@
 {% extends 'base.html' %}
 {% block content %}
   
-<div>
-  <h3>Content information</h3>
-  <div class="data-container">
-    <form id="module_edit" action="{{ url_for('modules.module_edit', module_id = model.content['id']) }}" method="post">
-      <input type="hidden" name="id" value="{{ model.content['id'] }}" />
+<form id="module_edit" action="{{ url_for('modules.module_edit', module_id = model.content['id']) }}" method="post">
+  <input type="hidden" name="id" value="{{ model.content['id'] }}" />
 
-      <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
-        <input type="text" class="form-control" name="title" id="title" value="{{ model.content['title'] }}" required />
-      </div>
+  <div>
+    <h3>Content information</h3>
+    <div class="data-container">
 
-      <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea class="description" id="description" name="description" required>{{ model.content['description'] }}</textarea>
-      </div>
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" class="form-control" name="title" id="title" value="{{ model.content['title'] }}" required />
+    </div>
 
-      <div class="mb-3">
-        <label for="playlist_id" class="form-label">Playlist</label>
-        <select name="playlist_id" id="playlist_id" class="form-select" required>
-          {% for playlist in model.playlists %}
-            {% if playlist['id'] == model.content['playlist_id'] %}
-              <option value="{{ playlist['id'] }}" selected>{{ playlist['name'] }}</option>
-            {% else %}
-              <option value="{{ playlist['id'] }}">{{ playlist['name'] }}</option>
-            {% endif %}
-          {% endfor %}
-        </select>
-      </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea class="text-box" id="description" name="description" required>{{ model.content['description'] }}</textarea>
+    </div>
 
-      <div class="row mb-3">
-        <div class="col-auto short_input">
-          <label class="form-check-label form-label" for="is_active">Is active</label>
-          <input type="checkbox" class="form-check-input" name="is_active" id="is_active" {% if model.content['is_active'] %}checked{% endif %} />
-        </div>
-        <div class="col-auto short_input">
-          <label for="youtube_url" class="form-label">YouTube URL</label>
-          <input type="text" class="form-control" name="youtube_url" id="youtube_url" value="{{ model.content['youtube_url'] }}" required />
-        </div>
-      </div>
+    <div class="mb-3">
+      <label for="playlist_id" class="form-label">Playlist</label>
+      <select name="playlist_id" id="playlist_id" class="form-select" required>
+        {% for playlist in model.playlists %}
+          {% if playlist['id'] == model.content['playlist_id'] %}
+            <option value="{{ playlist['id'] }}" selected>{{ playlist['name'] }}</option>
+          {% else %}
+            <option value="{{ playlist['id'] }}">{{ playlist['name'] }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+    </div>
 
-      <div class="mb-3">
-        <button type="submit" class="btn btn-primary">Save</button>
+    <div class="row mb-3">
+      <div class="col-auto short_input">
+        <label class="form-check-label form-label" for="is_active">Is active</label>
+        <input type="checkbox" class="form-check-input" name="is_active" id="is_active" {% if model.content['is_active'] %}checked{% endif %} />
       </div>
-    </form>
+      <div class="col-auto short_input">
+        <label for="youtube_url" class="form-label">YouTube URL</label>
+        <input type="text" class="form-control" name="youtube_url" id="youtube_url" value="{{ model.content['youtube_url'] }}" required />
+      </div>
+    </div>
+
   </div>
-</div>
+
+  <div>
+    <h3>Notes</h3>
+    <p>Notes are used to provide additional information about the module. They are not displayed to the user.</p>
+    <div class="mb-3">
+      <textarea id="notes" name="notes" cols="80" rows="6">{{ model.content['notes'] }}</textarea>
+    </div>      
+  </div>
+  <div class="mb-3">
+    <div class="col-auto short_input">
+      <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+  </div>
+</form>
 
 
 <div style="padding-top: 30px;">
@@ -56,7 +66,6 @@
       <div class="col-auto short_input">
         <label for="video" class="form-label">Video</label>
         <div id="video">
-          
           {% if model.content["video_url"] and model.content["video_url"] != None %}
             <!-- show a delete button -->
             <form action="{{ url_for('modules.module_attachment_delete') }}" method="post">
