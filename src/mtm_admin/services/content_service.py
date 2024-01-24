@@ -30,8 +30,20 @@ class ContentService:
             if content_id in playlist["content"]:
                 yield playlist
         
-    def update_playlists_for_content(content_id, playlist_ids):
-        pass
+    def update_playlists_for_content(self, content_id, playlist_ids):
+        metadata_collection, _ = self.get_collections()
+
+        playlists_doc = metadata_collection.find_one({"name": "playlists"})
+
+        # enumerate the playlists and add the content to the playlist
+        for playlist_id in playlist_ids:
+            for playlist in playlists_doc["playlists"]:
+                if str(playlist["id"]) == playlist_id:
+                    if content_id not in playlist["content"]:
+                        playlist["content"].append(content_id)
+                        break
+
+        metadata_collection.update_one({"name": "playlists"}, {"$set": playlists_doc})
         
     def add_content(self, content):
         _, content_collection = self.get_collections()
