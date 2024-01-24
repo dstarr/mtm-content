@@ -25,7 +25,7 @@ def playlist_detail(playlist_id):
 def playlist_edit(playlist_id):
     if request.method == "POST":
 
-        content_service.update_playlist(
+        content_service.update_playlist_name(
             id=playlist_id,
             name=request.form["name"],
         )
