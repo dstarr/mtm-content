@@ -1,2 +1,1 @@
-# mtm-content
-Mastering the Marketplace media management
+# Content manager
