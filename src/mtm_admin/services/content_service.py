@@ -30,7 +30,7 @@ class ContentService:
             if content_id in playlist["content"]:
                 yield playlist
         
-    def update_playlist_names_for_content(self, content_id, playlist_ids):
+    def update_playlists_content(self, content_id, playlist_ids):
 
         metadata_collection, _ = self.get_collections()
         playlists_doc = metadata_collection.find_one({"name": "playlists"})
