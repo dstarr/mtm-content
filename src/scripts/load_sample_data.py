@@ -29,25 +29,24 @@ def make_playlists():
     playlists = {
         "name": "playlists",
         "playlists": [
-            {"id": str(uuid.uuid4()), "name": "Mastering Container offers"},
-            {"id": str(uuid.uuid4()), "name": "Mastering Managed Application offers"},
-            {"id": str(uuid.uuid4()), "name": "Mastering Partner Center"},
-            {"id": str(uuid.uuid4()), "name": "Mastering SaaS Offers"},
-            {"id": str(uuid.uuid4()), "name": "Mastering Virtual Machine offers"},
-            {"id": str(uuid.uuid4()), "name": "The marketplace for customers"},
-            {"id": str(uuid.uuid4()), "name": "Business in the marketplace"},
+            {"id": str(uuid.uuid4()), "name": "Mastering Container offers", "short_name": "Container offers"},
+            {"id": str(uuid.uuid4()), "name": "Mastering Managed Application offers", "short_name": "Managed Application offers"},
+            {"id": str(uuid.uuid4()), "name": "Mastering Partner Center", "short_name": "Partner Center"},
+            {"id": str(uuid.uuid4()), "name": "Mastering SaaS Offers", "short_name": "SaaS Offers"},
+            {"id": str(uuid.uuid4()), "name": "Mastering Virtual Machine offers", "short_name": "Virtual Machine offers"},
+            {"id": str(uuid.uuid4()), "name": "The marketplace for customers", "short_name": "For customers"},
+            {"id": str(uuid.uuid4()), "name": "Doing business in the marketplace", "short_name": "Business in the marketplace"},
         ],
     }
 
     return playlists
 
-# def make_modules(playlists, video_url, transcript_url, slides_url, pdf_url):
-def make_modules():
-    modules = []
+def make_content():
+    content_modules = []
 
     for i in range(1, 21):
         
-        module = {
+        content = {
             "id": str(uuid.uuid4()),
             "title": f"Title {i}",
             "description": f"This is the {i} module",
@@ -55,13 +54,12 @@ def make_modules():
             "is_active": True,
             "date_created": datetime.utcnow(),
             "date_updated": datetime.utcnow(),
-            "created_by": "David Starr",
-            "updated_by": "David Starr",
+            "created_by": "David Starr"
         }
 
-        modules.append(module)
+        content_modules.append(content)
 
-    return modules
+    return content_modules
 
 def upload_pdf():
     file_path=f"{FILE_DIR}/02.0-ma-overview.pdf"
@@ -121,22 +119,23 @@ def upload_file_to_blob(file_path, container_name):
 
     return blob_url
 
-def assign_modules_to_playlist(playlist, modules):
-    playlist["modules"] = []
+def assign_content_to_playlist(playlist, content):
+    playlist["content"] = []
 
     for i in range(0, 5):
-        module = random.choice(modules)
-        playlist["modules"].append(module["id"])
+        module = random.choice(content)
+        module["display-order"] = i
+        playlist["content"].append(module["id"])
 
     return playlist
 
-def write_modules_to_mongo(modules):
+def write_content_to_mongo(content):
     client = pymongo.MongoClient(COSMOS_DB_CONNECTION_STRING)
     db = client[COSMOS_DB_NAME]
     content_collection = db[COSMOS_DB_CONTENT_COLLECTION_NAME]
 
     content_collection.delete_many({})
-    content_collection.insert_many(modules)
+    content_collection.insert_many(content)
 
     client.close()
     
@@ -160,18 +159,20 @@ if __name__ == "__main__":
 
     # write_mongo_data(video_url, transcript_url, slides_url, pdf_url)
 
-    modules = make_modules()
-    write_modules_to_mongo(modules)
+    content = make_content()
+    print("Adding content")
+    write_content_to_mongo(content)
     
-    playlists_with_modules = []
+    playlists_with_content = []
     playlists_doc = make_playlists()
 
     for playlist in playlists_doc["playlists"]:
-        playlist = assign_modules_to_playlist(playlist, modules)
-        playlists_with_modules.append(playlist)
+        playlist = assign_content_to_playlist(playlist, content)
+        playlists_with_content.append(playlist)
         
-    playlists_doc["playlists"] = playlists_with_modules    
+    playlists_doc["playlists"] = playlists_with_content    
     
+    print("Adding playlists")
     write_playlist_to_mongo(playlists_doc)
 
     
