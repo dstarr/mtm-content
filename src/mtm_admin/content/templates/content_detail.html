@@ -14,8 +14,19 @@
 
     <div class="mb-3">
       <div class="col-auto">
-        <label for="playlist" class="form-label">Playlist</label>
-        <div id="playlist">{{ model.playlist['name'] }}</div>
+        <label for="playlists" class="form-label">Playlists</label>
+        <div id="playlists" class="list-group">
+          {% for playlist in model.all_playlists %}
+            {% for content in playlist["content"] %}
+              {% if model.content["id"] in content %}
+                <div class="list-group-item list-group-item-action">
+                    <a href="{{ url_for('playlists.playlist_detail', playlist_id = playlist['id']) }}">{{ playlist['name'] }}</a>
+                </div>
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+        </ul>
+
       </div>
     </div>
 
@@ -95,6 +106,6 @@
     </div>
 
     <div class="mb-3">
-      <button type="button" class="btn btn-primary" onclick="window.location.href='{{ url_for('modules.module_edit', module_id = model.content['id']) }}'">Edit</button>
+      <button type="button" class="btn btn-primary" onclick="window.location.href='{{ url_for('content.content_edit', content_id = model.content['id']) }}'">Edit</button>
     </div>
 {% endblock %}

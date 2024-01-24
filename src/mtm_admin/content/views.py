@@ -53,11 +53,11 @@ def content_add():
 @content_bp.route('detail/<content_id>')
 def content_detail(content_id):
     content = content_service.get_content(content_id)
-    playlist = content_service.get_playlist(content["playlist_id"])
+    all_playlists = content_service.get_playlists()
     
-    model = DetailModel(playlist=playlist, content=content)
+    model = DetailModel(content=content, all_playlists=all_playlists)
 
-    return render_template('contents_detail.html', model=model)
+    return render_template('content_detail.html', model=model)
 
 @content_bp.route('edit/<content_id>', methods=['GET', 'POST'])
 def content_edit(content_id):

@@ -120,12 +120,19 @@ def upload_file_to_blob(file_path, container_name):
     return blob_url
 
 def assign_content_to_playlist(playlist, content):
+    
+    print(content)
+    
     playlist["content"] = []
 
     for i in range(0, 5):
-        module = random.choice(content)
-        module["display-order"] = i
-        playlist["content"].append(module["id"])
+        item = random.choice(content)
+        
+        if item["id"] in playlist["content"]:
+            continue
+        
+        item["display-order"] = i
+        playlist["content"].append(item["id"])
 
     return playlist
 
