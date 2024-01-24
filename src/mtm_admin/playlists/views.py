@@ -39,10 +39,22 @@ def playlist_edit(playlist_id):
             name=request.form["name"],
         )
         
-        return redirect(url_for('playlists.playlists_detail', playlist_id=playlist_id))
+        return redirect(url_for('playlists.playlist_detail', playlist_id=playlist_id))
     
     elif request.method == "GET":
         playlist = content_service.get_playlist(id=playlist_id)
+        content_info = []
+        for content_id in playlist["content"]:
+            content = content_service.get_content(content_id=content_id)
+            content_info.append(
+                { 
+                 "id": content["id"], 
+                 "title": content["title"],
+                #  "display_order": content["display_order"]
+                }
+            )
+    
+    model=PlaylistDetailModel(content=content_info, playlist=playlist)
 
-        return render_template("playlists_edit.html", model=playlist)
+    return render_template("playlists_edit.html", model=model)
 

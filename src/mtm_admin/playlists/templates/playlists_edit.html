@@ -3,11 +3,11 @@
     
     <h2>Edit playlist</h2>
 
-    <form action="{{ url_for('playlists.playlists_edit', playlist_id=model['id']) }}" method="post">
+    <form action="{{ url_for('playlists.playlist_edit', playlist_id=model.playlist['id']) }}" method="post">
 
       <div class="mb-3">
         <label for="name" class="form-label">Title</label>
-        <input type="text" class="form-control" name="name" id="name" value="{{ model['name'] }}" required />
+        <input type="text" class="form-control" name="name" id="name" value="{{ model.playlist['name'] }}" required />
       </div>
 
       <div class="mb-3">
