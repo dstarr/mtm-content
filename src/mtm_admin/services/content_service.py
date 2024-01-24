@@ -10,50 +10,37 @@ class ContentService:
     def __init__(self):
         pass
 
-    def get_all_modules(self):
+    def get_all_content(self):
         _, content_collection = self.get_collections()
 
-        modules = content_collection.find()
+        contents = content_collection.find()
+        
+        return contents
 
-        return modules
-
-    def get_module(self, module_id):
+    def get_content(self, content_id):
         _, content_collection = self.get_collections()
 
-        module = content_collection.find_one({"id": module_id})
+        content = content_collection.find_one({"id": content_id})
 
-        return module
+        return content
 
-        # # get the playlist for the module
-        # playlist = None
-        # playlists_doc = metadata_collection.find_one({"name": "playlists"})
-        # for playlist_doc in playlists_doc["playlists"]:
-        #     if str(playlist_doc["id"]) == module["playlist_id"]:
-        #         playlist = playlist_doc
-        #         break
-
-        # return {
-        #     "module": module, 
-        #     "playlist": playlist
-        #     }
-
-    def get_modules_for_playlist(self, playlist_id):
+    def get_contents_for_playlist(self, playlist_id):
         _, content_collection = self.get_collections()
 
-        modules = content_collection.find({"playlist_id": playlist_id})
+        contents = content_collection.find({"playlist_id": playlist_id})
 
-        return modules
+        return contents
 
-    def add_module(self, module):
+    def add_content(self, content):
         _, content_collection = self.get_collections()
 
-        content_collection.insert_one(module)
+        content_collection.insert_one(content)
 
-    def update_module(self, module_id, module_to_update):
+    def update_content(self, content_id, content_to_update):
 
         _, content_collection = self.get_collections()
 
-        content_collection.update_one({"id": module_id}, {"$set": module_to_update})
+        content_collection.update_one({"id": content_id}, {"$set": content_to_update})
 
     def get_playlists(self):
         metadata_collection, _ = self.get_collections()
@@ -79,14 +66,14 @@ class ContentService:
 
         return playlist
 
-    def get_playlist_with_modules(self, id):
+    def get_playlist_with_contents(self, id):
         metadata_collection, _ = self.get_collections()
 
         playlist = metadata_collection.find_one(
             {"name": "playlists"}, {"playlists": {"$elemMatch": {"id": id}}}
         )["playlists"][0]
 
-        playlist["modules"] = self.get_modules_for_playlist(playlist["id"])
+        playlist["contents"] = self.get_contents_for_playlist(playlist["id"])
 
         return playlist
 
