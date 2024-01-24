@@ -55,7 +55,11 @@ def content_detail(content_id):
     content = content_service.get_content(content_id)
     content_playlists = content_service.get_playlists_for_content(content_id)
     
-    model = DetailModel(content=content, playlists=content_playlists)
+    print("======   content_playlists   ======")
+    for playlist in content_playlists:
+        print(playlist)
+    
+    model = DetailModel(content=content, playlists_info=content_playlists)
 
     return render_template('content_detail.html', model=model)
 

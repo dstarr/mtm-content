@@ -26,9 +26,16 @@ class ContentService:
 
     def get_playlists_for_content(self, content_id):
         all_playlists = self.get_playlists()
+        
+        content_playlists = []
+
+        # if the content is in the playlist, add it to the list
         for playlist in all_playlists:
-            if content_id in playlist["content"]:
-                yield playlist
+            for playlist_item in playlist["content"]:
+                if playlist_item["id"] == content_id:
+                    content_playlists.append(playlist)
+                
+        return content_playlists
         
     def update_playlists_content(self, content_id, playlist_ids):
 

@@ -16,9 +16,9 @@
       <div class="col-auto">
         <label for="playlists" class="form-label">Playlists</label>
         <div id="playlists" class="list-group">
-          {% for playlist in model.playlists %}
+          {% for playlist_info in model.playlists_info %}
             <div class="list-group-item list-group-item-action">
-                <a href="{{ url_for('playlists.playlist_detail', playlist_id = playlist['id']) }}">{{ playlist['name'] }}</a>
+                <a href="{{ url_for('playlists.playlist_detail', playlist_id = playlist_info['id']) }}">{{ playlist_info['name'] }}</a>
             </div>
           {% endfor %}
         </div>
