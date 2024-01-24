@@ -12,7 +12,7 @@
       {% for playlist in model %}
         <tr>
           <th scope="row">{{ loop.index }}</td>
-            <td><a href="{{ url_for('playlists.playlists_detail', playlist_id = playlist.id) }}">{{ playlist.name }}</a></td>
+            <td><a href="{{ url_for('playlists.playlist_detail', playlist_id = playlist.id) }}">{{ playlist.name }}</a></td>
           </tr>
         </tr>
       {% endfor %}
