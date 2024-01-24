@@ -7,6 +7,7 @@ import pymongo
 import uuid
 
 from azure.storage.blob import BlobServiceClient, PublicAccess
+from typing import List, Dict
 
 load_dotenv()
 
@@ -24,7 +25,7 @@ BLOB_STORAGE_CONTAINER_NAME_TRANSCRIPTS=os.environ.get("BLOB_STORAGE_CONTAINER_N
 
 FILE_DIR=os.environ.get("FILE_DIR")
 
-def get_playlists():
+def make_playlists():
     playlists = {
         "name": "playlists",
         "playlists": [
@@ -40,20 +41,17 @@ def get_playlists():
 
     return playlists
 
-# def get_modules(playlists, video_url, transcript_url, slides_url, pdf_url):
-def get_modules(playlists):
+# def make_modules(playlists, video_url, transcript_url, slides_url, pdf_url):
+def make_modules():
     modules = []
 
-    for i in range(1, 10):
+    for i in range(1, 21):
         
-        playlist = random.choice(playlists["playlists"])
-
         module = {
             "id": str(uuid.uuid4()),
             "title": f"Title {i}",
             "description": f"This is the {i} module",
             "youtube_url": f"https://www.youtube.com/watch?v={i}",
-            "playlist_id": playlist["id"],
             "is_active": True,
             "date_created": datetime.utcnow(),
             "date_updated": datetime.utcnow(),
@@ -64,68 +62,6 @@ def get_modules(playlists):
         modules.append(module)
 
     return modules
-
-def get_mongo_collections(db):
-    
-    # create the collection if it does not exist
-    if db["COSMOS_DB_CONTENT_COLLECTION_NAME"] is None:
-        content_collection = db.create_collection(name=COSMOS_DB_CONTENT_COLLECTION_NAME)
-    else:
-        content_collection = db[COSMOS_DB_CONTENT_COLLECTION_NAME]
-        
-    # create the collection if it does not exist
-    if db["COSMOS_DB_METADATA_COLLECTION_NAME"] is None:
-        metadata_collection = db.create_collection(name=COSMOS_DB_METADATA_COLLECTION_NAME)
-    else:
-        metadata_collection = db[COSMOS_DB_METADATA_COLLECTION_NAME]
-    
-    return metadata_collection, content_collection
-
-# def write_mongo_data(video_url, transcript_url, slides_url, pdf_url):
-def write_mongo_data():
-    client = pymongo.MongoClient(COSMOS_DB_CONNECTION_STRING)
-    db = client[COSMOS_DB_NAME]
-
-    playlist_collection, content_collection = get_mongo_collections(db)
-    
-    # delete any existing data from mongo
-    playlist_collection.delete_many({})
-    content_collection.delete_many({})
-
-    # playlists
-    print("Creating playlists...")
-    playlists = get_playlists()
-    playlist_collection.insert_one(playlists)
-    
-    # content modules
-    print("Creating content modules...")
-    # modules = get_modules(playlists, video_url, transcript_url, slides_url, pdf_url)
-    modules = get_modules(playlists)
-    content_collection.insert_many(modules)
-
-
-    client.close()
-
-def delete_blob_containers():
-
-    blob_service_client = BlobServiceClient.from_connection_string(BLOB_STORAGE_CONNECTION_STRING)
-    
-    # List all containers in the blob service account
-    containers = blob_service_client.list_containers()
-
-    # Iterate through each container and delete
-    for container in containers:
-        
-        container_name = container['name']
-        container_client = blob_service_client.get_container_client(container_name)
-    
-        blob_service_client.delete_container(container_name)
-
-        # Wait for the container to be deleted
-        while True:
-            if not container_client.exists():
-                break
-            time.sleep(1)  # Wait for 1 second before checking again
 
 def upload_pdf():
     file_path=f"{FILE_DIR}/02.0-ma-overview.pdf"
@@ -185,6 +121,36 @@ def upload_file_to_blob(file_path, container_name):
 
     return blob_url
 
+def assign_modules_to_playlist(playlist, modules):
+    playlist["modules"] = []
+
+    for i in range(0, 5):
+        module = random.choice(modules)
+        playlist["modules"].append(module["id"])
+
+    return playlist
+
+def write_modules_to_mongo(modules):
+    client = pymongo.MongoClient(COSMOS_DB_CONNECTION_STRING)
+    db = client[COSMOS_DB_NAME]
+    content_collection = db[COSMOS_DB_CONTENT_COLLECTION_NAME]
+
+    content_collection.delete_many({})
+    content_collection.insert_many(modules)
+
+    client.close()
+    
+def write_playlist_to_mongo(playlists):
+    client = pymongo.MongoClient(COSMOS_DB_CONNECTION_STRING)
+    db = client[COSMOS_DB_NAME]
+    metadata_collection = db[COSMOS_DB_METADATA_COLLECTION_NAME]
+
+    metadata_collection.delete_many({})
+    metadata_collection.insert_one(playlists)
+
+    client.close()
+    
+
 if __name__ == "__main__":
 
     # video_url = upload_video()
@@ -193,7 +159,20 @@ if __name__ == "__main__":
     # pdf_url = upload_pdf()
 
     # write_mongo_data(video_url, transcript_url, slides_url, pdf_url)
-    write_mongo_data()
+
+    modules = make_modules()
+    write_modules_to_mongo(modules)
+    
+    playlists_with_modules = []
+    playlists_doc = make_playlists()
+
+    for playlist in playlists_doc["playlists"]:
+        playlist = assign_modules_to_playlist(playlist, modules)
+        playlists_with_modules.append(playlist)
+        
+    playlists_doc["playlists"] = playlists_with_modules    
+    
+    write_playlist_to_mongo(playlists_doc)
 
     
     
