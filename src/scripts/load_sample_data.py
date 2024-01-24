@@ -104,7 +104,6 @@ def upload_file_to_blob(file_path, container_name):
     blob_client = blob_service_client.get_blob_client(container=container_name, blob=file_name)
     
     blob_url = f"https://{blob_service_client.account_name}.blob.core.windows.net/{container_name}/{file_name}"
-    # https://dsmtmcontentmgmtstore.blob.core.windows.net/test-pdfs/02.0-ma-overview.pdf
 
     # create the container if it doesn't exist
     if not container_client.exists():
@@ -122,17 +121,19 @@ def upload_file_to_blob(file_path, container_name):
 def assign_content_to_playlist(playlist, content):
     playlist["content"] = []
     
+    count = 1
     for i in range(1, 6):
-        content_doc = random.choice(content)
+        content_item = random.choice(content)
         content_info = {
-            "id": content_doc["id"],
-            "display_order": i
+            "id": content_item["id"],
+            "display_order": count
         }
         
-        if content_info in playlist["content"]:
+        if content_is_already_in_playlist(content_item, playlist):
             continue
         
         playlist["content"].append(content_info)
+        count += 1
 
     return playlist
 
@@ -156,6 +157,12 @@ def write_playlist_to_mongo(playlists):
 
     client.close()
     
+def content_is_already_in_playlist(content, playlist):
+    for content_item in playlist["content"]:
+        if content_item["id"] == content["id"]:
+            return True
+        
+    return False
 
 if __name__ == "__main__":
 
