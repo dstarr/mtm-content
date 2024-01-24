@@ -16,17 +16,12 @@
       <div class="col-auto">
         <label for="playlists" class="form-label">Playlists</label>
         <div id="playlists" class="list-group">
-          {% for playlist in model.all_playlists %}
-            {% for content in playlist["content"] %}
-              {% if model.content["id"] in content %}
-                <div class="list-group-item list-group-item-action">
-                    <a href="{{ url_for('playlists.playlist_detail', playlist_id = playlist['id']) }}">{{ playlist['name'] }}</a>
-                </div>
-              {% endif %}
-            {% endfor %}
+          {% for playlist in model.playlists %}
+            <div class="list-group-item list-group-item-action">
+                <a href="{{ url_for('playlists.playlist_detail', playlist_id = playlist['id']) }}">{{ playlist['name'] }}</a>
+            </div>
           {% endfor %}
-        </ul>
-
+        </div>
       </div>
     </div>
 

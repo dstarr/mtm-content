@@ -24,22 +24,25 @@ class ContentService:
 
         return content
 
-    def get_contents_for_playlist(self, playlist_id):
-        _, content_collection = self.get_collections()
-
-        contents = content_collection.find({"playlist_id": playlist_id})
-
-        return contents
-
+    def get_playlists_for_content(self, content_id):
+        all_playlists = self.get_playlists()
+        for playlist in all_playlists:
+            if content_id in playlist["content"]:
+                yield playlist
+        
+    def update_playlists_for_content(content_id, playlist_ids):
+        pass
+        
     def add_content(self, content):
         _, content_collection = self.get_collections()
 
         content_collection.insert_one(content)
 
-    def update_content(self, content_id, content_to_update):
+    def update_content(self, content_to_update):
 
         _, content_collection = self.get_collections()
 
+        content_id = content_to_update["id"]
         content_collection.update_one({"id": content_id}, {"$set": content_to_update})
 
     def get_playlists(self):

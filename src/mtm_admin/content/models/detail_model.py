@@ -1,7 +1,7 @@
 class DetailModel():
     
-    def __init__(self, content, all_playlists):
+    def __init__(self, content, playlists):
         self.content = content
-        self.all_playlists = all_playlists
+        self.playlists = playlists
         
     

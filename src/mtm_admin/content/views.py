@@ -48,40 +48,33 @@ def content_add():
 
         content_service.add_content(content=content)
 
-        return redirect(url_for('contents.content_detail', content_id=content["id"]))
+        return redirect(url_for('content.content_detail', content_id=content["id"]))
 
 @content_bp.route('detail/<content_id>')
 def content_detail(content_id):
     content = content_service.get_content(content_id)
-    all_playlists = content_service.get_playlists()
+    content_playlists = content_service.get_playlists_for_content(content_id)
     
-    model = DetailModel(content=content, all_playlists=all_playlists)
+    model = DetailModel(content=content, playlists=content_playlists)
 
     return render_template('content_detail.html', model=model)
 
 @content_bp.route('edit/<content_id>', methods=['GET', 'POST'])
 def content_edit(content_id):
+    
     if request.method == 'POST':
         property_values=request.form
 
+        # save changes to the content
         content = content_service.get_content(content_id)
+        new_content_entity = map_content_entity(content=content, property_values=property_values)
+        content_service.update_content(content_to_update=new_content_entity)
 
-        # map new values to entity 
-        is_active = False
-        if property_values.get("is_active"):
-            is_active = True
-            
-        content["date_updated"] = datetime.utcnow()
-        content["description"] = property_values["description"]
-        content["is_active"] = is_active
-        content["notes"] = property_values["notes"]
-        content["playlist_id"] = property_values["playlist_id"]
-        content["title"] = property_values["title"]
-        content["updated_by"] = ""
+        # save changes to the playlists
+        playlist_ids = property_values.getlist('playlist_id')
+        content_service.update_playlists_for_content(content_id=content_id, playlist_ids=playlist_ids)
 
-        content_service.update_content(content_id=content_id, content_to_update=content)
-
-        return redirect(url_for('contents.content_detail', content_id=content["id"]))
+        return redirect(url_for('content.content_detail', content_id=content_id))
 
     # render the edit form
     elif request.method == 'GET':
@@ -89,7 +82,22 @@ def content_edit(content_id):
         playlists = content_service.get_playlists()
         model = EditModel(playlists=playlists, content=content)
     
-        return render_template('contents_edit.html', model=model)
+        return render_template('content_edit.html', model=model)
+
+def map_content_entity(content, property_values):
+
+    is_active = False
+    if property_values.get("is_active"):
+        is_active = True
+            
+    content["date_updated"] = datetime.utcnow()
+    content["description"] = property_values["description"]
+    content["is_active"] = is_active
+    content["notes"] = property_values["notes"]
+    content["playlist_id"] = property_values["playlist_id"]
+    content["title"] = property_values["title"]
+    content["updated_by"] = ""
+    return content
     
 @content_bp.route('add_attachment', methods=['POST'])
 def content_attachment_add():
