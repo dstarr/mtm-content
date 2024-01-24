@@ -120,9 +120,6 @@ def upload_file_to_blob(file_path, container_name):
     return blob_url
 
 def assign_content_to_playlist(playlist, content):
-    
-    print(content)
-    
     playlist["content"] = []
 
     for i in range(0, 5):
