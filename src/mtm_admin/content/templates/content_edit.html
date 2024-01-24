@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<form id="module_edit" action="{{ url_for('content.content_edit', content_id = model.content['id']) }}" method="post">
+<form id="content_edit" action="{{ url_for('content.content_edit', content_id = model.content['id']) }}" method="post">
   <input type="hidden" name="id" value="{{ model.content['id'] }}" />
 
   <div>
@@ -56,7 +56,7 @@
 
     <div>
       <h3>Notes</h3>
-      <p>Notes are used to provide additional information about the module. They are not displayed to the user.</p>
+      <p>Notes are used to provide additional information about the content. They are not displayed to the user.</p>
       <div class="mb-3">
         <textarea id="notes" name="notes" cols="80" rows="6">{{ model.content['notes'] }}</textarea>
       </div>
@@ -78,7 +78,7 @@
         <div id="video">
           {% if model.content["video_url"] and model.content["video_url"] != None %}
           <!-- show a delete button -->
-          <form action="{{ url_for('content.module_attachment_delete') }}" method="post">
+          <form action="{{ url_for('content.content_attachment_delete') }}" method="post">
             <a href="{{ model.content['video_url'] }}" class="btn btn-primary btn-sm">Download</a>
             <input type="hidden" name="content_id" value="{{ model.content['id'] }}" />
             <input type="hidden" name="blob_url" value="{{ model.content['video_url'] }}" />
@@ -102,7 +102,7 @@
 
           {% if model.content["transcript_url"] and model.content["transcript_url"] != None %}
           <!-- show a delete button -->
-          <form action="{{ url_for('content.module_attachment_delete') }}" method="post">
+          <form action="{{ url_for('content.content_attachment_delete') }}" method="post">
             <a href="{{ model.content['transcript_url'] }}" class="btn btn-primary btn-sm">Download</a>
             <input type="hidden" name="content_id" value="{{ model.content['id'] }}" />
             <input type="hidden" name="blob_url" value="{{ model.content['transcript_url'] }}" />
@@ -128,7 +128,7 @@
 
           {% if model.content["slides_url"] and model.content["slides_url"] != None %}
           <!-- show a delete button -->
-          <form action="{{ url_for('content.module_attachment_delete') }}" method="post">
+          <form action="{{ url_for('content.content_attachment_delete') }}" method="post">
             <a href="{{ model.content['slides_url'] }}" class="btn btn-primary btn-sm">Download</a>
             <input type="hidden" name="content_id" value="{{ model.content['id'] }}" />
             <input type="hidden" name="blob_url" value="{{ model.content['slides_url'] }}" />
@@ -152,7 +152,7 @@
 
           {% if model.content["pdf_url"] and model.content["pdf_url"] != None %}
           <!-- show a delete button -->
-          <form action="{{ url_for('content.module_attachment_delete') }}" method="post">
+          <form action="{{ url_for('content.content_attachment_delete') }}" method="post">
             <a href="{{ model.content['pdf_url'] }}" class="btn btn-primary btn-sm">Download</a>
             <input type="hidden" name="content_id" value="{{ model.content['id'] }}" />
             <input type="hidden" name="blob_url" value="{{ model.content['pdf_url'] }}" />

@@ -123,7 +123,7 @@ def content_attachment_add():
     print(file_type.value["content_key"])
 
     content[file_type.value["content_key"]] = blob_url
-    content_service.update_content(content_id=content_id, content_to_update=content)
+    content_service.update_content(content_to_update=content)
     
     return redirect(request.referrer)
 
@@ -138,7 +138,7 @@ def content_attachment_delete():
     # remove the attachment from the content
     content = content_service.get_content(content_id)
     content[file_type.value["content_key"]] = None
-    content_service.update_content(content_id=content_id, content_to_update=content)
+    content_service.update_content(content_to_update=content)
 
     # delete the attachment from blob storage
     file_service.delete_blob_in_storage(file_type=file_type, blob_name=blob_name)
