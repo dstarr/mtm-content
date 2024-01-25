@@ -13,7 +13,7 @@
 <table class="table table-striped table-hover">
   <thead>
     <tr>
-      <th scope="col">#</th>
+      <th scope="col">Display order</th>
       <th scope="col">Title</th>
     </tr>
   </thead>
@@ -21,7 +21,7 @@
 
       {% for content_info in model.get_content() %}
       <tr>
-          <th scope="row">{{ loop.index }}</th>
+          <th scope="row">{{ content_info["display_order"] }}</th>
           <td><a href="{{ url_for('content.content_detail', content_id=content_info['id']) }}">{{ content_info.title }}</a></td>
       </tr>
     {% endfor %}

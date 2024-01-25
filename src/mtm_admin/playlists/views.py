@@ -18,15 +18,19 @@ def playlists_index():
 @playlists_bp.route("/<playlist_id>")
 def playlist_detail(playlist_id):
     playlist = content_service.get_playlist(id=playlist_id)
-    contents = []
+    ordered_content_items = playlist["content"]
     
-    for content_id in playlist["content"]:
-        content = content_service.get_content(content_id=content_id)
-        contents.append(
-            { "id": content["id"], "title": content["title"] }
+    ordered_content_items = sorted(ordered_content_items, key=lambda x: x['display_order'])
+    
+    content_items = []
+    
+    for content_item in ordered_content_items:
+        content = content_service.get_content(content_id=content_item['id'])
+        content_items.append(
+            { "id": content["id"], "title": content["title"], "display_order": content_item["display_order"] }
         )
         
-    model = PlaylistDetailModel(content=contents, playlist=playlist)
+    model = PlaylistDetailModel(content_info_items=content_items, playlist=playlist)
 
     return render_template("playlists_detail.html", model=model)
 
