@@ -1,4 +1,5 @@
 from flask import Blueprint, redirect, render_template, request, url_for
+from playlists.model.playlist_edit_model import PlaylistEditModel
 from playlists.model.playlist_detail_model import PlaylistDetailModel
 from services.content_service import ContentService
 
@@ -37,7 +38,6 @@ def playlist_detail(playlist_id):
 @playlists_bp.route("edit/<playlist_id>", methods=["GET", "POST"])
 def playlist_edit(playlist_id):
     if request.method == "POST":
-
         content_service.update_playlist_name(
             id=playlist_id,
             name=request.form["name"],
@@ -47,18 +47,18 @@ def playlist_edit(playlist_id):
     
     elif request.method == "GET":
         playlist = content_service.get_playlist(id=playlist_id)
-        content_info = []
-        for content_id in playlist["content"]:
-            content = content_service.get_content(content_id=content_id)
-            content_info.append(
+        content_info_list = []
+        for content_info in playlist["content"]:
+            content = content_service.get_content(content_id=content_info["id"])
+            content_info_list.append(
                 { 
                  "id": content["id"], 
                  "title": content["title"],
-                #  "display_order": content["display_order"]
+                "display_order": content_info["display_order"]
                 }
             )
     
-    model=PlaylistDetailModel(content=content_info, playlist=playlist)
+    model=PlaylistEditModel(content_info_items=content_info_list, playlist=playlist)
 
     return render_template("playlists_edit.html", model=model)
 

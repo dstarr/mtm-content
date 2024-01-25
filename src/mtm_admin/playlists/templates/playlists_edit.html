@@ -10,10 +10,31 @@
         <input type="text" class="form-control" name="name" id="name" value="{{ model.playlist['name'] }}" required />
       </div>
 
+      <div>
+        <label for="courses" class="form-label">Content</label>
+        <div id="sorted_content" class="form-text">
+        
+          {% for content_info in model.content_info_items %}
+            <ul class="list-group list-group-horizontal" style="margin-bottom: 20px;">
+              <li class="list-group-item list-group-item-action">
+                <input type="hidden" name="display_order" value="{{ content_info['display_order'] }}"/>
+                {{ content_info['display_order'] }}
+              </li>
+              <li class="list-group-item list-group-item-action">
+                {{ content_info['title'] }}
+              </li>
+            </ul>
+          {% endfor %}
+       </div>
+      </div>  
+
       <div class="mb-3">
         <button type="submit" class="btn btn-primary">Save</button>
       </div>
 
     </form>
+
+    <!-- jsDelivr :: Sortable :: Latest (https://www.jsdelivr.com/package/npm/sortablejs) -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
 {% endblock %}
