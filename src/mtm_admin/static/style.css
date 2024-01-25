@@ -31,3 +31,8 @@
     border: 0px;
     border-radius: 0px;
 }
+
+.glyphicon-move {
+    cursor: move;
+    cursor: -webkit-grabbing;
+}

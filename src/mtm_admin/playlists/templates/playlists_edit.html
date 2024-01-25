@@ -9,32 +9,112 @@
         <label for="name" class="form-label">Title</label>
         <input type="text" class="form-control" name="name" id="name" value="{{ model.playlist['name'] }}" required />
       </div>
-
-      <div>
-        <label for="courses" class="form-label">Content</label>
-        <div id="sorted_content" class="form-text">
-        
-          {% for content_info in model.content_info_items %}
-            <ul class="list-group list-group-horizontal" style="margin-bottom: 20px;">
-              <li class="list-group-item list-group-item-action">
-                <input type="hidden" name="display_order" value="{{ content_info['display_order'] }}"/>
-                {{ content_info['display_order'] }}
-              </li>
-              <li class="list-group-item list-group-item-action">
-                {{ content_info['title'] }}
-              </li>
-            </ul>
-          {% endfor %}
-       </div>
-      </div>  
-
       <div class="mb-3">
         <button type="submit" class="btn btn-primary">Save</button>
       </div>
+    </form> 
 
-    </form>
+      <div class="mb-3">
+        <label for="sorted_content" class="form-label">Ordered content list</label>
+        <div id="sorted_content" class="list-group">
+          {% for content_info in model.content_info_items %}
+            <div class="list-group-item list-group-item-action">
+              <input type="hidden" name="display_order" value="{{ content_info['id'] }}"/>
+              <span class="display_order">{{ content_info['display_order'] }}</span>
+              <span class="display_order_title">{{ content_info['title'] }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      </div>  
 
-    <!-- jsDelivr :: Sortable :: Latest (https://www.jsdelivr.com/package/npm/sortablejs) -->
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+      <button id="sort_button" type="button" class="btn btn-primary" onclick="onOrderedListSubmit()">Set order</button>
 
+      <!-- jsDelivr :: Sortable :: Latest (https://www.jsdelivr.com/package/npm/sortablejs) -->
+      <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+    <script>
+      
+      onOrderedListSubmit = function() {
+        
+        // var sortedContentDiv = document.getElementById('sorted_content');
+        var domItems = document.querySelectorAll('input[type="hidden"]');
+          
+        let sortedItems = [];
+        for (i = 0; i < domItems.length; i++) {
+
+          // find the display_order_title element and get the content title 
+          let sibling = domItems[i].nextElementSibling;
+          let title = null;
+          while (sibling) {
+            if (sibling.classList.contains('display_order_title')) {
+              title = sibling.textContent;
+              break;
+            }
+            sibling = sibling.nextElementSibling; // Move to the next sibling
+          }
+          
+          // create a sorted item object and add it to the sorted items array
+          sortedItem = {
+            id: domItems[i].value,
+            display_order: i + 1,
+            title: title
+          };
+          sortedItems.push(sortedItem);
+
+          console.log("id: " + sortedItem.id + ", display_order: " + sortedItem.display_order + ", title: " + sortedItem.title);
+        } 
+
+        postSortedContentItems(sortedItems);
+      }
+    
+      postSortedContentItems = function(sortedItems) {
+
+        let url = "{{ url_for('playlists.playlist_order_update', playlist_id=model.playlist['id']) }}";
+
+        fetch(url, {
+          method: 'POST', // Specify the request method
+          headers: {
+              'Content-Type': 'application/json', // Specify the content type
+          },
+          body: JSON.stringify(sortedItems) // Convert the data object to JSON
+        })
+        .then(response => {
+            if (!response.ok) {
+                alert('Failed to save the list order.');
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            alert('Saved the list order.');
+            return; // or response.text() if the response is not in JSON format
+        })
+        .catch(error => {
+          alert('Failed to save the list order.');
+          console.error('Error:', error); // Handle errors
+        });
+      }
+
+      var sortedContentDiv = document.getElementById('sorted_content');
+
+      var sortable = Sortable.create(sortedContentDiv, {
+        
+        group: 'shared',
+        animation: 150,
+        
+        onFoo: function (evt) {
+          
+          var items = evt.to.querySelectorAll('input[type="hidden"]');
+          
+          sortedItems = [];
+          for (i = 0; i < items.length; i++) {
+            sortedItem = {
+              id: items[i].value,
+              display_order: i + 1,
+              title: items[i].nextElementSibling.textContent
+            };
+            sortedItems[i] = sortedItem;
+
+            console.log("id: " + sortedItem.id + ", display_order: " + sortedItem.display_order + ", title: " + sortedItem.title);
+          }
+        },
+      });
+  </script>
 {% endblock %}

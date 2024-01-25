@@ -62,3 +62,15 @@ def playlist_edit(playlist_id):
 
     return render_template("playlists_edit.html", model=model)
 
+@playlists_bp.route("playlist_order/<playlist_id>", methods=["POST"])
+def playlist_order_update(playlist_id):
+    sorted_content_items = request.json
+    
+    print(sorted_content_items)
+    
+    return "", 200
+    
+    # content_service.update_playlist_order(
+    #     id=playlist_id,
+    #     sorted_content_items=sorted_content_items,
+    # )
