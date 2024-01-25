@@ -118,6 +118,18 @@ class ContentService:
 
         metadata_collection.update_one({"name": "playlists"}, {"$set": playlists_doc})
 
+    def update_playlist_content_display_order(self, playlist_id, content_items):
+        metadata_collection, _ = self.get_collections()
+
+        playlists_doc = metadata_collection.find_one({"name": "playlists"})
+
+        for playlist in playlists_doc["playlists"]:
+            if str(playlist["id"]) == playlist_id:
+                playlist["content"] = content_items
+                break
+        
+        metadata_collection.update_one({"name": "playlists"}, {"$set": playlists_doc})
+
     def get_collections(self):
         client = pymongo.MongoClient(config.COSMOS_DB_CONNECTION_STRING)
         db = client[config.COSMOS_DB_NAME]
@@ -142,3 +154,4 @@ class ContentService:
             metadata_collection = db[config.COSMOS_DB_METADATA_COLLECTION_NAME]
 
         return metadata_collection, content_collection
+

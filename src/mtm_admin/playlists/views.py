@@ -66,9 +66,16 @@ def playlist_edit(playlist_id):
 def playlist_order_update(playlist_id):
     sorted_content_items = request.json
     
-    print(sorted_content_items)
-    
-    return "", 200
+    try:
+        content_service.update_playlist_content_display_order(
+            playlist_id=playlist_id,
+            content_items=sorted_content_items
+        )
+        return "", 200
+    except Exception as e:
+        print(e)
+        return "", 500
+        
     
     # content_service.update_playlist_order(
     #     id=playlist_id,

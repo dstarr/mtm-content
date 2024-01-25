@@ -16,11 +16,11 @@
 
       <div class="mb-3">
         <label for="sorted_content" class="form-label">Ordered content list</label>
+        <p>Drag and drop the items to set the order.</p>
         <div id="sorted_content" class="list-group">
           {% for content_info in model.content_info_items %}
             <div class="list-group-item list-group-item-action">
               <input type="hidden" name="display_order" value="{{ content_info['id'] }}"/>
-              <span class="display_order">{{ content_info['display_order'] }}</span>
               <span class="display_order_title">{{ content_info['title'] }}</span>
             </div>
           {% endfor %}
@@ -56,12 +56,9 @@
           // create a sorted item object and add it to the sorted items array
           sortedItem = {
             id: domItems[i].value,
-            display_order: i + 1,
-            title: title
+            display_order: i + 1
           };
           sortedItems.push(sortedItem);
-
-          console.log("id: " + sortedItem.id + ", display_order: " + sortedItem.display_order + ", title: " + sortedItem.title);
         } 
 
         postSortedContentItems(sortedItems);
@@ -79,42 +76,23 @@
           body: JSON.stringify(sortedItems) // Convert the data object to JSON
         })
         .then(response => {
-            if (!response.ok) {
-                alert('Failed to save the list order.');
-                throw new Error('Network response was not ok ' + response.statusText);
-            }
-            alert('Saved the list order.');
-            return; // or response.text() if the response is not in JSON format
+          if (!response.ok) {
+              throw new Error('Network response was not ok: ' + response.statusText);
+          }
+        })
+        .then(data => {
+            alert('The list order was saved successfully.');
         })
         .catch(error => {
-          alert('Failed to save the list order.');
+          alert('Something went wrong. Failed to save the list order.');
           console.error('Error:', error); // Handle errors
         });
       }
 
       var sortedContentDiv = document.getElementById('sorted_content');
-
       var sortable = Sortable.create(sortedContentDiv, {
-        
         group: 'shared',
         animation: 150,
-        
-        onFoo: function (evt) {
-          
-          var items = evt.to.querySelectorAll('input[type="hidden"]');
-          
-          sortedItems = [];
-          for (i = 0; i < items.length; i++) {
-            sortedItem = {
-              id: items[i].value,
-              display_order: i + 1,
-              title: items[i].nextElementSibling.textContent
-            };
-            sortedItems[i] = sortedItem;
-
-            console.log("id: " + sortedItem.id + ", display_order: " + sortedItem.display_order + ", title: " + sortedItem.title);
-          }
-        },
       });
   </script>
 {% endblock %}
