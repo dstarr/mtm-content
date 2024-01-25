@@ -20,7 +20,7 @@ file_service = FileService()
 def content_add():
     if request.method == 'GET':
         playlists=content_service.get_playlists()
-        return render_template('contents_add.html', playlists=playlists)
+        return render_template('content_add.html', playlists=playlists)
     
     elif request.method == 'POST':
 
@@ -33,20 +33,21 @@ def content_add():
         content = {
             "id": str(uuid.uuid4()),
 
-            "created_by": "",
+            "created_by": "David",
             "date_created": datetime.utcnow(),
             "date_updated": datetime.utcnow(),
             "updated_by": "",
-
             "notes": property_values["notes"],
             "description": property_values["description"],
             "is_active": is_active,
-            "playlist_id": property_values["playlist_id"],
             "title": property_values["title"],
             "youtube_url": property_values["youtube_url"],
         }
 
         content_service.add_content(content=content)
+        
+        playlist_ids = property_values.getlist('playlist_id')
+        content_service.update_playlists_content(content_id=content["id"], playlist_ids=playlist_ids)
 
         return redirect(url_for('content.content_detail', content_id=content["id"]))
 

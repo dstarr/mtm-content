@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<form action="{{ url_for('modules.module_add') }}" method="post">
+<form action="{{ url_for('content.content_add') }}" method="post">
   <h3>Add a new module</h3>
 
   <div class="data-container">
@@ -24,12 +24,16 @@
 
     <div>
       <div class="col-auto">
-        <label for="playlist_id" class="form-label">Playlist</label>
-        <select name="playlist_id" id="playlist_id" class="form-select" required>
+        <label for="playlists" class="form-label">Playlists</label>
+        <div id="playlists" class="list-group">
+
           {% for playlist in playlists %}
-            <option value="{{ playlist['id'] }}">{{ playlist['name'] }}</option>
+            <div class="mb-3 list-group-item list-group-item-action">
+              <input type="checkbox" title="playlist['name']" class="form-check-input" name="playlist_id" id="playlist_{{ playlist['id'] }}" value="{{ playlist['id'] }}" />
+              {{ playlist['name'] }}
+            </div>
           {% endfor %}
-        </select>
+        </div>
       </div>
     </div>
 

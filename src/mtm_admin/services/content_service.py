@@ -47,9 +47,10 @@ class ContentService:
             "display_order": 999
         }
         
+        # remove the content from all playlists
         for playlist in playlists_doc["playlists"]:
-            # remove the content from all playlists
-            playlist["content"] = [item for item in playlist["content"] if item["id"] != content_id]
+            if playlist["content"] is not None:
+                playlist["content"] = [item for item in playlist["content"] if item["id"] != content_id]
         
         # if a playlist is in the list of playlists to add the content to, add it
         for playlist in playlists_doc["playlists"]:
