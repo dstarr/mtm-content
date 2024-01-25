@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<form action="{{ url_for('content.content_add') }}" method="post">
+<form action="{{ url_for('content.content_add') }}" method="post" id="content_form">
   <h3>Add a new module</h3>
 
   <div class="data-container">
@@ -15,10 +15,8 @@
 
     <div>
       <div class="col-auto">
-        <div>
           <label for="description" class="form-label">Description</label>
-        </div>
-        <textarea class="text-box" id="description" name="description" required></textarea>
+          <textarea class="text-box" id="description" name="description" required></textarea>
       </div>
     </div>
 
@@ -61,11 +59,14 @@
     
     <div class="mb-3">
       <div class="col-auto short_input">
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button id="submit" type="submit" class="btn btn-primary">Save</button>
       </div>
     </div>
 
   </form>
 
   {% include 'editor_script.html' %}
+
+  {% include 'playlist_selection_script.html' %}
+  
 {% endblock %}

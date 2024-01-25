@@ -32,7 +32,6 @@ def content_add():
 
         content = {
             "id": str(uuid.uuid4()),
-
             "created_by": "David",
             "date_created": datetime.utcnow(),
             "date_updated": datetime.utcnow(),

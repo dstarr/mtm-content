@@ -1,0 +1,13 @@
+<script>
+    document.getElementById('content_form').addEventListener('submit', function(e) {
+      // Get all checkboxes with the name 'playlist_id'
+      var checkboxes = document.querySelectorAll('input[name="playlist_id"]:checked');
+  
+      // Check if no checkbox is checked
+      if (checkboxes.length === 0) {
+        // Prevent form submission
+        e.preventDefault();
+        alert('Please select at least one playlist.');
+      }
+    });
+  </script>
