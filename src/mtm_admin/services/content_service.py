@@ -50,7 +50,9 @@ class ContentService:
         for playlist in playlists_doc["playlists"]:
             # remove the content from all playlists
             playlist["content"] = [item for item in playlist["content"] if item["id"] != content_id]
-            # if the playlist is in the list of playlists to add the content to, add it
+        
+        # if a playlist is in the list of playlists to add the content to, add it
+        for playlist in playlists_doc["playlists"]:
             if playlist["id"] in playlist_ids:
                 playlist["content"].append(new_content_item)
             

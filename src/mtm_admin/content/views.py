@@ -72,6 +72,7 @@ def content_edit(content_id):
 
         # save changes to the playlists
         playlist_ids = property_values.getlist('playlist_id')
+        
         content_service.update_playlists_content(content_id=content_id, playlist_ids=playlist_ids)
 
         return redirect(url_for('content.content_detail', content_id=content_id))
