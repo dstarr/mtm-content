@@ -55,10 +55,6 @@ def content_detail(content_id):
     content = content_service.get_content(content_id)
     content_playlists = content_service.get_playlists_for_content(content_id)
     
-    print("======   content_playlists   ======")
-    for playlist in content_playlists:
-        print(playlist)
-    
     model = DetailModel(content=content, playlists_info=content_playlists)
 
     return render_template('content_detail.html', model=model)
@@ -84,7 +80,22 @@ def content_edit(content_id):
     elif request.method == 'GET':
         content = content_service.get_content(content_id)
         playlists = content_service.get_playlists()
-        model = EditModel(playlists=playlists, content=content)
+        
+        playlists_infos = []
+        
+        for playlist in playlists:
+            
+            is_selected = any(content_info['id'] == content_id for content_info in playlist["content"])
+
+            playlist_info = {
+                "id": playlist["id"],
+                "name": playlist["name"],
+                "is_selected": is_selected
+            }
+            playlists_infos.append(playlist_info)
+        
+        
+        model = EditModel(playlists=playlists_infos, content=content)
     
         return render_template('content_edit.html', model=model)
 

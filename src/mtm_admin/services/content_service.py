@@ -41,19 +41,21 @@ class ContentService:
 
         metadata_collection, _ = self.get_collections()
         playlists_doc = metadata_collection.find_one({"name": "playlists"})
-
-        # enumerate the playlists and update the content in each when needed
-        for playlist in playlists_doc["playlists"]:
-            if playlist["id"] in playlist_ids:
-                # add the content to the playlist if it is not already there
-                if content_id not in playlist["content"]:
-                    playlist["content"].append(content_id)
-            # remove the content from the playlist if it is there
-            elif content_id in playlist["content"]:
-                playlist["content"].remove(content_id)
-
-        metadata_collection.update_one({"name": "playlists"}, {"$set": playlists_doc})
         
+        new_content_item = {
+            "id": content_id,
+            "display_order": 999
+        }
+        
+        for playlist in playlists_doc["playlists"]:
+            # remove the content from all playlists
+            playlist["content"] = [item for item in playlist["content"] if item["id"] != content_id]
+            # if the playlist is in the list of playlists to add the content to, add it
+            if playlist["id"] in playlist_ids:
+                playlist["content"].append(new_content_item)
+            
+        metadata_collection.update_one({"name": "playlists"}, {"$set": playlists_doc})
+
     def add_content(self, content):
         _, content_collection = self.get_collections()
 

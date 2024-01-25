@@ -25,7 +25,7 @@
           <div id="playlists" class="list-group">
             {% for playlist in model.playlists %}
               <div class="list-group-item list-group-item-action">
-                {% if model.content["id"] in playlist["content"] %}
+                {% if playlist["is_selected"] %}
                   <input type="checkbox" title="playlist['name']" class="form-check-input" name="playlist_id" id="playlist_{{ playlist['id'] }}"
                     value="{{ playlist['id'] }}" checked />
                 {% else %}
