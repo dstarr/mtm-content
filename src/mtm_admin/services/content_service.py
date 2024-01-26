@@ -135,6 +135,10 @@ class ContentService:
         metadata_collection.update_one({"name": "playlists"}, {"$set": playlists_doc})
 
     def get_collections(self):
+        
+        print("======   get connection   ======")
+        print(f"COSMOS_DB_CONNECTION_STRING: {config.COSMOS_DB_CONNECTION_STRING}")
+        
         client = pymongo.MongoClient(config.COSMOS_DB_CONNECTION_STRING)
         db = client[config.COSMOS_DB_NAME]
 
