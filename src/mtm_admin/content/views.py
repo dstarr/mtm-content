@@ -112,7 +112,9 @@ def map_content_entity(content, property_values):
     content["notes"] = property_values["notes"]
     content["playlist_id"] = property_values["playlist_id"]
     content["title"] = property_values["title"]
+    content["youtube_url"] = property_values["youtube_url"]
     content["updated_by"] = ""
+    
     return content
     
 @content_bp.route('add_attachment', methods=['POST'])
