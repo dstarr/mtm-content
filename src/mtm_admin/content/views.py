@@ -131,10 +131,6 @@ def content_attachment_add():
     file_contents = file.read()
     file_type = find_enum_by_container_key_value(key='content_type', value=attachment_type)
     
-    print("======   file_type   ======")
-    print(attachment_type)
-    print(file_type)
-
     blob_url = file_service.upload_to_blob(blob_name=file_name, content=file_contents, file_type=file_type)
 
     # add the data about the uploaded files to the content
