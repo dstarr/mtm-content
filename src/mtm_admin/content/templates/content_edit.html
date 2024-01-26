@@ -74,6 +74,7 @@
 <div style="padding-top: 30px;">
   <h3>File attachments</h3>
   <div class="data-container">
+    
     <div class="row mb-3">
       <div class="col-auto short_input">
         <label for="video" class="form-label">Video</label>
@@ -92,8 +93,8 @@
             action="{{ url_for('content.content_attachment_add') }}">
             <input type="hidden" name="content_id" value="{{ model.content['id'] }}" />
             <input type="hidden" name="attachment_type" value="video" />
-            <input name="file" type="file" accept=".mp4" />
-            <button type="submit" class="btn btn-primary">Upload</button>
+            <input name="file" type="file" class="file-input" accept=".mp4" />
+            <button type="submit" class="btn btn-primary submit-btn" disabled>Upload</button>
           </form>
           {% endif %}
         </div>
@@ -116,13 +117,14 @@
             action="{{ url_for('content.content_attachment_add') }}">
             <input type="hidden" name="content_id" value="{{ model.content['id'] }}" />
             <input type="hidden" name="attachment_type" value="transcript" />
-            <input name="file" type="file" accept=".vtt,.txt" />
-            <button type="submit" class="btn btn-primary btn-sm">Upload</button>
+            <input name="file" class="file-input" type="file" accept=".vtt,.txt" />
+            <button type="submit" class="btn btn-primary btn-sm submit-btn" disabled>Upload</button>
           </form>
           {% endif %}
         </div>
       </div>
     </div>
+
     <div class="row mb-3">
       <div class="col-auto short_input">
         <label for="slides" class="form-label">Slides</label>
@@ -142,8 +144,8 @@
             action="{{ url_for('content.content_attachment_add') }}">
             <input type="hidden" name="content_id" value="{{ model.content['id'] }}" />
             <input type="hidden" name="attachment_type" value="slides" />
-            <input name="file" type="file" accept=".pptx" />
-            <button type="submit" class="btn btn-sm btn-primary">Upload</button>
+            <input name="file" class="file-input" type="file" accept=".pptx" />
+            <button type="submit" class="btn btn-sm btn-primary submit-btn" disabled>Upload</button>
           </form>
           {% endif %}
         </div>
@@ -166,13 +168,14 @@
             action="{{ url_for('content.content_attachment_add') }}">
             <input type="hidden" name="content_id" value="{{ model.content['id'] }}" />
             <input type="hidden" name="attachment_type" value="pdf" />
-            <input name="file" type="file" accept=".pdf" />
-            <button type="submit" class="btn btn-primary">Upload</button>
+            <input name="file" class="file-input" type="file" accept=".pdf" />
+            <button type="submit" class="btn btn-primary submit-btn" disabled>Upload</button>
           </form>
           {% endif %}
         </div>
       </div>
     </div>
+
   </div>
 </div>
 
@@ -215,6 +218,32 @@
 
   </div>
 </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+      // Enable submit button when a file is selected
+      var fileInputs = document.querySelectorAll('.file-input');
+      fileInputs.forEach(function(input) {
+          input.addEventListener('change', function() {
+              if (input.files.length > 0) {
+                  var form = input.closest('form');
+                  var submitButton = form.querySelector('.submit-btn');
+                  submitButton.disabled = false;
+              }
+          });
+      });
+
+          // Change cursor to wait cursor when upload is initiated
+      var submitButtons = document.querySelectorAll('.submit-btn');
+      submitButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            document.body.style.cursor = 'wait';
+        });
+      });
+
+    });
+  </script>
 
   {% include 'editor_script.html' %}
   {% include 'playlist_selection_script.html' %}
