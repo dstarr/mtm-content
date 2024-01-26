@@ -130,13 +130,15 @@ def content_attachment_add():
     file_name = file.filename
     file_contents = file.read()
     file_type = find_enum_by_container_key_value(key='content_type', value=attachment_type)
+    
+    print("======   file_type   ======")
+    print(attachment_type)
+    print(file_type)
 
     blob_url = file_service.upload_to_blob(blob_name=file_name, content=file_contents, file_type=file_type)
 
     # add the data about the uploaded files to the content
     content = content_service.get_content(content_id)
-    print("======   content   ======")           
-    print(file_type.value["content_key"])
 
     content[file_type.value["content_key"]] = blob_url
     content_service.update_content(content_to_update=content)
@@ -162,6 +164,9 @@ def content_attachment_delete():
     return redirect(request.referrer)
 
 def find_enum_by_container_key_value(key, value):
+    print("======   find_enum_by_container_key_value   ======")
+    print(key)
+    print(value)
     for file_type in FileType:
         if file_type.value[key] == value:
             return file_type

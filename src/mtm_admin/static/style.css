@@ -20,7 +20,8 @@
     border: 1px solid rgba(0,0,0,.8);
     border-radius: 5px;
     padding: 10px 10px;
-    margin-bottom: 15px;
+    margin: 10px;
+    width:100%;
 }
 
 .short_input {
@@ -30,6 +31,7 @@
 .dropzone {
     border: 0px;
     border-radius: 0px;
+    padding-bottom: 10px;
 }
 
 .glyphicon-move {

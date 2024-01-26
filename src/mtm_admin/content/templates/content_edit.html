@@ -52,31 +52,33 @@
         </div>
       </div>
 
-    </div>
-
-    <div class="row mb-3">
-      <div class="col-auto short_input">
-      <h3>Notes</h3>
-        <p>Notes are used to provide additional information about the content. They are not displayed to the user.</p>
-        <div>
-          <textarea id="notes" name="notes" cols="80" rows="6">{{ model.content['notes'] }}</textarea>
+      <div class=" mb-3">
+        <div class="col-auto">
+          <label for="notes" class="form-label">Notes</label>
+          <p>Notes are used to provide additional information about the content. They are not displayed to the user.</p>
+          <div id="notes">
+            <textarea id="notes" name="notes" cols="80" rows="6">{{ model.content['notes'] }}</textarea>
+          </div>
         </div>
       </div>
+
       <div class="mb-3">
         <div class="col-auto short_input">
           <button type="submit" class="btn btn-primary">Save</button>
         </div>
       </div>
+
     </div>
-  </form>
+  </div>
+</form>
 
 
 <div style="padding-top: 30px;">
   <h3>File attachments</h3>
-  <div class="data-container">
+  <div>
     
     <div class="row mb-3">
-      <div class="col-auto short_input">
+      <div class="col-auto data-container">
         <label for="video" class="form-label">Video</label>
         <div id="video">
           {% if model.content["video_url"] and model.content["video_url"] != None %}
@@ -99,34 +101,10 @@
           {% endif %}
         </div>
       </div>
-      <div class="col-auto short_input">
-        <label for="transcript" class="form-label">Transcript</label>
-        <div id="transcript">
-
-          {% if model.content["transcript_url"] and model.content["transcript_url"] != None %}
-          <!-- show a delete button -->
-          <form action="{{ url_for('content.content_attachment_delete') }}" method="post">
-            <a href="{{ model.content['transcript_url'] }}" class="btn btn-primary btn-sm">Download</a>
-            <input type="hidden" name="content_id" value="{{ model.content['id'] }}" />
-            <input type="hidden" name="blob_url" value="{{ model.content['transcript_url'] }}" />
-            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-          </form>
-          {% else %}
-          <!-- show an upload form -->
-          <form class="dropzone" method="post" enctype="multipart/form-data"
-            action="{{ url_for('content.content_attachment_add') }}">
-            <input type="hidden" name="content_id" value="{{ model.content['id'] }}" />
-            <input type="hidden" name="attachment_type" value="transcript" />
-            <input name="file" class="file-input" type="file" accept=".vtt,.txt" />
-            <button type="submit" class="btn btn-primary btn-sm submit-btn" disabled>Upload</button>
-          </form>
-          {% endif %}
-        </div>
-      </div>
     </div>
 
     <div class="row mb-3">
-      <div class="col-auto short_input">
+      <div class="col-auto data-container">
         <label for="slides" class="form-label">Slides</label>
         <div id="slides">
 
@@ -150,7 +128,9 @@
           {% endif %}
         </div>
       </div>
-      <div class="col-auto short_input">
+    </div>
+    <div class="row mb-3">
+      <div class="col-auto data-container">
         <label for="pdf" class="form-label">PDF</label>
         <div id="pdf">
 
@@ -176,10 +156,64 @@
       </div>
     </div>
 
+    <div class="row mb-3">
+      <div class="col-auto data-container">
+        <label for="transcript" class="form-label">Transcript</label>
+        <div id="transcript">
+
+          {% if model.content["transcript_url"] and model.content["transcript_url"] != None %}
+          <!-- show a delete button --> 
+          <form action="{{ url_for('content.content_attachment_delete') }}" method="post">
+            <a href="{{ model.content['transcript_url'] }}" class="btn btn-primary btn-sm">Download</a>
+            <input type="hidden" name="content_id" value="{{ model.content['id'] }}" />
+            <input type="hidden" name="blob_url" value="{{ model.content['transcript_url'] }}" />
+            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+          </form>
+          {% else %}
+          <!-- show an upload form -->
+          <form class="dropzone" method="post" enctype="multipart/form-data"
+            action="{{ url_for('content.content_attachment_add') }}">
+            <input type="hidden" name="content_id" value="{{ model.content['id'] }}" />
+            <input type="hidden" name="attachment_type" value="transcript" />
+            <input name="file" class="file-input" type="file" accept=".vtt,.txt" />
+            <button type="submit" class="btn btn-primary btn-sm submit-btn" disabled>Upload</button>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-auto data-container">
+        <label for="code" class="form-label">Sample code</label>
+        <div id="code">
+
+          {% if model.content["sample_code_url"] and model.content["sample_code_url"] != None %}
+          <!-- show a delete button -->
+          <form action="{{ url_for('content.content_attachment_delete') }}" method="post">
+            <a href="{{ model.content['sample_code_url'] }}" class="btn btn-primary btn-sm">Download</a>
+            <input type="hidden" name="content_id" value="{{ model.content['id'] }}" />
+            <input type="hidden" name="blob_url" value="{{ model.content['sample_code_url'] }}" />
+            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+          </form>
+          {% else %}
+          <!-- show an upload form -->
+          <form class="dropzone" method="post" enctype="multipart/form-data"
+            action="{{ url_for('content.content_attachment_add') }}">
+            <input type="hidden" name="content_id" value="{{ model.content['id'] }}" />
+            <input type="hidden" name="attachment_type" value="sample_code" />
+            <input name="file" class="file-input" type="file" accept=".zip" />
+            <button type="submit" class="btn btn-primary submit-btn" disabled>Upload</button>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
-<div style="padding-top: 30px; margin-bottom: 30px;">
+<div style="margin-top: 30px; margin-bottom: 30px;">
   <h3>More information</h3>
   <div class="data-container">
 
