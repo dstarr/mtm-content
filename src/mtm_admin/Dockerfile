@@ -1,6 +1,8 @@
 # Use an official Python runtime as the base image
 FROM python:3.9-slim
 
+RUN apt-get update && apt-get upgrade -y
+
 # Create a non-root user and group
 RUN groupadd -r app_group 
 RUN useradd -r -g app_group app_user
