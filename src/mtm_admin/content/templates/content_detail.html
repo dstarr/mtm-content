@@ -27,17 +27,30 @@
 
     <div class="row mb-3">
       <div class="col-auto short_input">
-        <label class="form-check-label form-label" for="is_active">Is active</label>
-        <div id="is_active">{{ model.content['is_active'] }}</div>
-      </div>
-      <div class="col-auto short_input">
         <label for="youtube_url" class="form-label">YouTube URL</label>
         <div id="youtube_url">
-            <a href="{{ model.content['youtube_url'] }}" target="_blank">{{ model.content['youtube_url'] }}</a>
+          <a href="{{ model.content['youtube_url'] }}" target="_blank">{{ model.content['youtube_url'] }}</a>
+        </div>
+      </div>
+      <div class="col-auto short_input">
+        <label for="short_url" class="form-label">Short link URL</label>
+        <div id="short_url">
+          {% if model.content['short_url'] %}
+            <a href="{{ model.content['short_url'] }}" target="_blank">{{ model.content['short_url'] }}</a>            
+          {% else %}
+            None
+          {% endif %}
         </div>
       </div>
     </div>
-
+    
+    <div class="row">
+      <div class="col-auto short_input">
+        <label class="form-label" for="is_active">Is active</label>
+        <div id="is_active">{{ model.content['is_active'] }}</div>
+      </div>
+    </div>
+    
     <div class="row mb-3">
       <div class="col-auto short_input">
         <label for="attachments" class="form-label">Attachments</label>

@@ -24,9 +24,8 @@
       <div class="col-auto">
         <label for="playlists" class="form-label">Playlists</label>
         <div id="playlists" class="list-group">
-
           {% for playlist in playlists %}
-            <div class="mb-3 list-group-item list-group-item-action">
+            <div class="list-group-item list-group-item-action">
               <input type="checkbox" title="playlist['name']" class="form-check-input" name="playlist_id" id="playlist_{{ playlist['id'] }}" value="{{ playlist['id'] }}" />
               {{ playlist['name'] }}
             </div>
@@ -34,7 +33,18 @@
         </div>
       </div>
     </div>
-
+    
+    <div class="row">
+      <div class="col-auto short_input">
+        <label for="youtube_url" class="form-label">YouTube URL</label>
+        <input type="url" class="form-control" name="youtube_url" id="youtube_url" required />
+      </div>
+      <div class="col-auto short_input">
+        <label for="short_url" class="form-label">Short link URL (optional)</label>
+        <input type="url" class="form-control" name="short_url" id="short_url" />
+      </div>
+    </div>
+    
     <div class="row">
       <div class="col-auto short_input">
         <div class="mb-3 form-check">
@@ -42,13 +52,12 @@
           <input type="checkbox" class="form-check-input" name="is_active" id="is_active" value="True" checked />
         </div>
       </div>
-      <div class="col-auto short_input">
-        <label for="youtube_url" class="form-label">YouTube URL</label>
-        <input type="url" class="form-control" name="youtube_url" id="youtube_url" required />
-      </div>
+      <div class="col-auto short_input"></div>
     </div>
-  </div>
   
+
+
+
     <div class="mb-3">
       <h3>Notes</h3>
       <p>Notes are used to provide additional information about the module. They are not displayed to the user.</p>

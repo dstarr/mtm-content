@@ -69,6 +69,10 @@ class ContentService:
         _, content_collection = self.get_collections()
 
         content_id = content_to_update["id"]
+        
+        print("======   update_content   ======")
+        print(content_to_update["short_url"])
+        
         content_collection.update_one({"id": content_id}, {"$set": content_to_update})
 
     def get_playlists(self):

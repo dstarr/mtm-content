@@ -41,6 +41,7 @@ def content_add():
             "is_active": is_active,
             "title": property_values["title"],
             "youtube_url": property_values["youtube_url"],
+            "short_url": property_values["short_url"],
         }
 
         content_service.add_content(content=content)
@@ -64,10 +65,11 @@ def content_edit(content_id):
     
     if request.method == 'POST':
         property_values=request.form
-
+        
         # save changes to the content
         content = content_service.get_content(content_id)
         new_content_entity = map_content_entity(content=content, property_values=property_values)
+        
         content_service.update_content(content_to_update=new_content_entity)
 
         # save changes to the playlists
@@ -102,6 +104,10 @@ def content_edit(content_id):
 
 def map_content_entity(content, property_values):
 
+    print("======   content_edit   ======")
+    print(property_values["short_url"])
+
+
     is_active = False
     if property_values.get("is_active"):
         is_active = True
@@ -113,6 +119,7 @@ def map_content_entity(content, property_values):
     content["playlist_id"] = property_values["playlist_id"]
     content["title"] = property_values["title"]
     content["youtube_url"] = property_values["youtube_url"]
+    content["short_url"] = property_values["short_url"]
     
     return content
     
