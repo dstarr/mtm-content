@@ -13,7 +13,7 @@
             {% for result in model.get_search_results() %}
                 <tr>
                     <th scope="row">{{ loop.index }}</th>
-                    <td><a href="{{ url_for('modules.module_detail', module_id=result['id']) }}">{{ result['title'] }}</a></td>
+                    <td><a href="{{ url_for('content.content_detail', content_id=result['id']) }}">{{ result['title'] }}</a></td>
                 </tr>
             {% endfor %}
         </tbody>
