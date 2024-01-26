@@ -121,7 +121,7 @@
     </div>
 
     <div class="mb-3">
-      <button type="button" class="btn btn-primary" onclick="window.location.href='{{ url_for('content.content_edit', content_id = model.content['id']) }}'">Edit</button>
+      <a class="btn btn-primary" href="{{ url_for('content.content_edit', content_id = model.content['id']) }}">Edit</a>
     </div>
 
     {% if model.content['video_url'] %}
