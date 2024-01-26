@@ -38,13 +38,10 @@
       </div>
     </div>
 
-    <div class="mb-3">
-      <div class="col-auto">
+    <div class="row mb-3">
+      <div class="col-auto short_input">
         <label for="attachments" class="form-label">Attachments</label>
         <ul id="attachments">
-          {% if model.content['video_url'] %}
-            <li><a href="{{ model.content['video_url'] }}">Video</a></li>
-          {% endif %}
           {% if model.content['slides_url'] %}
           <li><a href="{{ model.content['slides_url'] }}">Slides</a></li>
           {% endif %}
@@ -59,6 +56,16 @@
           {% endif %}
         </ul>
       </div>
+      {% if model.content['video_url'] %}
+        <div class="col-auto short_input">
+          <label for="video_view" class="form-label">View raw video</label>
+          <div id="video_view">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Launch
+            </button>
+          </div>  
+        </div>
+      {% endif %}
     </div>
 
     {% if model.content['notes'] %}
@@ -103,4 +110,28 @@
     <div class="mb-3">
       <button type="button" class="btn btn-primary" onclick="window.location.href='{{ url_for('content.content_edit', content_id = model.content['id']) }}'">Edit</button>
     </div>
+
+    {% if model.content['video_url'] %}
+      <!--Video viewer modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">{{ model.content['title'] }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <video width="640" height="480" preload="metadata" controls>
+                <source src="{{ model.content['video_url'] }}" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
 {% endblock %}
