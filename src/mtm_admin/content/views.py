@@ -32,9 +32,9 @@ def content_add():
 
         content = {
             "id": str(uuid.uuid4()),
-            "created_by": "David",
             "date_created": datetime.utcnow(),
             "date_updated": datetime.utcnow(),
+            "created_by": "",
             "updated_by": "",
             "notes": property_values["notes"],
             "description": property_values["description"],
@@ -113,7 +113,6 @@ def map_content_entity(content, property_values):
     content["playlist_id"] = property_values["playlist_id"]
     content["title"] = property_values["title"]
     content["youtube_url"] = property_values["youtube_url"]
-    content["updated_by"] = ""
     
     return content
     
