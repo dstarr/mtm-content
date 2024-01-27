@@ -15,6 +15,10 @@ content_bp = Blueprint(
 content_service = ContentService()
 file_service = FileService()
 
+@content_bp.route('/')
+def index():
+    content = content_service.get_all_content()
+    return render_template('index.html', model=content)
 
 @content_bp.route('add', methods=['GET','POST'])
 def content_add():

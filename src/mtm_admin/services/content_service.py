@@ -11,14 +11,14 @@ class ContentService:
         pass
 
     def get_all_content(self):
-        _, content_collection = self.get_collections()
+        _, content_collection = self._get_collections()
 
         contents = content_collection.find()
         
         return contents
 
     def get_content(self, content_id):
-        _, content_collection = self.get_collections()
+        _, content_collection = self._get_collections()
 
         content = content_collection.find_one({"id": content_id})
 
@@ -39,7 +39,7 @@ class ContentService:
         
     def update_playlists_content(self, content_id, playlist_ids):
 
-        metadata_collection, _ = self.get_collections()
+        metadata_collection, _ = self._get_collections()
         playlists_doc = metadata_collection.find_one({"name": "playlists"})
         
         new_content_item = {
@@ -60,30 +60,26 @@ class ContentService:
         metadata_collection.update_one({"name": "playlists"}, {"$set": playlists_doc})
 
     def add_content(self, content):
-        _, content_collection = self.get_collections()
+        _, content_collection = self._get_collections()
 
         content_collection.insert_one(content)
 
     def update_content(self, content_to_update):
 
-        _, content_collection = self.get_collections()
+        _, content_collection = self._get_collections()
 
         content_id = content_to_update["id"]
-        
-        print("======   update_content   ======")
-        print(content_to_update["short_url"])
-        
         content_collection.update_one({"id": content_id}, {"$set": content_to_update})
 
     def get_playlists(self):
-        metadata_collection, _ = self.get_collections()
+        metadata_collection, _ = self._get_collections()
 
         playlists = metadata_collection.find_one({"name": "playlists"})
 
         return playlists["playlists"]
 
     def get_playlist(self, id):
-        metadata_collection, _ = self.get_collections()
+        metadata_collection, _ = self._get_collections()
 
         playlist = metadata_collection.find_one(
             {
@@ -100,7 +96,7 @@ class ContentService:
         return playlist
 
     def get_playlist_with_contents(self, id):
-        metadata_collection, _ = self.get_collections()
+        metadata_collection, _ = self._get_collections()
 
         playlist = metadata_collection.find_one(
             {"name": "playlists"}, {"playlists": {"$elemMatch": {"id": id}}}
@@ -111,7 +107,7 @@ class ContentService:
         return playlist
 
     def update_playlist_name(self, id, name):
-        metadata_collection, _ = self.get_collections()
+        metadata_collection, _ = self._get_collections()
 
         playlists_doc = metadata_collection.find_one({"name": "playlists"})
 
@@ -123,7 +119,7 @@ class ContentService:
         metadata_collection.update_one({"name": "playlists"}, {"$set": playlists_doc})
 
     def update_playlist_content_display_order(self, playlist_id, content_items):
-        metadata_collection, _ = self.get_collections()
+        metadata_collection, _ = self._get_collections()
 
         playlists_doc = metadata_collection.find_one({"name": "playlists"})
 
@@ -134,10 +130,7 @@ class ContentService:
         
         metadata_collection.update_one({"name": "playlists"}, {"$set": playlists_doc})
 
-    def get_collections(self):
-        
-        print("======   get connection   ======")
-        print(f"COSMOS_DB_CONNECTION_STRING: {config.COSMOS_DB_CONNECTION_STRING}")
+    def _get_collections(self):
         
         client = pymongo.MongoClient(config.COSMOS_DB_CONNECTION_STRING)
         db = client[config.COSMOS_DB_NAME]
