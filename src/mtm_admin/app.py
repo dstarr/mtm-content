@@ -10,7 +10,6 @@ from search.views import search_bp
 from content.models.list_model import ListItemModel, ListModel
 from services.content_service import ContentService
 
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(16)
 
@@ -23,11 +22,11 @@ app.secret_key = os.urandom(16)
 
 # MSAL configuration
 AUTHORITY = f"https://login.microsoftonline.com/{config.AZURE_TENANT_ID}"
+app.config["MSAL_AUTHORIZE_ENDPOINT"] = f"{AUTHORITY}/oauth2/v2.0/authorize"
 app.config["MSAL_CLIENT_ID"] = config.AZURE_CLIENT_ID
 app.config["MSAL_CLIENT_SECRET"] = config.AZURE_CLIENT_SECRET
-app.config["MSAL_AUTHORIZE_ENDPOINT"] = f"{AUTHORITY}/oauth2/v2.0/authorize"
-app.config["MSAL_TOKEN_ENDPOINT"] = f"{AUTHORITY}/oauth2/v2.0/token"
 app.config["MSAL_SCOPE"] = ["User.Read"]
+app.config["MSAL_TOKEN_ENDPOINT"] = f"{AUTHORITY}/oauth2/v2.0/token"
 
 # MSAL instance
 msal_app = msal.ConfidentialClientApplication(
@@ -68,19 +67,19 @@ def authorized():
 @app.route("/logout")
 def logout():
     session.clear()
-    return redirect(url_for("index"))
-
-
-
+    return render_template("auth_signed_out.html")
 
 # @app.before_request
 # def check_user_authenticated():
-#     if not session.get('user'):
+#     if "user" not in session:
 #         return redirect(url_for('login'))
 
-# @app.context_processor
-# def inject_user():
-#     return dict(user=session['user'])
+@app.context_processor
+def inject_user():
+    if "user" in session:
+        return dict(user=session['user'])
+    else:
+        return dict(user=None)
 
 if __name__ == '__main__':
     app.run(port=config.FLASK_PORT, debug=config.FLASK_DEBUG)
