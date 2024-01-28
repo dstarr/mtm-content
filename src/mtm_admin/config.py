@@ -39,8 +39,7 @@ if FLASK_DEBUG == None:
     FLASK_DEBUG = 1
 
 if FLASK_PORT == None:
-    print(" FLASK_PORT is not set")
-    env_vars_set = False
+    FLASK_PORT = 5000
 
 if AZURE_TENANT_ID == None:
     print("AZURE_TENANT_ID is not set")
