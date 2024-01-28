@@ -1,16 +1,24 @@
-{% extends 'base.html' %}
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+{% include 'head.html' %}
+<body>
+    <div class="container main">
+        <h3>Signed out</h3>
+        
+        <div class="alert alert-success" role="alert">
+            You have been signed out.
+        </div>
+        
+        <div>
+            <a type="button" class="btn btn-primary" href="{{ url_for('index') }}">Sign back in</a>
+        </div>
+    </div>
+    {% include 'scripts.html' %}
+</body>
+</html>
 
-<h3>Signed out</h3>
-
-<div class="alert alert-success" role="alert">
-  You have been signed out.
-</div>
-
-<div>
-    <a type="button" href="{{ url_for('index') }}">Sign back in</a>
-</div>
 
 
 
-{% endblock %}
+
+
