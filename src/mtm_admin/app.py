@@ -21,7 +21,7 @@ app.register_blueprint(search_bp, url_prefix='/search')
 app.secret_key = os.urandom(16)
 
 # MSAL configuration
-AUTHORITY = f"https://login.microsoftonline.com/{config.AZURE_TENANT_ID}"
+AUTHORITY = config.AZURE_AUTHORITY
 app.config["MSAL_AUTHORIZE_ENDPOINT"] = f"{AUTHORITY}/oauth2/v2.0/authorize"
 app.config["MSAL_CLIENT_ID"] = config.AZURE_CLIENT_ID
 app.config["MSAL_CLIENT_SECRET"] = config.AZURE_CLIENT_SECRET
@@ -57,6 +57,11 @@ def authorized():
         scopes=app.config["MSAL_SCOPE"],
         redirect_uri=url_for("authorized", _external=True)
     )
+    
+    print("==============")
+    print(result)
+    print("==============")
+    
 
     if "error" in result:
         return f"Error: {result['error_description']}"
