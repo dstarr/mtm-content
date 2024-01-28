@@ -28,6 +28,11 @@ msal_app = msal.ConfidentialClientApplication(
     authority=config.AZURE_AUTHORITY,
     client_credential=config.AZURE_CLIENT_SECRET)
 
+# @app.before_request
+# def check_user_authenticated():
+#     if not session.get('user'):
+#         return redirect(url_for('login'))
+
 @app.route('/')
 def index():
     if not session.get('user'):
@@ -55,8 +60,12 @@ def authorized():
         return f"Login failure: {result.get('error_description')}"
 
     session['user'] = result.get('id_token_claims')
+    
     return redirect(url_for('index'))
 
+# @app.context_processor
+# def inject_user():
+#     return dict(user=session['user'])
 
 if __name__ == '__main__':
     app.run(port=config.FLASK_PORT, debug=config.FLASK_DEBUG)
