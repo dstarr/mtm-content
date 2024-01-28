@@ -15,7 +15,6 @@ COPY requirements.txt .
 
 
 # Install the Python dependencies
-RUN pip install python-dotenv
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Copy the application code into the container
