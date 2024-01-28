@@ -13,14 +13,16 @@ WORKDIR /app
 # Copy the requirements file into the container
 COPY requirements.txt .
 
+
 # Install the Python dependencies
+RUN pip install python-dotenv
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Copy the application code into the container
 COPY . .
 
 # Expose the port on which the web server will listen
-EXPOSE 80
+EXPOSE 5000
 
 # Set the ownership of the working directory to the non-root user
 RUN chown -R app_user:app_group /app
@@ -34,7 +36,5 @@ RUN chown -R app_user:app_group /app
 USER app_user
 
 ENV FLASK_APP app.py
-ENV FLASK_DEBUG 1
-ENV FLASK_PORT 80
 
 CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=5000"]
