@@ -1,28 +1,17 @@
 import os
-from flask import Flask, render_template, redirect, url_for, session, request
-import config
+from flask import Flask, redirect, url_for, session, request
 import msal
-
-from content.views import content_bp
-from playlists.views import playlists_bp
-from search.views import search_bp
-
-from content.models.list_model import ListItemModel, ListModel
-from services.content_service import ContentService
-
+import config
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.urandom(16)
-
-app.register_blueprint(content_bp, url_prefix='/content')
-app.register_blueprint(playlists_bp, url_prefix='/playlists')
-app.register_blueprint(search_bp, url_prefix='/search')
-
-# set up session
 app.secret_key = os.urandom(16)
 
-# MSAL configuration
+# Azure AD configuration
+CLIENT_ID = config.AZURE_CLIENT_ID
+
 AUTHORITY = f"https://login.microsoftonline.com/{config.AZURE_TENANT_ID}"
+
+# MSAL configuration
 app.config["MSAL_CLIENT_ID"] = config.AZURE_CLIENT_ID
 app.config["MSAL_CLIENT_SECRET"] = config.AZURE_CLIENT_SECRET
 app.config["MSAL_AUTHORIZE_ENDPOINT"] = f"{AUTHORITY}/oauth2/v2.0/authorize"
@@ -37,9 +26,10 @@ msal_app = msal.ConfidentialClientApplication(
 )
 
 @app.route("/")
-def index():
+def home():
     if "user" in session:
-        return redirect(url_for("content.index"))
+        # return f"Hello, {session['user']['displayName']}!"
+        return f"Hello, {session['user']['name']}!"
     else:
         return redirect(url_for("login"))
 
@@ -63,24 +53,12 @@ def authorized():
         return f"Error: {result['error_description']}"
 
     session["user"] = result.get("id_token_claims")
-    return redirect(url_for("index"))
+    return redirect(url_for("home"))
 
 @app.route("/logout")
 def logout():
     session.clear()
-    return redirect(url_for("index"))
+    return redirect(url_for("home"))
 
-
-
-
-# @app.before_request
-# def check_user_authenticated():
-#     if not session.get('user'):
-#         return redirect(url_for('login'))
-
-# @app.context_processor
-# def inject_user():
-#     return dict(user=session['user'])
-
-if __name__ == '__main__':
-    app.run(port=config.FLASK_PORT, debug=config.FLASK_DEBUG)
+if __name__ == "__main__":
+    app.run(port=3000)
