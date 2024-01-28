@@ -4,8 +4,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-FLASK_DEBUG = os.environ.get("FLASK_DEBUG")
-FLASK_PORT = os.environ.get("FLASK_PORT")
+FLASK_DEBUG=os.environ.get("FLASK_DEBUG")
+FLASK_PORT=os.environ.get("FLASK_PORT")
 
 AZURE_TENANT_ID=os.environ.get("AZURE_TENANT_ID")
 AZURE_CLIENT_ID=os.environ.get("AZURE_CLIENT_ID")
@@ -14,8 +14,6 @@ AZURE_AUTHORITY = f"https://login.microsoftonline.com/{AZURE_TENANT_ID}"
 AZURE_REDIRECT_PATH = "/content/"
 AZURE_ENDPOINT = 'https://graph.microsoft.com/v1.0/users'
 AZURE_SCOPE = ["User.Read"]
-# AZURE_SESSION_TYPE = "filesystem"
-
 
 COSMOS_DB_CONNECTION_STRING = os.environ.get("COSMOS_DB_CONNECTION_STRING")
 COSMOS_DB_NAME = os.environ.get("COSMOS_DB_NAME")
@@ -31,15 +29,13 @@ BLOB_STORAGE_CONTAINER_NAME_TRANSCRIPTS=os.environ.get("BLOB_STORAGE_CONTAINER_N
 BLOB_STORAGE_CONTAINER_NAME_SAMPLE_CODE=os.environ.get("BLOB_STORAGE_CONTAINER_NAME_SAMPLE_CODE")
 BLOB_STORAGE_CONTAINER_NAME_OTHER=os.environ.get("BLOB_STORAGE_CONTAINER_NAME_OTHER")
 
-
-
 env_vars_set = True
 
 if FLASK_DEBUG == None:
-    FLASK_DEBUG = 1
+    FLASK_DEBUG=1
 
 if FLASK_PORT == None:
-    FLASK_PORT = 5000
+    FLASK_PORT=5000
 
 if AZURE_TENANT_ID == None:
     print("AZURE_TENANT_ID is not set")
