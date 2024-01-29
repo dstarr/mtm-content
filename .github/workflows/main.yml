@@ -24,7 +24,7 @@ jobs:
       - name: Build and push container image to registry
         uses: docker/build-push-action@v3
         with:
-          context: src/mtm_admin
+          context: './src/mtm_admin'
           push: true
           tags: ${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.ACR_USERNAME }}/mtm-content-mgmt:${{ github.sha }}
           file: Dockerfile
