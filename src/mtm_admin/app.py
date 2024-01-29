@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template, redirect, url_for, session, request
 import config
 import msal
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 from content.views import content_bp
 from playlists.views import playlists_bp
@@ -11,6 +12,7 @@ from content.models.list_model import ListItemModel, ListModel
 from services.content_service import ContentService
 
 app = Flask(__name__)
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 app.config['SECRET_KEY'] = os.urandom(16)
 
 app.register_blueprint(content_bp, url_prefix='/content')
