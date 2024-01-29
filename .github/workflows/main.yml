@@ -11,8 +11,7 @@ jobs:
     runs-on: ubuntu-latest
       
     steps:
-      - run:
-        working-directory: src/mtm_admin
+
       - uses: actions/checkout@v4
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -25,7 +24,7 @@ jobs:
       - name: Build and push container image to registry
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: src/mtm_admin
           push: true
           tags: ${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.ACR_USERNAME }}/mtm-content-mgmt:${{ github.sha }}
           file: Dockerfile
