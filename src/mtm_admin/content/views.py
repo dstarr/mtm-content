@@ -1,6 +1,6 @@
 from datetime import datetime
 import uuid
-from flask import Blueprint, redirect, render_template, request, url_for
+from flask import Blueprint, redirect, render_template, request, session, url_for
 from services.file_service import FileService, FileType
 from services.content_service import ContentService
 from content.models.detail_model import DetailModel
@@ -38,8 +38,8 @@ def content_add():
             "id": str(uuid.uuid4()),
             "date_created": datetime.utcnow(),
             "date_updated": datetime.utcnow(),
-            "created_by": "",
-            "updated_by": "",
+            "created_by": session["user"]["name"],
+            "updated_by": session["user"]["name"],
             "notes": property_values["notes"],
             "description": property_values["description"],
             "is_active": is_active,
@@ -72,7 +72,7 @@ def content_edit(content_id):
         
         # save changes to the content
         content = content_service.get_content(content_id)
-        new_content_entity = map_content_entity(content=content, property_values=property_values)
+        new_content_entity = _map_content_entity(content=content, property_values=property_values)
         
         content_service.update_content(content_to_update=new_content_entity)
 
@@ -105,27 +105,6 @@ def content_edit(content_id):
         model = EditModel(playlists=playlists_infos, content=content)
     
         return render_template('content_edit.html', model=model)
-
-def map_content_entity(content, property_values):
-
-    print("======   content_edit   ======")
-    print(property_values["short_url"])
-
-
-    is_active = False
-    if property_values.get("is_active"):
-        is_active = True
-            
-    content["date_updated"] = datetime.utcnow()
-    content["description"] = property_values["description"]
-    content["is_active"] = is_active
-    content["notes"] = property_values["notes"]
-    content["playlist_id"] = property_values["playlist_id"]
-    content["title"] = property_values["title"]
-    content["youtube_url"] = property_values["youtube_url"]
-    content["short_url"] = property_values["short_url"]
-    
-    return content
     
 @content_bp.route('add_attachment', methods=['POST'])
 def content_attachment_add():
@@ -141,7 +120,7 @@ def content_attachment_add():
     file = request.files['file']
     file_name = file.filename
     file_contents = file.read()
-    file_type = find_enum_by_container_key_value(key='content_type', value=attachment_type)
+    file_type = _find_enum_by_container_key_value(key='content_type', value=attachment_type)
     
     blob_url = file_service.upload_to_blob(blob_name=file_name, content=file_contents, file_type=file_type)
 
@@ -159,7 +138,7 @@ def content_attachment_delete():
     blob_url = request.form["blob_url"]
     container_name = blob_url.split("/")[-2]
     blob_name=blob_url.split("/")[-1]
-    file_type = find_enum_by_container_key_value(key='container_name', value=container_name)
+    file_type = _find_enum_by_container_key_value(key='container_name', value=container_name)
 
     # remove the attachment from the content
     content = content_service.get_content(content_id)
@@ -171,8 +150,8 @@ def content_attachment_delete():
 
     return redirect(request.referrer)
 
-def find_enum_by_container_key_value(key, value):
-    print("======   find_enum_by_container_key_value   ======")
+def _find_enum_by_container_key_value(key, value):
+    print("======   _find_enum_by_container_key_value   ======")
     print(key)
     print(value)
     for file_type in FileType:
@@ -181,3 +160,24 @@ def find_enum_by_container_key_value(key, value):
     
     return None
 
+def _map_content_entity(content, property_values):
+
+    print("======   content_edit   ======")
+    print(property_values["short_url"])
+
+
+    is_active = False
+    if property_values.get("is_active"):
+        is_active = True
+            
+    content["date_updated"] = datetime.utcnow()
+    content["updated_by"] = session["user"]["name"]
+    content["description"] = property_values["description"]
+    content["is_active"] = is_active
+    content["notes"] = property_values["notes"]
+    content["playlist_id"] = property_values["playlist_id"]
+    content["title"] = property_values["title"]
+    content["youtube_url"] = property_values["youtube_url"]
+    content["short_url"] = property_values["short_url"]
+    
+    return content

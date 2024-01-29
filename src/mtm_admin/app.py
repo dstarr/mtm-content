@@ -57,16 +57,13 @@ def authorized():
         scopes=app.config["MSAL_SCOPE"],
         redirect_uri=url_for("authorized", _external=True)
     )
-    
-    print("==============")
-    print(result)
-    print("==============")
-    
-
     if "error" in result:
         return f"Error: {result['error_description']}"
 
     session["user"] = result.get("id_token_claims")
+    
+    print(session["user"])
+    
     return redirect(url_for("index"))
 
 @app.route("/logout")

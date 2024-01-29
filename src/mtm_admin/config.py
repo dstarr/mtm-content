@@ -41,6 +41,10 @@ if AZURE_TENANT_ID == None:
     print("AZURE_TENANT_ID is not set")
     env_vars_set = False
     
+if AZURE_AUTHORITY == None:
+    print("AZURE_AUTHORITY is not set")
+    env_vars_set = False
+
 if AZURE_CLIENT_ID == None:
     print("AZURE_CLIENT_ID is not set")
     env_vars_set = False
@@ -99,3 +103,11 @@ if BLOB_STORAGE_CONTAINER_NAME_SAMPLE_CODE == None:
 
 if env_vars_set == False:
     exit(1)
+    
+def _print_env_vars():
+    for key, value in os.environ.items():
+        print(f'{key}: {value}')
+        
+    print("AZURE_AUTHORITY: " + AZURE_AUTHORITY)
+    
+_print_env_vars()
