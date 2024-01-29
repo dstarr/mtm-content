@@ -110,4 +110,4 @@ def _print_env_vars():
         
     print("AZURE_AUTHORITY: " + AZURE_AUTHORITY)
     
-_print_env_vars()
+# _print_env_vars()
