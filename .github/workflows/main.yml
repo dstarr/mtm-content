@@ -29,7 +29,6 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.ACR_USERNAME }}/mtm-content-mgmt:${{ github.sha }}
-          file: Dockerfile
 
   deploy:
     runs-on: ubuntu-latest
