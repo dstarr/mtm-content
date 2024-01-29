@@ -44,7 +44,7 @@ def make_playlists():
 def make_content():
     content_modules = []
 
-    for i in range(1, 21):
+    for i in range(1, 3):
         
         content = {
             "id": str(uuid.uuid4()),
@@ -65,7 +65,7 @@ def upload_pdf():
     file_path=f"{FILE_DIR}/02.0-ma-overview.pdf"
     container_name=BLOB_STORAGE_CONTAINER_NAME_PDFS
 
-    blob_url = upload_file_to_blob(file_path, container_name)
+    blob_url = _upload_file_to_blob(file_path, container_name)
 
     return blob_url
 
@@ -73,7 +73,7 @@ def upload_slides():
     file_path=f"{FILE_DIR}/02.0-ma-overview.pptx"
     container_name=BLOB_STORAGE_CONTAINER_NAME_SLIDES
 
-    blob_url = upload_file_to_blob(file_path, container_name)
+    blob_url = _upload_file_to_blob(file_path, container_name)
 
     return blob_url
     
@@ -81,7 +81,7 @@ def upload_transcript():
     file_path=f"{FILE_DIR}/02.0-ma-overview-en-US.vtt"
     container_name=BLOB_STORAGE_CONTAINER_NAME_TRANSCRIPTS
 
-    blob_url = upload_file_to_blob(file_path, container_name)
+    blob_url = _upload_file_to_blob(file_path, container_name)
 
     return blob_url
 
@@ -90,11 +90,11 @@ def upload_video():
     file_path=f"{FILE_DIR}/02.0-ma-overview.mp4"
     container_name=BLOB_STORAGE_CONTAINER_NAME_VIDEO
 
-    blob_url = upload_file_to_blob(file_path, container_name)
+    blob_url = _upload_file_to_blob(file_path, container_name)
 
     return blob_url
 
-def upload_file_to_blob(file_path, container_name):
+def _upload_file_to_blob(file_path, container_name):
     print(f"Uploading {file_path} to {container_name}...")
 
     file_name = os.path.basename(file_path)
@@ -129,7 +129,7 @@ def assign_content_to_playlist(playlist, content):
             "display_order": count
         }
         
-        if content_is_already_in_playlist(content_item, playlist):
+        if _content_is_already_in_playlist(content_item, playlist):
             continue
         
         playlist["content"].append(content_info)
@@ -157,7 +157,7 @@ def write_playlist_to_mongo(playlists):
 
     client.close()
     
-def content_is_already_in_playlist(content, playlist):
+def _content_is_already_in_playlist(content, playlist):
     for content_item in playlist["content"]:
         if content_item["id"] == content["id"]:
             return True
@@ -166,25 +166,34 @@ def content_is_already_in_playlist(content, playlist):
 
 if __name__ == "__main__":
 
+    # ================================
+    # write some attachements to blob storage
+    # ================================
     # video_url = upload_video()
     # transcript_url = upload_transcript()
     # slides_url = upload_slides()
     # pdf_url = upload_pdf()
-
     # write_mongo_data(video_url, transcript_url, slides_url, pdf_url)
 
-    content = make_content()
-    print("Adding content")
-    write_content_to_mongo(content)
+    # ================================
+    # put in sample content
+    # ================================
+    # content = make_content()
+    # print("Adding content")
+    # write_content_to_mongo(content)
+    # write_content_to_mongo([])
     
+    # ================================
+    # put in actual playlists
+    # ================================
     playlists_with_content = []
     playlists_doc = make_playlists()
 
-    for playlist in playlists_doc["playlists"]:
-        playlist = assign_content_to_playlist(playlist, content)
-        playlists_with_content.append(playlist)
+    # for playlist in playlists_doc["playlists"]:
+    #     playlist = assign_content_to_playlist(playlist, content)
+    #     playlists_with_content.append(playlist)
         
-    playlists_doc["playlists"] = playlists_with_content    
+    # playlists_doc["playlists"] = playlists_with_content    
     
     print("Adding playlists")
     write_playlist_to_mongo(playlists_doc)
