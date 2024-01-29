@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./src/mtm_admin
+        working-directory: src/mtm_admin
         
     steps:
       - name: Echo the current working directory
