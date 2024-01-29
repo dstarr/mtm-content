@@ -178,10 +178,10 @@ if __name__ == "__main__":
     # ================================
     # put in sample content
     # ================================
-    # content = make_content()
-    # print("Adding content")
-    # write_content_to_mongo(content)
-    # write_content_to_mongo([])
+    content = make_content()
+
+    print("Adding content")
+    write_content_to_mongo(content)
     
     # ================================
     # put in actual playlists
@@ -189,11 +189,11 @@ if __name__ == "__main__":
     playlists_with_content = []
     playlists_doc = make_playlists()
 
-    # for playlist in playlists_doc["playlists"]:
-    #     playlist = assign_content_to_playlist(playlist, content)
-    #     playlists_with_content.append(playlist)
+    for playlist in playlists_doc["playlists"]:
+        playlist = assign_content_to_playlist(playlist, content)
+        playlists_with_content.append(playlist)
         
-    # playlists_doc["playlists"] = playlists_with_content    
+    playlists_doc["playlists"] = playlists_with_content    
     
     print("Adding playlists")
     write_playlist_to_mongo(playlists_doc)
