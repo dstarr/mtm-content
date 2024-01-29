@@ -19,7 +19,7 @@ jobs:
       - name: Log in to container registry
         uses: docker/login-action@v2
         with:
-          registry: https://mtmcontentmgmtacr.azurecr.io/
+          registry: ${{ secrets.ACR_LOGIN_SERVER }}
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
       - name: Build and push container image to registry
@@ -27,7 +27,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.AzureAppService_ContainerUsername_7cc2d4315c754db58e42c35495d53077 }}/mtm-content-mgmt:${{ github.sha }}
+          tags: ${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.AzureAppService_ContainerUsername_7cc2d4315c754db58e42c35495d53077 }}:${{ github.sha }}
           file: ./Dockerfile
 
   deploy:
@@ -43,5 +43,4 @@ jobs:
         with:
           app-name: 'mtm-content-mgmt-web-app-dev'
           slot-name: 'development'
-          # publish-profile: ${{ secrets.AzureAppService_PublishProfile_887ff2e59ca54aabbd58e9c2452a67b3 }}
           images: '${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.ACR_USERNAME }}/mtm-content-mgmt:${{ github.sha }}'
