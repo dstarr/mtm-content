@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Build & push Docker image
     steps:
+      - run: echo ${{ secrets.ACR_LOGIN_SERVER }}
       - uses: actions/checkout@v4
       - uses: mr-smithers-excellent/docker-build-push@v6
         with:
