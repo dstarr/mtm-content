@@ -1,0 +1,35 @@
+name: Dev environment container deployment
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build & push Docker image
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mr-smithers-excellent/docker-build-push@v6
+        with:
+          directory: src/mtm_admin
+          image: ${{ secrets.ACR_LOGIN_SERVER }}/mtm-content-mgmt-dev:${{ github.sha }}
+          registry: ${{ secrets.ACR_LOGIN_SERVER }}
+          dockerfile: src/mtm_admin/Dockerfile
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+  
+  deploy:
+    name: Deploy to Azure Container Instances 
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to Azure
+        uses: Azure/login@v1.6.1
+        with:
+          creds: ${{ secrets.AZ_CREDS }}
+      
+
+
