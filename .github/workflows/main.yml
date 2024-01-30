@@ -16,10 +16,10 @@ jobs:
       - uses: mr-smithers-excellent/docker-build-push@v6
         name: Build & push Docker image
         with:
-          directory: /src/mtm_admin
+          # directory: /src/mtm_admin
           image: ${{ secrets.ACR_LOGIN_SERVER }}/mtm-content-mgmt
           registry: ${{ secrets.ACR_LOGIN_SERVER }}
-          dockerfile: Dockerfile
+          dockerfile: src/mtm_admin/Dockerfile
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
       # - name: Build and push container image to registry
