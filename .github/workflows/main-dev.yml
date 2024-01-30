@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build:  
     runs-on: ubuntu-latest
     name: Build & push Docker image
     steps:
@@ -22,7 +22,7 @@ jobs:
           password: ${{ secrets.ACR_PASSWORD }}
   
   deploy:
-    name: Deploy to Azure Container Instances 
+    name: Deploy to dev environment
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -31,5 +31,3 @@ jobs:
         with:
           creds: ${{ secrets.AZ_CREDS }}
       
-
-
