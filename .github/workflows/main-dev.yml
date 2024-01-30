@@ -7,24 +7,24 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:  
-    runs-on: ubuntu-latest
-    name: Build & push Docker image
-    # steps:
-    #   - run: echo ${{ secrets.ACR_LOGIN_SERVER }}
-    #   - uses: actions/checkout@v4
-    #   - uses: mr-smithers-excellent/docker-build-push@v6
-    #     with:
-    #       directory: src/mtm_admin
-    #       image: ${{ secrets.ACR_LOGIN_SERVER }}/mtm-content-mgmt-dev
-    #       registry: ${{ secrets.ACR_LOGIN_SERVER }}
-    #       dockerfile: src/mtm_admin/Dockerfile
-    #       username: ${{ secrets.ACR_USERNAME }}
-    #       password: ${{ secrets.ACR_PASSWORD }}
+  # build:  
+  #   runs-on: ubuntu-latest
+  #   name: Build & push Docker image
+  #   steps:
+  #     - run: echo ${{ secrets.ACR_LOGIN_SERVER }}
+  #     - uses: actions/checkout@v4
+  #     - uses: mr-smithers-excellent/docker-build-push@v6
+  #       with:
+  #         directory: src/mtm_admin
+  #         image: ${{ secrets.ACR_LOGIN_SERVER }}/mtm-content-mgmt-dev
+  #         registry: ${{ secrets.ACR_LOGIN_SERVER }}
+  #         dockerfile: src/mtm_admin/Dockerfile
+  #         username: ${{ secrets.ACR_USERNAME }}
+  #         password: ${{ secrets.ACR_PASSWORD }}
   
   deploy:
     name: Deploy to dev environment
-    needs: build
+    # needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Login to Azure
