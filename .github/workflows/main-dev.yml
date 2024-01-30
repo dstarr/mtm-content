@@ -10,7 +10,10 @@ on:
 env:
   AZURE_WEBAPP_NAME: mtm-content-mgmt-web-app-dev
   IMAGE_NAME: mtm-content-mgmt-dev
-  SUBSCRIPTION: bf7adf12-c3a8-426c-9976-29f145eba70f
+  AZ_SUBSCRIPTION_ID: bf7adf12-c3a8-426c-9976-29f145eba70f
+  AZ_CLIENT_ID: 57f0c7c0-7edc-4ed6-b97c-28f39850d3d7
+  AZ_TENANT_ID: 72f988bf-86f1-41af-91ab-2d7cd011db47
+
 
 # permissions:
 #   id-token: write
@@ -42,7 +45,8 @@ jobs:
       - name: Login to Azure
         uses: Azure/login@v1
         with:
-          creds: '{"clientId":"${{ secrets.AZ_CLIENT_ID }}","clientSecret":"${{ secrets.AZ_APP_REG_SECRET }}","subscriptionId":"${{ env.SUBSCRIPTION }}","tenantId":"${{ secrets.AZ_TENANT_ID }}"}'
+          creds: '{"clientId":"${{ env.AZ_CLIENT_ID }}","clientSecret":"${{ secrets.AZ_APP_REG_SECRET }}","subscriptionId":"${{ env.AZ_SUBSCRIPTION_ID }}","tenantId":"${{ env.AZ_TENANT_ID }}"}'
+          # creds: '{"clientId":"${{ secrets.AZ_CLIENT_ID }}","clientSecret":"${{ secrets.AZ_APP_REG_SECRET }}","subscriptionId":"${{ secrets.AZ_SUBSCRIPTION }}","tenantId":"${{ secrets.AZ_TENANT_ID }}"}'
       
       - name: Azure CLI script test
         uses: azure/CLI@v1
