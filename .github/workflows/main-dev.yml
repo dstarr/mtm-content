@@ -16,7 +16,7 @@ jobs:
       - uses: mr-smithers-excellent/docker-build-push@v6
         with:
           directory: src/mtm_admin
-          image: ${{ secrets.ACR_LOGIN_SERVER }}/mtm-content-mgmt-dev:${{ github.sha }}
+          image: ${{ secrets.ACR_LOGIN_SERVER }}/mtm-content-mgmt-dev
           registry: ${{ secrets.ACR_LOGIN_SERVER }}
           dockerfile: src/mtm_admin/Dockerfile
           username: ${{ secrets.ACR_USERNAME }}
