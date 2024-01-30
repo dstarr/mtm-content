@@ -30,5 +30,7 @@ jobs:
       - name: Login to Azure
         uses: Azure/login@v1.6.1
         with:
-          creds: ${{ secrets.AZ_CREDS }}
+          client-id: ${{ secrets.AZ_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZ_TENANT_ID }}
+          subscription-id: ${{ secrets.AZ_SUBSCRIPTION }}
       
