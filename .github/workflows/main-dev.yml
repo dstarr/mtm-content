@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Login to Azure
-        uses: Azure/login@v1.6.1
+      - uses: Azure/login@v1.6.1
         with:
           - uses: Azure/login@v1
           with:
