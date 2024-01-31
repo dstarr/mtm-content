@@ -1,1 +1,57 @@
-# Content manager
+# Mastering the Marketplace
+
+The tools in this repository are used to manage the content for the Mastering the Marketplace program.
+
+## MTM Contnent Manager
+
+This Flask-based web application enables storing content such as video, slides, and provising data about the content, such as title and description.
+
+```cmd
+AZURE_TENANT_ID=
+AZURE_CLIENT_ID=
+AZURE_CLIENT_SECRET=
+
+BLOB_STORAGE_CONNECTION_STRING=
+BLOB_STORAGE_CONTAINER_NAME_SLIDES=
+BLOB_STORAGE_CONTAINER_NAME_PDFS=
+BLOB_STORAGE_CONTAINER_NAME_VIDEO=
+BLOB_STORAGE_CONTAINER_NAME_TRANSCRIPTS=
+BLOB_STORAGE_CONTAINER_NAME_SAMPLE_CODE=
+BLOB_STORAGE_CONTAINER_NAME_OTHER=
+
+COSMOS_DB_CONNECTION_STRING=
+COSMOS_DB_NAME=
+COSMOS_DB_CONTENT_COLLECTION_NAME=
+COSMOS_DB_METADATA_COLLECTION_NAME=
+
+
+FLASK_DEBUG= # default is "1" 
+FLASK_PORT= # default is 5000
+```
+
+## Scripts
+
+The Python scripts in this folder are used during development to manipulate data in the databases underlying thecontent management solution.
+
+The scripts depend on the following environmental variables.
+
+```cmd
+AZURE_TENANT_ID=
+AZURE_CLIENT_ID=
+AZURE_CLIENT_SECRET=
+
+BLOB_STORAGE_CONNECTION_STRING=
+BLOB_STORAGE_CONTAINER_NAME_SLIDES=
+BLOB_STORAGE_CONTAINER_NAME_PDFS=
+BLOB_STORAGE_CONTAINER_NAME_VIDEO=
+BLOB_STORAGE_CONTAINER_NAME_TRANSCRIPTS=
+BLOB_STORAGE_CONTAINER_NAME_SAMPLE_CODE=
+BLOB_STORAGE_CONTAINER_NAME_OTHER=
+
+COSMOS_DB_CONNECTION_STRING=
+COSMOS_DB_NAME=
+COSMOS_DB_CONTENT_COLLECTION_NAME=
+COSMOS_DB_METADATA_COLLECTION_NAME=
+```
+
+
