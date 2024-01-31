@@ -27,11 +27,11 @@ jobs:
         with:
           directory: src/mtm_admin
           image: ${{ env.IMAGE_NAME }}
-          # image: ${{ secrets.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}
           registry: ${{ secrets.ACR_LOGIN_SERVER }}
           dockerfile: src/mtm_admin/Dockerfile
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
+      - run: echo ${{ env.IMAGE_NAME }}
 
   # deploy:
   #   # needs: build
