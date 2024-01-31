@@ -12,8 +12,8 @@ env:
   IMAGE_NAME: mtm-content-mgmt-dev
 
 
-# permissions:
-#   id-token: write
+permissions:
+  id-token: write
 #   contents: read
   
 jobs:
