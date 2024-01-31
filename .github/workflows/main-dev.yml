@@ -42,7 +42,7 @@ jobs:
       - name: Login to Azure
         uses: Azure/login@v1
         with:
-          auth-type: 'SERVICE_PRINCIPAL'
+          auth-type: 'IDENTITY'
           creds: '{"clientId":"${{ secrets.AZ_CLIENT_ID }}","clientSecret":"${{ secrets.AZ_APP_REG_SECRET }}","subscriptionId":"${{ secrets.AZ_SUBSCRIPTION }}","tenantId":"${{ secrets.AZ_TENANT_ID }}"}'
       - name: Azure CLI script test
         uses: azure/CLI@v1
