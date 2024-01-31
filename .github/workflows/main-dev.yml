@@ -33,20 +33,27 @@ jobs:
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
           
-  
-  # deploy:
-  #   name: Deploy to dev environment
-  #   # needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Login to Azure
-  #       uses: Azure/login@v1
-  #       with:
-  #         creds: '{"clientId":"${{ secrets.AZ_CLIENT_ID }}","clientSecret":"${{ secrets.AZ_APP_REG_SECRET }}","subscriptionId":"${{ secrets.AZ_SUBSCRIPTION }}","tenantId":"${{ secrets.AZ_TENANT_ID }}"}'
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    name: Deploy to Azure Web App
+    steps:
+      - name: Login to Azure
+        uses: Azure/login@v1
+        with:
+          creds: '{"clientId":"${{ secrets.AZ_CLIENT_ID }}","clientSecret":"${{ secrets.AZ_APP_REG_SECRET }}","subscriptionId":"${{ secrets.AZ_SUBSCRIPTION }}","tenantId":"${{ secrets.AZ_TENANT_ID }}"}'
+      - name: Azure CLI script test
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az account show
       
-  #     - name: Azure CLI script test
-  #       uses: azure/CLI@v1
-  #       with:
-  #         azcliversion: latest
-  #         inlineScript: |
-  #           az account show
+      # - name: Deploy to Azure Web App
+      #   uses: azure/webapps-deploy@v2
+      #   with:
+      #     app-name: 'mtm-content-mgmt-web-app-dev'
+      #     slot-name: 'production'
+      #     publish-profile: ''
+      #     images: '${{ secrets.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest'    
