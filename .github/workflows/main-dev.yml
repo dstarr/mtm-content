@@ -4,6 +4,14 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+
+
+env:
+  AZURE_WEBAPP_NAME: mtm-content-mgmt-web-app-dev
+  IMAGE_NAME: mtm-content-mgmt-dev
+
+
 # permissions:
 #   id-token: write
 #   contents: read
