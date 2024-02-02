@@ -5,9 +5,9 @@
   <a href="{{ url_for('playlists.playlist_edit', playlist_id=model.playlist['id']) }}" class="btn btn-primary">Edit</a> 
 </div>
 
-<h2>{{ model.playlist["name"] }}</h2>
+<h3>{{ model.playlist["name"] }}</h3>
 
-<div>
+<div class="mb-4">
   {{ model.playlist["description"] | safe }}
 </div>
 

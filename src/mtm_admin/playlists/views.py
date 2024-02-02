@@ -38,9 +38,12 @@ def playlist_detail(playlist_id):
 @playlists_bp.route("edit/<playlist_id>", methods=["GET", "POST"])
 def playlist_edit(playlist_id):
     if request.method == "POST":
-        content_service.update_playlist_name(
+        
+        content_service.update_playlist(
             id=playlist_id,
             name=request.form["name"],
+            short_name=request.form["short_name"],
+            description=request.form["description"]
         )
         
         return redirect(url_for('playlists.playlist_detail', playlist_id=playlist_id))
