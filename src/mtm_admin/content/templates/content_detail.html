@@ -90,6 +90,9 @@
     </div>
     {% endif %}
 
+    <div class="mb-3">
+      <a class="btn btn-primary" href="{{ url_for('content.content_edit', content_id = model.content['id']) }}">Edit</a>
+    </div>
 
     <div class="row mb-3">
       <div class="col-auto short_input">
@@ -118,10 +121,6 @@
         <label for="updated_by" class="form-label">Updated by</label>
         <div id="updated_by">{{ model.content['updated_by'] }}</div>
       </div>
-    </div>
-
-    <div class="mb-3">
-      <a class="btn btn-primary" href="{{ url_for('content.content_edit', content_id = model.content['id']) }}">Edit</a>
     </div>
 
     {% if model.content['video_url'] %}
