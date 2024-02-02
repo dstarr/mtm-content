@@ -12,13 +12,15 @@
       </tr>
     </thead>
     <tbody>
-      {% for item in model %}
-        <tr>
-          <th scope="row">{{ loop.index }}</th>
-          <td><a href="{{ url_for('content.content_detail', content_id = item.id) }}">{{ item.title }}</a></td>
-          <td>{{ item.is_active }}</td>
-        </tr>
-      {% endfor %}
+      {% if model %}
+        {% for item in model %}
+          <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td><a href="{{ url_for('content.content_detail', content_id = item.id) }}">{{ item.title }}</a></td>
+            <td>{{ item.is_active }}</td>
+          </tr>
+        {% endfor %}
+      {% endif %}
     </tbody>
   </table>
   
