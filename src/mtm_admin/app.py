@@ -1,4 +1,3 @@
-import os
 from flask import Flask, render_template, redirect, url_for, session, request
 import config
 import msal
@@ -8,19 +7,15 @@ from content.views import content_bp
 from playlists.views import playlists_bp
 from search.views import search_bp
 
-from content.models.list_model import ListItemModel, ListModel
-from services.content_service import ContentService
-
 app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
-app.config['SECRET_KEY'] = os.urandom(16)
 
 app.register_blueprint(content_bp, url_prefix='/content')
 app.register_blueprint(playlists_bp, url_prefix='/playlists')
 app.register_blueprint(search_bp, url_prefix='/search')
 
 # set up session
-app.secret_key = os.urandom(16)
+app.config['SECRET_KEY'] = config.FLASK_SESSION_SECRET
 
 # MSAL configuration
 AUTHORITY = config.AZURE_AUTHORITY

@@ -2,13 +2,14 @@
 {% block content %}
 
 <div class="mb-3">
-  <button 
-  type="button" 
-  class="btn btn-primary" 
-  onclick="window.location.href='{{ url_for('playlists.playlist_edit', playlist_id=model.playlist['id']) }}'">Edit</button>
+  <a href="{{ url_for('playlists.playlist_edit', playlist_id=model.playlist['id']) }}" class="btn btn-primary">Edit</a> 
 </div>
 
 <h2>{{ model.playlist["name"] }}</h2>
+
+<div>
+  {{ model.playlist["description"] | safe }}
+</div>
 
 <table class="table table-striped table-hover">
   <thead>
@@ -19,7 +20,7 @@
   </thead>
   <tbody>
 
-      {% for content_info in model.get_content() %}
+      {% for content_info in model.content %}
       <tr>
           <th scope="row">{{ content_info["display_order"] }}</th>
           <td><a href="{{ url_for('content.content_detail', content_id=content_info['id']) }}">{{ content_info.title }}</a></td>

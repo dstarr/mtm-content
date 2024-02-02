@@ -6,6 +6,7 @@ load_dotenv()
 
 FLASK_DEBUG=os.environ.get("FLASK_DEBUG")
 FLASK_PORT=os.environ.get("FLASK_PORT")
+FLASK_SESSION_SECRET=os.environ.get("FLASK_SESSION_SECRET")
 
 AZURE_TENANT_ID=os.environ.get("AZURE_TENANT_ID")
 AZURE_CLIENT_ID=os.environ.get("AZURE_CLIENT_ID")
@@ -36,6 +37,10 @@ if FLASK_DEBUG == None:
 
 if FLASK_PORT == None:
     FLASK_PORT=5000
+    
+if FLASK_SESSION_SECRET == None:
+    print("FLASK_SESSION_SECRET is not set")
+    env_vars_set = False
 
 if AZURE_TENANT_ID == None:
     print("AZURE_TENANT_ID is not set")
