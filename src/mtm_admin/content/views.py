@@ -101,7 +101,6 @@ def content_edit(content_id):
             }
             playlists_infos.append(playlist_info)
         
-        
         model = EditModel(playlists=playlists_infos, content=content)
     
         return render_template('content_edit.html', model=model)
@@ -110,7 +109,6 @@ def content_edit(content_id):
 def content_attachment_add():
     # Check if the 'file' key is present in request.files
     if not request.files['file']:
-        print('No file in the request')
         raise Exception('No file in the request')
     
     content_id = request.form["content_id"]
@@ -151,9 +149,6 @@ def content_attachment_delete():
     return redirect(request.referrer)
 
 def _find_enum_by_container_key_value(key, value):
-    print("======   _find_enum_by_container_key_value   ======")
-    print(key)
-    print(value)
     for file_type in FileType:
         if file_type.value[key] == value:
             return file_type
@@ -161,10 +156,6 @@ def _find_enum_by_container_key_value(key, value):
     return None
 
 def _map_content_entity(content, property_values):
-
-    print("======   content_edit   ======")
-    print(property_values["short_url"])
-
 
     is_active = False
     if property_values.get("is_active"):

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
     
-    <h2>Edit playlist</h2>
+    <h2 class="md-3">Edit playlist</h2>
 
     <form action="{{ url_for('playlists.playlist_edit', playlist_id=model.playlist['id']) }}" method="post">
       <div class="mb-3">
@@ -9,17 +9,28 @@
         <input type="text" class="form-control" name="name" id="name" value="{{ model.playlist['name'] }}" required />
       </div>
       <div class="mb-3">
+        <label for="short_name" class="form-label">Short name</label>
+        <input type="text" class="form-control" name="short_name" id="short_name" value="{{ model.playlist['short_name'] }}" required />
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="text-box" id="description" name="description"
+          required>{{ model.playlist['description'] }}</textarea>
+      </div>
+      <div class="mb-3">
         <button type="submit" class="btn btn-primary">Save</button>
+        <a href="{{ url_for('playlists.playlist_detail', playlist_id=model.playlist['id']) }}" class="btn btn-primary">Back to detail view</a>
       </div>
     </form> 
 
     <div class="mb-3">
-      <label for="sorted_content" class="form-label">Ordered content list</label>
+      <h3>Ordered content list</h3>
       <p>Drag and drop the items to set the order.</p>
       <div id="sorted_content" class="list-group">
         {% for content_info in model.content_info_items %}
           <div class="list-group-item list-group-item-action">
             <input type="hidden" name="display_order" value="{{ content_info['id'] }}"/>
+            <span class="badge rounded-pill bg-dark">{{ content_info['display_order'] }}</span>
             <span class="display_order_title">{{ content_info['title'] }}</span>
           </div>
         {% endfor %}
@@ -79,7 +90,8 @@
           }
         })
         .then(data => {
-            alert('The list order was saved successfully.');
+          window.location.href = "{{ url_for('playlists.playlist_edit', playlist_id=model.playlist['id']) }}";  
+          // alert('The list order was saved successfully.');
         })
         .catch(error => {
           alert('Something went wrong. Failed to save the list order.');
@@ -92,5 +104,9 @@
         group: 'shared',
         animation: 150,
       });
-  </script>
+
+    </script>
+
+    {% include 'editor_script.html' %}
+
 {% endblock %}

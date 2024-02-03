@@ -106,7 +106,7 @@ class ContentService:
 
         return playlist
 
-    def update_playlist_name(self, id, name):
+    def update_playlist(self, id, name, short_name, description):
         metadata_collection, _ = self._get_collections()
 
         playlists_doc = metadata_collection.find_one({"name": "playlists"})
@@ -114,6 +114,8 @@ class ContentService:
         for playlist in playlists_doc["playlists"]:
             if str(playlist["id"]) == id:
                 playlist["name"] = name
+                playlist["short_name"] = short_name
+                playlist["description"] = description
                 break
 
         metadata_collection.update_one({"name": "playlists"}, {"$set": playlists_doc})
