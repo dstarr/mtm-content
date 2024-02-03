@@ -4,9 +4,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-FLASK_DEBUG=os.environ.get("FLASK_DEBUG")
-FLASK_PORT=os.environ.get("FLASK_PORT")
-
 AZURE_TENANT_ID=os.environ.get("AZURE_TENANT_ID")
 AZURE_CLIENT_ID=os.environ.get("AZURE_CLIENT_ID")
 AZURE_CLIENT_SECRET=os.environ.get("AZURE_CLIENT_SECRET")
@@ -29,13 +26,11 @@ BLOB_STORAGE_CONTAINER_NAME_TRANSCRIPTS=os.environ.get("BLOB_STORAGE_CONTAINER_N
 BLOB_STORAGE_CONTAINER_NAME_SAMPLE_CODE=os.environ.get("BLOB_STORAGE_CONTAINER_NAME_SAMPLE_CODE")
 BLOB_STORAGE_CONTAINER_NAME_OTHER=os.environ.get("BLOB_STORAGE_CONTAINER_NAME_OTHER")
 
+FLASK_DEBUG = int(os.environ.get("FLASK_DEBUG", 1))
+FLASK_PORT = int(os.environ.get("FLASK_PORT", 500))
+FLASK_SESSION_SECRET = os.environ.get("FLASK_SESSION_SECRET")
+
 env_vars_set = True
-
-if FLASK_DEBUG == None:
-    FLASK_DEBUG=1
-
-if FLASK_PORT == None:
-    FLASK_PORT=5000
 
 if AZURE_TENANT_ID == None:
     print("AZURE_TENANT_ID is not set")
@@ -101,13 +96,10 @@ if BLOB_STORAGE_CONTAINER_NAME_SAMPLE_CODE == None:
     print("BLOB_STORAGE_CONTAINER_NAME_SAMPLE_CODE is not set")
     env_vars_set = False
 
+if FLASK_SESSION_SECRET == None:
+    print("FLASK_SESSION_SECRET is not set")
+    env_vars_set = False
+
 if env_vars_set == False:
     exit(1)
     
-def _print_env_vars():
-    for key, value in os.environ.items():
-        print(f'{key}: {value}')
-        
-    print("AZURE_AUTHORITY: " + AZURE_AUTHORITY)
-    
-# _print_env_vars()

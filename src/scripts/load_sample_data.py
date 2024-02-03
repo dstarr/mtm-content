@@ -29,13 +29,14 @@ def make_playlists():
     playlists = {
         "name": "playlists",
         "playlists": [
+            {"id": str(uuid.uuid4()), "name": "Doing business in the marketplace", "short_name": "The business of marketplace"},
             {"id": str(uuid.uuid4()), "name": "Mastering Container offers", "short_name": "Container offers"},
             {"id": str(uuid.uuid4()), "name": "Mastering Managed Application offers", "short_name": "Managed Application offers"},
             {"id": str(uuid.uuid4()), "name": "Mastering Partner Center", "short_name": "Partner Center"},
             {"id": str(uuid.uuid4()), "name": "Mastering SaaS Offers", "short_name": "SaaS Offers"},
+            {"id": str(uuid.uuid4()), "name": "Mastering the SaaS Accelerator", "short_name": "SaaS Accelerator"},
             {"id": str(uuid.uuid4()), "name": "Mastering Virtual Machine offers", "short_name": "Virtual Machine offers"},
             {"id": str(uuid.uuid4()), "name": "The marketplace for customers", "short_name": "For customers"},
-            {"id": str(uuid.uuid4()), "name": "Doing business in the marketplace", "short_name": "Business in the marketplace"},
         ],
     }
 
@@ -44,7 +45,7 @@ def make_playlists():
 def make_content():
     content_modules = []
 
-    for i in range(1, 3):
+    for i in range(1, 21):
         
         content = {
             "id": str(uuid.uuid4()),

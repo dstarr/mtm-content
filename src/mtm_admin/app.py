@@ -20,7 +20,7 @@ app.register_blueprint(playlists_bp, url_prefix='/playlists')
 app.register_blueprint(search_bp, url_prefix='/search')
 
 # set up session
-app.secret_key = os.urandom(16)
+app.secret_key = config.FLASK_SESSION_SECRET
 
 # MSAL configuration
 AUTHORITY = config.AZURE_AUTHORITY
