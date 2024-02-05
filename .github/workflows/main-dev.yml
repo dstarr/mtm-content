@@ -42,16 +42,16 @@ jobs:
         with:
           creds: ${{ secrets.AZ_CREDS }}
 
-      - name: Azure CLI script test
-        uses: azure/CLI@v1
-        with:
-          azcliversion: latest
-          inlineScript: |
-            az account show
-
-      # - name: Push from ACR to web app
-      #   uses: azure/webapps-deploy@v2
+      # - name: Azure CLI script test
+      #   uses: azure/CLI@v1
       #   with:
-      #     app-name: ${{ env.AZURE_WEBAPP_NAME }}
-      #     slot-name: 'production'
-      #     images: '${{ secrets.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest'
+      #     azcliversion: latest
+      #     inlineScript: |
+      #       az account show
+
+      - name: Push from ACR to web app
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          slot-name: 'production'
+          images: '${{ secrets.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest'
