@@ -11,7 +11,6 @@ env:
   AZURE_WEBAPP_NAME: mtm-content-mgmt-web-app-dev
   IMAGE_NAME: mtm-content-mgmt-dev
 
-
 permissions:
   id-token: write
 #   contents: read
@@ -20,7 +19,7 @@ jobs:
 
   build:  
     runs-on: ubuntu-latest
-    name: Build & push Docker image
+    name: Build & push Docker image to ACR
     steps:
       - uses: actions/checkout@v4
       - uses: mr-smithers-excellent/docker-build-push@v6
@@ -32,6 +31,23 @@ jobs:
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
       - run: echo ${{ env.IMAGE_NAME }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    name: Deploy to Azure Web App
+    steps:
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: '{"clientId":"${{ secrets.AZ_CLIENT_ID }}","clientSecret":"${{ secrets.AZ_APP_REG_SECRET }}","subscriptionId":"${{ secrets.AZ_SUBSCRIPTION }}","tenantId":"${{ secrets.AZ_TENANT_ID }}"}'
+          # creds: $ { {  secrets.AZ_CREDS } }
+      - name: Push from ACR to web app
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          slot-name: 'production'
+          images: '${{ secrets.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest'
 
   # deploy:
   #   # needs: build
@@ -50,10 +66,6 @@ jobs:
   #         azcliversion: latest
   #         inlineScript: |
   #           az account show
-      
-      # - name: Deploy to Azure Web App
-      #   uses: azure/webapps-deploy@v2
-      #   with:
-      #     app-name: 'mtm-content-mgmt-web-app-dev'
-      #     slot-name: 'production'
-      #     images: '${{ secrets.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest'    
+  
+
+  
