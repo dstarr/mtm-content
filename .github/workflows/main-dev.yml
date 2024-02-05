@@ -53,5 +53,4 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          slot-name: 'production'
           images: '${{ secrets.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest'
