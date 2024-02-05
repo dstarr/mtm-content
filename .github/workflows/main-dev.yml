@@ -8,8 +8,8 @@ on:
 
 
 env:
-  AZURE_WEBAPP_NAME: mtm-content-mgmt-web-app-dev
-  IMAGE_NAME: mtm-content-mgmt-dev
+  AZURE_WEBAPP_NAME: mtam-admin-dev
+  IMAGE_NAME: mtam-admin-dev
 
 permissions:
   id-token: write
@@ -18,7 +18,7 @@ permissions:
 jobs:
 
   build:  
-    if: false
+    if: true
     runs-on: ubuntu-latest
     name: Build & push Docker image to ACR
     steps:
@@ -31,17 +31,15 @@ jobs:
           dockerfile: src/mtm_admin/Dockerfile
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
-      - run: echo ${{ env.IMAGE_NAME }}
 
   deploy:
-    # needs: build
+    needs: build
     runs-on: ubuntu-latest
     name: Deploy to Azure Web App
     steps:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          # creds: '{"clientId":"$ {{ secrets.AZ_CLIENT_ID }}","clientSecret":"$ {{ secrets.AZ_APP_REG_SECRET }}","subscriptionId":"$ {{ secrets.AZ_SUBSCRIPTION }}","tenantId":"$ {{ secrets.AZ_TENANT_ID }}"}'
           creds: ${{ secrets.AZ_CREDS }}
 
       - name: Azure CLI script test
@@ -57,8 +55,3 @@ jobs:
       #     app-name: ${{ env.AZURE_WEBAPP_NAME }}
       #     slot-name: 'production'
       #     images: '${{ secrets.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest'
-
-
-  
-
-  
