@@ -18,6 +18,7 @@ permissions:
 jobs:
 
   build:  
+    if: false
     runs-on: ubuntu-latest
     name: Build & push Docker image to ACR
     steps:
@@ -33,39 +34,32 @@ jobs:
       - run: echo ${{ env.IMAGE_NAME }}
 
   deploy:
-    needs: build
+    # needs: build
     runs-on: ubuntu-latest
     name: Deploy to Azure Web App
     steps:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          creds: '{"clientId":"${{ secrets.AZ_CLIENT_ID }}","clientSecret":"${{ secrets.AZ_APP_REG_SECRET }}","subscriptionId":"${{ secrets.AZ_SUBSCRIPTION }}","tenantId":"${{ secrets.AZ_TENANT_ID }}"}'
+          creds: '{"clientId":"${{ secrets.AZ_CLIENT_ID }}","clientSecret":"${{ secrets.AZ_APP_REG_SECRET }}","subscriptionId":"bf7adf12-c3a8-426c-9976-29f145eba70f","tenantId":"${{ secrets.AZ_TENANT_ID }}"}'
+          # creds: '{"clientId":"${{ secrets.AZ_CLIENT_ID }}","clientSecret":"${{ secrets.AZ_APP_REG_SECRET }}","subscriptionId":"${{ secrets.AZ_SUBSCRIPTION }}","tenantId":"${{ secrets.AZ_TENANT_ID }}"}'
           # creds: $ { {  secrets.AZ_CREDS } }
-      - name: Push from ACR to web app
-        uses: azure/webapps-deploy@v2
+
+      - name: Azure CLI script test
+        uses: azure/CLI@v1
         with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          slot-name: 'production'
-          images: '${{ secrets.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest'
+          azcliversion: latest
+          inlineScript: |
+            az account show
 
-  # deploy:
-  #   # needs: build
-  #   runs-on: ubuntu-latest
-  #   name: Deploy to Azure Web App
-  #   steps:
-  #     - name: Login to Azure
-  #       uses: azure/login@v1
-  #       with:
-  #         # creds: '{"clientId":"${{ secrets.AZ_CLIENT_ID }}","clientSecret":"${{ secrets.AZ_APP_REG_SECRET }}","subscriptionId":"${{ secrets.AZ_SUBSCRIPTION }}","tenantId":"${{ secrets.AZ_TENANT_ID }}"}'
-  #         creds: ${{ secrets.AZ_CREDS }}
+      # - name: Push from ACR to web app
+      #   uses: azure/webapps-deploy@v2
+      #   with:
+      #     app-name: ${{ env.AZURE_WEBAPP_NAME }}
+      #     slot-name: 'production'
+      #     images: '${{ secrets.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest'
 
-  #     - name: Azure CLI script test
-  #       uses: azure/CLI@v1
-  #       with:
-  #         azcliversion: latest
-  #         inlineScript: |
-  #           az account show
+
   
 
   
