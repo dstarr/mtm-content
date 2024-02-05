@@ -41,9 +41,8 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          creds: '{"clientId":"${{ secrets.AZ_CLIENT_ID }}","clientSecret":"${{ secrets.AZ_APP_REG_SECRET }}","subscriptionId":"bf7adf12-c3a8-426c-9976-29f145eba70f","tenantId":"${{ secrets.AZ_TENANT_ID }}"}'
-          # creds: '{"clientId":"${{ secrets.AZ_CLIENT_ID }}","clientSecret":"${{ secrets.AZ_APP_REG_SECRET }}","subscriptionId":"${{ secrets.AZ_SUBSCRIPTION }}","tenantId":"${{ secrets.AZ_TENANT_ID }}"}'
-          # creds: $ { {  secrets.AZ_CREDS } }
+          # creds: '{"clientId":"$ {{ secrets.AZ_CLIENT_ID }}","clientSecret":"$ {{ secrets.AZ_APP_REG_SECRET }}","subscriptionId":"$ {{ secrets.AZ_SUBSCRIPTION }}","tenantId":"$ {{ secrets.AZ_TENANT_ID }}"}'
+          creds: ${{ secrets.AZ_CREDS }}
 
       - name: Azure CLI script test
         uses: azure/CLI@v1
