@@ -5,8 +5,8 @@ on:
   create:
 
 env:
-  AZURE_WEBAPP_NAME: mtam-admin-dev
-  IMAGE_NAME: mtam-admin-dev
+  AZURE_WEBAPP_NAME: mtam-admin
+  IMAGE_NAME: mtam-admin
 
 permissions:
   id-token: write
