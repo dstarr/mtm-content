@@ -15,7 +15,7 @@ app.register_blueprint(playlists_bp, url_prefix='/playlists')
 app.register_blueprint(search_bp, url_prefix='/search')
 
 # set up session
-app.config['SECRET_KEY'] = config.FLASK_SESSION_SECRET
+app.secret_key = config.FLASK_SESSION_SECRET
 
 # MSAL configuration
 AUTHORITY = config.AZURE_AUTHORITY
