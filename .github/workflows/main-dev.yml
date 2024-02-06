@@ -6,7 +6,6 @@ on:
       - main
   workflow_dispatch:
 
-
 env:
   AZURE_WEBAPP_NAME: mtam-admin-dev
   IMAGE_NAME: mtam-admin-dev
@@ -31,19 +30,21 @@ jobs:
           dockerfile: src/mtm_admin/Dockerfile
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
+      - run: echo "TAG============="
+      - run: echo ${GITHUB_REF#refs/tags/}
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    name: Deploy to Azure Web App
-    steps:
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZ_CREDS }}
+  # deploy:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   name: Deploy to Azure Web App
+  #   steps:
+  #     - name: Login to Azure
+  #       uses: azure/login@v1
+  #       with:
+  #         creds: ${{ secrets.AZ_CREDS }}
 
-      - name: Push from ACR to web app
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          images: '${{ secrets.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}'
+  #     - name: Push from ACR to web app
+  #       uses: azure/webapps-deploy@v2
+  #       with:
+  #         app-name: ${{ env.AZURE_WEBAPP_NAME }}
+  #         images: '${{ secrets.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}'
