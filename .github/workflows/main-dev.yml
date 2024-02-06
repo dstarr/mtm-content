@@ -1,4 +1,4 @@
-name: Dev environment container deployment
+name: DEV container deployment
 
 on:
   push:

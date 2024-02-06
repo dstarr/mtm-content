@@ -1,4 +1,4 @@
-name: Dev environment container deployment
+name: PROD environment container deployment
 
 # run on tag events 
 on:
