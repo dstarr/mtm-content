@@ -42,9 +42,8 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZ_CREDS }}
-
       - name: Push from ACR to web app
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v2.5.0
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           images: '${{ secrets.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}'
