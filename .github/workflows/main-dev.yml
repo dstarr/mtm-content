@@ -32,7 +32,7 @@ jobs:
           password: ${{ secrets.ACR_PASSWORD }}
       - run: echo "TAG============="
       # - run: echo ${{GITHUB_REF#refs/tags/}}
-      - run: echo ${{github.run_number}}
+      - run: echo ${{github.run_id}}
       - run: echo ${{github.run_number}}
 
   # deploy:
