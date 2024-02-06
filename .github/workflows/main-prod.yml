@@ -1,8 +1,9 @@
-name: PROD environment container deployment
+name: PROD container deployment
 
 # run on tag events 
 on:
   create:
+    
 
 env:
   AZURE_WEBAPP_NAME: mtam-admin
