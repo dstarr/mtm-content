@@ -76,7 +76,6 @@ def logout():
 @app.context_processor
 def inject_user():
     if "user" in session:
-        print(session['user'])
         return dict(user=session['user'])
     else:
         return dict(user=None)
