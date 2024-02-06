@@ -17,8 +17,9 @@ class ContentService:
         
         return contents
 
-    def get_content(self, content_id):
-        _, content_collection = self._get_collections()
+    def get_content(self, content_id, content_collection=None):
+        if content_collection is None:
+            _, content_collection = self._get_collections()
 
         content = content_collection.find_one({"id": content_id})
 
@@ -96,13 +97,24 @@ class ContentService:
         return playlist
 
     def get_playlist_with_contents(self, id):
-        metadata_collection, _ = self._get_collections()
+        metadata_collection, content_collection = self._get_collections()
 
         playlist = metadata_collection.find_one(
             {"name": "playlists"}, {"playlists": {"$elemMatch": {"id": id}}}
         )["playlists"][0]
 
-        playlist["contents"] = self.get_contents_for_playlist(playlist["id"])
+        ordered_content_items = sorted(playlist["content"], key=lambda x: x['display_order'])
+
+        content_items = []
+        for content_item in ordered_content_items:
+            content = self.get_content(content_id=content_item['id'], content_collection=content_collection)
+            content_items.append(
+                { "id": content["id"], "title": content["title"], "display_order": content_item["display_order"] }
+            )
+            
+        playlist["content"] = content_items
+
+
 
         return playlist
 

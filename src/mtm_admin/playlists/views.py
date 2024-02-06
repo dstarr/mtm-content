@@ -18,22 +18,8 @@ def playlists_index():
 
 @playlists_bp.route("/<playlist_id>")
 def playlist_detail(playlist_id):
-    playlist = content_service.get_playlist(id=playlist_id)
-    ordered_content_items = playlist["content"]
-    
-    ordered_content_items = sorted(ordered_content_items, key=lambda x: x['display_order'])
-    
-    content_items = []
-    
-    for content_item in ordered_content_items:
-        content = content_service.get_content(content_id=content_item['id'])
-        content_items.append(
-            { "id": content["id"], "title": content["title"], "display_order": content_item["display_order"] }
-        )
-        
-    model = PlaylistDetailModel(content_info_items=content_items, playlist=playlist)
-
-    return render_template("playlists_detail.html", model=model)
+    playlist = content_service.get_playlist_with_contents(id=playlist_id)
+    return render_template("playlists_detail.html", model=playlist)
 
 @playlists_bp.route("edit/<playlist_id>", methods=["GET", "POST"])
 def playlist_edit(playlist_id):
@@ -79,8 +65,4 @@ def playlist_order_update(playlist_id):
         print(e)
         return "", 500
         
-    
-    # content_service.update_playlist_order(
-    #     id=playlist_id,
-    #     sorted_content_items=sorted_content_items,
-    # )
+
