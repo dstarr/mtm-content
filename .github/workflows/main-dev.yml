@@ -24,16 +24,16 @@ jobs:
       - uses: actions/checkout@v4
       - uses: mr-smithers-excellent/docker-build-push@v6
         with:
+          addLatest: true
           directory: src/mtm_admin
-          image: ${{ env.IMAGE_NAME }}
-          registry: ${{ secrets.ACR_LOGIN_SERVER }}
           dockerfile: src/mtm_admin/Dockerfile
-          username: ${{ secrets.ACR_USERNAME }}
+          image: ${{ env.IMAGE_NAME }}
           password: ${{ secrets.ACR_PASSWORD }}
-      - run: echo "TAG============="
-      # - run: echo ${{GITHUB_REF#refs/tags/}}
+          registry: ${{ secrets.ACR_LOGIN_SERVER }}
+          username: ${{ secrets.ACR_USERNAME }}
       - run: echo ${{github.run_id}}
-      - run: echo ${{github.run_number}}
+      - run: echo ${{ github.env.container }}
+      - run: echo ${{ github.ref_name }}
 
   # deploy:
   #   needs: build
