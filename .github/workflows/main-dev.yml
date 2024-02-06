@@ -42,13 +42,6 @@ jobs:
         with:
           creds: ${{ secrets.AZ_CREDS }}
 
-      # - name: Azure CLI script test
-      #   uses: azure/CLI@v1
-      #   with:
-      #     azcliversion: latest
-      #     inlineScript: |
-      #       az account show
-
       - name: Push from ACR to web app
         uses: azure/webapps-deploy@v2
         with:
