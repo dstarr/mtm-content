@@ -31,9 +31,7 @@ jobs:
           password: ${{ secrets.ACR_PASSWORD }}
           registry: ${{ secrets.ACR_LOGIN_SERVER }}
           username: ${{ secrets.ACR_USERNAME }}
-      - run: echo ${{github.run_id}}
-      - run: echo ${{ github.env.container }}
-      - run: echo ${{ github.ref_name }}
+      - run: echo ${{ github.ref }}
 
   # deploy:
   #   needs: build
