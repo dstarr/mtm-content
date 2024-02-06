@@ -2,8 +2,10 @@ name: PROD container deployment
 
 # run on tag events 
 on:
+  # runs on tag events
   create:
-    
+  # run on manual trigger
+  workflow_dispatch:
 
 env:
   AZURE_WEBAPP_NAME: mtam-admin
@@ -15,8 +17,6 @@ permissions:
 jobs:
 
   build:
-    # runs on tag evnts only
-    if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     name: Build & push Docker image to ACR
     steps:
@@ -32,18 +32,18 @@ jobs:
           username: ${{ secrets.ACR_USERNAME }}
       - run: echo ${{ github.ref }}
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    name: Deploy to Azure Web App
-    steps:
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZ_CREDS }}
+  # deploy:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   name: Deploy to Azure Web App
+  #   steps:
+  #     - name: Login to Azure
+  #       uses: azure/login@v1
+  #       with:
+  #         creds: ${{ secrets.AZ_CREDS }}
 
-      - name: Push from ACR to web app
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          images: '${{ secrets.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}'
+  #     - name: Push from ACR to web app
+  #       uses: azure/webapps-deploy@v2
+  #       with:
+  #         app-name: ${{ env.AZURE_WEBAPP_NAME }}
+  #         images: '${{ secrets.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}'
