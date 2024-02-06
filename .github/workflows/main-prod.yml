@@ -1,0 +1,48 @@
+name: Dev environment container deployment
+
+# run on tag events 
+on:
+  create:
+
+env:
+  AZURE_WEBAPP_NAME: mtam-admin-dev
+  IMAGE_NAME: mtam-admin-dev
+
+permissions:
+  id-token: write
+  
+jobs:
+
+  build:
+    # runs on tag evnts only
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    name: Build & push Docker image to ACR
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mr-smithers-excellent/docker-build-push@v6
+        with:
+          addLatest: true
+          directory: src/mtm_admin
+          dockerfile: src/mtm_admin/Dockerfile
+          image: ${{ env.IMAGE_NAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+          registry: ${{ secrets.ACR_LOGIN_SERVER }}
+          username: ${{ secrets.ACR_USERNAME }}
+      - run: echo ${{ github.ref }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    name: Deploy to Azure Web App
+    steps:
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZ_CREDS }}
+
+      - name: Push from ACR to web app
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          images: '${{ secrets.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}'
