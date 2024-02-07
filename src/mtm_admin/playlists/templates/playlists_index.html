@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
+
+  <h2>Playlists</h2>
+
+  <div class="mb-3">
+    <a href="{{ url_for('playlists.playlist_add') }}" class="btn btn-primary">Add playlist</a> 
+  </div>
+
   <table class="table table-striped table-hover">
     <thead>
       <tr>

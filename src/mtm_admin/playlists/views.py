@@ -16,6 +16,19 @@ def playlists_index():
     playlists = content_service.get_playlists()
     return render_template("playlists_index.html", model=playlists)
 
+@playlists_bp.route("/add", methods=["GET", "POST"])
+def playlist_add():
+    if request.method == "POST":
+        content_service.create_playlist(
+            name=request.form["name"],
+            short_name=request.form["short_name"],
+            description=request.form["description"]
+        )
+        return redirect(url_for('playlists.playlists_index'))
+    
+    elif request.method == "GET":
+        return render_template("playlists_add.html")
+
 @playlists_bp.route("/<playlist_id>")
 def playlist_detail(playlist_id):
     playlist = content_service.get_playlist_with_contents(id=playlist_id)

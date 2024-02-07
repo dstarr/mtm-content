@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+    
+    <h2 class="md-3">Add new playlist</h2>
+
+    <form action="{{ url_for('playlists.playlist_add') }}" method="post">
+      <div class="mb-3">
+        <label for="name" class="form-label">Title</label>
+        <input type="text" class="form-control" name="name" id="name" required />
+      </div>
+      <div class="mb-3">
+        <label for="short_name" class="form-label">Short name</label>
+        <input type="text" class="form-control" name="short_name" id="short_name" required />
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="text-box" id="description" name="description" required></textarea>
+      </div>
+      <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form> 
+
+    {% include 'editor_script.html' %}
+
+{% endblock %}
