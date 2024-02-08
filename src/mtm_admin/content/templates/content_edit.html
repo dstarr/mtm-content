@@ -39,6 +39,7 @@
         </div>
       </div>
 
+      <!-- video links -->
       <div class="row">
         <div class="col-auto short_input">
           <label for="youtube_url" class="form-label">YouTube URL</label>
@@ -50,28 +51,28 @@
         </div>
       </div>
 
+      <!-- is active -->
       <div class="row mb-3">
         <div class="col-auto short_input">
           <label class="form-check-label form-label" for="is_active">Is active</label>
-          
           {% if model.content['is_active'] %}
             <input type="checkbox" class="form-check-input" name="is_active" id="is_active" checked />
           {% else %} 
             <input type="checkbox" class="form-check-input" name="is_active" id="is_active" />
           {% endif %} 
-
-
-
         </div>
         <div class="col-auto short_input"></div>
       </div>
 
+      <!-- notes -->
       <div class="mb-3">
         <div class="col-auto">
           <label for="notes" class="form-label">Notes</label>
           <p>Notes are used to provide additional information about the content. They are not displayed to the user.</p>
           <div id="notes">
-            <textarea id="notes" name="notes" cols="80" rows="6">{{ model.content['notes'] }}</textarea>
+
+            <textarea class="text-box" id="notes" name="notes">{{ model.content['notes'] }}</textarea>
+
           </div>
         </div>
       </div>
