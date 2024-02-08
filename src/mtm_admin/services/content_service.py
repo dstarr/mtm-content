@@ -79,6 +79,23 @@ class ContentService:
 
         return playlists["playlists"]
 
+    def create_playlist(self, name, short_name, description):
+        metadata_collection, _ = self._get_collections()
+
+        playlists_doc = metadata_collection.find_one({"name": "playlists"})
+
+        new_playlist = {
+            "id": str(uuid.uuid4()),
+            "name": name,
+            "short_name": short_name,
+            "description": description,
+            "content": []
+        }
+
+        playlists_doc["playlists"].append(new_playlist)
+
+        metadata_collection.update_one({"name": "playlists"}, {"$set": playlists_doc})
+
     def get_playlist(self, id):
         metadata_collection, _ = self._get_collections()
 

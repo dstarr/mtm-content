@@ -59,8 +59,6 @@ def authorized():
 
     session["user"] = result.get("id_token_claims")
     
-    print(session["user"])
-    
     return redirect(url_for("index"))
 
 @app.route("/logout")
@@ -68,10 +66,11 @@ def logout():
     session.clear()
     return render_template("auth_signed_out.html")
 
-# @app.before_request
-# def check_user_authenticated():
-#     if "user" not in session:
-#         return redirect(url_for('login'))
+@app.before_request
+def check_user_authenticated():
+    if request.endpoint not in ['login', 'authorized']:
+        if "user" not in session:
+            return redirect(url_for('login'))
 
 @app.context_processor
 def inject_user():
