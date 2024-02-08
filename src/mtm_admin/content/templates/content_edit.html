@@ -39,6 +39,7 @@
         </div>
       </div>
 
+      <!-- video links -->
       <div class="row">
         <div class="col-auto short_input">
           <label for="youtube_url" class="form-label">YouTube URL</label>
@@ -50,20 +51,28 @@
         </div>
       </div>
 
+      <!-- is active -->
       <div class="row mb-3">
         <div class="col-auto short_input">
           <label class="form-check-label form-label" for="is_active">Is active</label>
-          <input type="checkbox" class="form-check-input" name="is_active" id="is_active" {% if model.content['is_active'] %}checked{% endif %} />
+          {% if model.content['is_active'] %}
+            <input type="checkbox" class="form-check-input" name="is_active" id="is_active" checked />
+          {% else %} 
+            <input type="checkbox" class="form-check-input" name="is_active" id="is_active" />
+          {% endif %} 
         </div>
         <div class="col-auto short_input"></div>
       </div>
 
+      <!-- notes -->
       <div class="mb-3">
         <div class="col-auto">
           <label for="notes" class="form-label">Notes</label>
           <p>Notes are used to provide additional information about the content. They are not displayed to the user.</p>
           <div id="notes">
-            <textarea id="notes" name="notes" cols="80" rows="6">{{ model.content['notes'] }}</textarea>
+
+            <textarea class="text-box" id="notes" name="notes">{{ model.content['notes'] }}</textarea>
+
           </div>
         </div>
       </div>
@@ -71,6 +80,7 @@
       <div class="mb-3">
         <div class="col-auto short_input">
           <button type="submit" class="btn btn-primary">Save</button>
+          <a href="{{ url_for('content.content_detail', content_id=model.content['id']) }}" class="btn btn-secondary">Cancel</a>
         </div>
       </div>
 
@@ -79,10 +89,10 @@
 </form>
 
 
-<div style="padding-top: 30px;">
+  <!-- Video -->
+  <div style="padding-top: 30px;">
   <h3>File attachments</h3>
   <div>
-    
     <div class="row mb-3">
       <div class="col-auto data-container">
         <label for="video" class="form-label">Video</label>
@@ -90,7 +100,10 @@
           {% if model.content["video_url"] and model.content["video_url"] != None %}
           <!-- show a delete button -->
           <form action="{{ url_for('content.content_attachment_delete') }}" method="post">
-            <a href="{{ model.content['video_url'] }}" class="btn btn-primary btn-sm">Download</a>
+              <a id="video_view" type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Launch
+              </a>
+              <a href="{{ model.content['video_url'] }}" class="btn btn-primary btn-sm">Download</a>
             <input type="hidden" name="content_id" value="{{ model.content['id'] }}" />
             <input type="hidden" name="blob_url" value="{{ model.content['video_url'] }}" />
             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -109,6 +122,7 @@
       </div>
     </div>
 
+    <!-- Slides -->
     <div class="row mb-3">
       <div class="col-auto data-container">
         <label for="slides" class="form-label">Slides</label>
@@ -135,6 +149,9 @@
         </div>
       </div>
     </div>
+
+
+    <!-- PDF -->
     <div class="row mb-3">
       <div class="col-auto data-container">
         <label for="pdf" class="form-label">PDF</label>
@@ -162,33 +179,7 @@
       </div>
     </div>
 
-    <div class="row mb-3">
-      <div class="col-auto data-container">
-        <label for="transcript" class="form-label">Transcript</label>
-        <div id="transcript">
-
-          {% if model.content["transcript_url"] and model.content["transcript_url"] != None %}
-          <!-- show a delete button --> 
-          <form action="{{ url_for('content.content_attachment_delete') }}" method="post">
-            <a href="{{ model.content['transcript_url'] }}" class="btn btn-primary btn-sm">Download</a>
-            <input type="hidden" name="content_id" value="{{ model.content['id'] }}" />
-            <input type="hidden" name="blob_url" value="{{ model.content['transcript_url'] }}" />
-            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-          </form>
-          {% else %}
-          <!-- show an upload form -->
-          <form class="dropzone" method="post" enctype="multipart/form-data"
-            action="{{ url_for('content.content_attachment_add') }}">
-            <input type="hidden" name="content_id" value="{{ model.content['id'] }}" />
-            <input type="hidden" name="attachment_type" value="transcript" />
-            <input name="file" class="file-input" type="file" accept=".vtt,.txt" />
-            <button type="submit" class="btn btn-primary btn-sm submit-btn" disabled>Upload</button>
-          </form>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-
+    <!-- Sample code -->
     <div class="row mb-3">
       <div class="col-auto data-container">
         <label for="code" class="form-label">Sample code</label>
@@ -219,6 +210,7 @@
   </div>
 </div>
 
+<!-- read only information -->
 <div style="margin-top: 30px; margin-bottom: 30px;">
   <h3>More information</h3>
   <div class="data-container">
@@ -259,31 +251,36 @@
   </div>
 </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
+<!-- File inputs -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
 
-      // Enable submit button when a file is selected
-      var fileInputs = document.querySelectorAll('.file-input');
-      fileInputs.forEach(function(input) {
-          input.addEventListener('change', function() {
-              if (input.files.length > 0) {
-                  var form = input.closest('form');
-                  var submitButton = form.querySelector('.submit-btn');
-                  submitButton.disabled = false;
-              }
-          });
-      });
-
-          // Change cursor to wait cursor when upload is initiated
-      var submitButtons = document.querySelectorAll('.submit-btn');
-      submitButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            document.body.style.cursor = 'wait';
+    // Enable submit button when a file is selected
+    var fileInputs = document.querySelectorAll('.file-input');
+    fileInputs.forEach(function(input) {
+        input.addEventListener('change', function() {
+            if (input.files.length > 0) {
+                var form = input.closest('form');
+                var submitButton = form.querySelector('.submit-btn');
+                submitButton.disabled = false;
+            }
         });
-      });
-
     });
-  </script>
+
+        // Change cursor to wait cursor when upload is initiated
+    var submitButtons = document.querySelectorAll('.submit-btn');
+    submitButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+          document.body.style.cursor = 'wait';
+      });
+    });
+
+  });
+</script>
+
+  {% if model.content['video_url'] %}
+    {% include 'video_player_modal.html' %}
+  {% endif %}
 
   {% include 'editor_script.html' %}
   {% include 'playlist_selection_script.html' %}
