@@ -53,7 +53,15 @@
       <div class="row mb-3">
         <div class="col-auto short_input">
           <label class="form-check-label form-label" for="is_active">Is active</label>
-          <input type="checkbox" class="form-check-input" name="is_active" id="is_active" {% if model.content['is_active'] %}checked{% endif %} />
+          
+          {% if model.content['is_active'] %}
+            <input type="checkbox" class="form-check-input" name="is_active" id="is_active" checked />
+          {% else %} 
+            <input type="checkbox" class="form-check-input" name="is_active" id="is_active" />
+          {% endif %} 
+
+
+
         </div>
         <div class="col-auto short_input"></div>
       </div>
