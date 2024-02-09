@@ -62,63 +62,6 @@ def make_content():
 
     return content_modules
 
-def upload_pdf():
-    file_path=f"{FILE_DIR}/02.0-ma-overview.pdf"
-    container_name=BLOB_STORAGE_CONTAINER_NAME_PDFS
-
-    blob_url = _upload_file_to_blob(file_path, container_name)
-
-    return blob_url
-
-def upload_slides():
-    file_path=f"{FILE_DIR}/02.0-ma-overview.pptx"
-    container_name=BLOB_STORAGE_CONTAINER_NAME_SLIDES
-
-    blob_url = _upload_file_to_blob(file_path, container_name)
-
-    return blob_url
-    
-def upload_transcript():
-    file_path=f"{FILE_DIR}/02.0-ma-overview-en-US.vtt"
-    container_name=BLOB_STORAGE_CONTAINER_NAME_TRANSCRIPTS
-
-    blob_url = _upload_file_to_blob(file_path, container_name)
-
-    return blob_url
-
-def upload_video():
-
-    file_path=f"{FILE_DIR}/02.0-ma-overview.mp4"
-    container_name=BLOB_STORAGE_CONTAINER_NAME_VIDEO
-
-    blob_url = _upload_file_to_blob(file_path, container_name)
-
-    return blob_url
-
-def _upload_file_to_blob(file_path, container_name):
-    print(f"Uploading {file_path} to {container_name}...")
-
-    file_name = os.path.basename(file_path)
-
-    blob_service_client = BlobServiceClient.from_connection_string(BLOB_STORAGE_CONNECTION_STRING)
-    container_client = blob_service_client.get_container_client(container_name)
-    blob_client = blob_service_client.get_blob_client(container=container_name, blob=file_name)
-    
-    blob_url = f"https://{blob_service_client.account_name}.blob.core.windows.net/{container_name}/{file_name}"
-
-    # create the container if it doesn't exist
-    if not container_client.exists():
-        blob_service_client.create_container(container_name)
-        time.sleep(5)
-        container_client = blob_service_client.get_container_client(container_name)
-        container_client.set_container_access_policy(public_access=PublicAccess.CONTAINER)
-
-    # upload the file
-    with open(file_path, "rb") as data:
-        blob_client.upload_blob(data, overwrite=True)
-
-    return blob_url
-
 def assign_content_to_playlist(playlist, content):
     playlist["content"] = []
     
@@ -167,14 +110,7 @@ def _content_is_already_in_playlist(content, playlist):
 
 if __name__ == "__main__":
 
-    # ================================
-    # write some attachements to blob storage
-    # ================================
-    # video_url = upload_video()
-    # transcript_url = upload_transcript()
-    # slides_url = upload_slides()
-    # pdf_url = upload_pdf()
-    # write_mongo_data(video_url, transcript_url, slides_url, pdf_url)
+
 
     # ================================
     # put in sample content

@@ -24,8 +24,8 @@ jobs:
       - uses: mr-smithers-excellent/docker-build-push@v6
         with:
           addLatest: true
-          directory: src/mtm_admin
-          dockerfile: src/mtm_admin/Dockerfile
+          directory: src
+          dockerfile: src/Dockerfile
           image: ${{ env.IMAGE_NAME }}
           password: ${{ secrets.ACR_PASSWORD }}
           registry: ${{ secrets.ACR_LOGIN_SERVER }}
