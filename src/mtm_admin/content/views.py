@@ -27,15 +27,22 @@ def content_add():
         return render_template('content_add.html', playlists=playlists)
     
     elif request.method == 'POST':
-
+        content_id = str(uuid.uuid4())
         property_values=request.form
 
+        # process video file and write it to blob storage
+        video_file = request.files['video_file']
+        video_content = video_file.read()
+        video_blob_name =  content_id + "_" + video_file.filename
+        video_blob_url = file_service.upload_to_blob(blob_name=video_blob_name, content=video_content, file_type=FileType.VIDEO)
+
+        # process slides file
         is_active = False
         if property_values.get("is_active"):
             is_active = True
 
         content = {
-            "id": str(uuid.uuid4()),
+            "id": content_id,
             "date_created": datetime.utcnow(),
             "date_updated": datetime.utcnow(),
             "created_by": session["user"]["name"],
@@ -46,13 +53,14 @@ def content_add():
             "title": property_values["title"],
             "youtube_url": property_values["youtube_url"],
             "short_url": property_values["short_url"],
+            "video_url": video_blob_url,
         }
 
+        # add the content to the database
         content_service.add_content(content=content)
-        
         playlist_ids = property_values.getlist('playlist_id')
         content_service.update_playlists_content(content_id=content["id"], playlist_ids=playlist_ids)
-
+        
         return redirect(url_for('content.content_detail', content_id=content["id"]))
 
 @content_bp.route('detail/<content_id>')
@@ -116,7 +124,7 @@ def content_attachment_add():
     
     # get the files from the request and upload them to blob storage
     file = request.files['file']
-    file_name = file.filename
+    file_name = content_id + "_" + file.filename
     file_contents = file.read()
     file_type = _find_enum_by_container_key_value(key='content_type', value=attachment_type)
     

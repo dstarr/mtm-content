@@ -1,5 +1,5 @@
 from enum import Enum
-from azure.storage.blob import BlobServiceClient
+from azure.storage.blob import BlobServiceClient, PublicAccess
 import config
 
 class FileType(Enum):
@@ -33,13 +33,15 @@ class FileService():
         
         container_name = file_type.value["container_name"]
         
+        # set up client
         blob_service_client = BlobServiceClient.from_connection_string(config.BLOB_STORAGE_CONNECTION_STRING)
-        container_client = blob_service_client.get_container_client(container_name)
         
-        # ensure the container exists
-        if not container_client.exists():
-            container_client.create_container()
+        # create the container if it doesn't exist
+        if container_name not in [container.name for container in blob_service_client.list_containers()]:
+            container_client = blob_service_client.create_container(container_name)
+            container_client.set_container_access_policy(public_access=PublicAccess.Blob)
         
+        # upload the blob
         blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
         blob_client.upload_blob(content, overwrite=True)
 
@@ -48,9 +50,7 @@ class FileService():
     def get_blob_from_storage(self, blob_name, file_type: FileType):
         blob_client = BlobServiceClient.from_connection_string(config.BLOB_STORAGE_CONNECTION_STRING).get_blob_client(container=file_type, blob=blob_name)
 
-        print(f"Downloading blob: {blob_name} from Azure Storage")
         blob_data = blob_client.download_blob().readall()
-        print("Download successful")
 
         return blob_data
 
@@ -60,6 +60,4 @@ class FileService():
         blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
 
         if blob_client.exists():
-            print(f"Deleting blob: {blob_name} from Azure Storage")
             blob_client.delete_blob()
-            print("Deletion successful")

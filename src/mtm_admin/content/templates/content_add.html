@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<form action="{{ url_for('content.content_add') }}" method="post" id="content_form">
+<form action="{{ url_for('content.content_add') }}" enctype="multipart/form-data" method="post" id="content_form">
   <h3>Add a new module</h3>
 
   <div class="data-container">
@@ -61,7 +61,6 @@
         <input id="video_file" name="video_file" type="file" class="file-input" accept=".mp4" required/>
       </div>
     </div>
-
 
     <div class="mb-3">
       <h3>Notes</h3>
