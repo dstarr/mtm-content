@@ -1,5 +1,6 @@
+import datetime
 from enum import Enum
-from azure.storage.blob import BlobServiceClient, PublicAccess
+from azure.storage.blob import BlobServiceClient, PublicAccess, AccessPolicy, ResourceTypes, AccountSasPermissions, generate_account_sas
 import config
 
 class FileType(Enum):
@@ -38,8 +39,12 @@ class FileService():
         
         # create the container if it doesn't exist
         if container_name not in [container.name for container in blob_service_client.list_containers()]:
+            
+            access_policy = AccessPolicy(permission=AccountSasPermissions(read=True), expiry=datetime.datetime.utcnow() + datetime.timedelta(hours=1))
+            identifiers = {'id': access_policy}
+            
             container_client = blob_service_client.create_container(container_name)
-            container_client.set_container_access_policy(public_access=PublicAccess.Blob)
+            container_client.set_container_access_policy(public_access=PublicAccess.Blob, signed_identifiers=identifiers)
         
         # upload the blob
         blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)

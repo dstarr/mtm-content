@@ -38,4 +38,4 @@ class SearchService:
 
         results = content_collection.find(query)
 
-        return results.sort("title", pymongo.ASCENDING)
+        return results

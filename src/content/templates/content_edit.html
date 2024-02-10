@@ -15,8 +15,7 @@
 
       <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <textarea class="text-box" id="description" name="description"
-          required>{{ model.content['description'] }}</textarea>
+        <textarea class="description" id="description" name="description" required>{{ model.content['description'] }}</textarea>
       </div>
 
       <div class="mb-3">
@@ -70,9 +69,7 @@
           <label for="notes" class="form-label">Notes</label>
           <p>Notes are used to provide additional information about the content. They are not displayed to the user.</p>
           <div id="notes">
-
-            <textarea class="text-box" id="notes" name="notes" maxlength="500">{{ model.content['notes'] }}</textarea>
-
+            <textarea class="text-box" cols="100" rows="10" id="notes" name="notes" maxlength="500">{{ model.content['notes'] }}</textarea>
           </div>
         </div>
       </div>
