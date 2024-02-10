@@ -114,7 +114,7 @@
             action="{{ url_for('content.content_attachment_add') }}">
             <input type="hidden" name="content_id" value="{{ model.content['id'] }}" />
             <input type="hidden" name="attachment_type" value="video" />
-            <input name="file" type="file" class="file-input" accept=".mp4" />
+            <input name="file" type="file" class="file-input" accept=".mp4" required />
             <button type="submit" class="btn btn-primary submit-btn" disabled>Upload</button>
           </form>
           {% endif %}
