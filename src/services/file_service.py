@@ -48,7 +48,13 @@ class FileService():
         
         # upload the blob
         blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
-        blob_client.upload_blob(content, overwrite=True)
+        try:
+            blob_client.upload_blob(content, overwrite=True, timeout=300)
+        except Exception as e:
+            print(e)
+            raise Exception(f"Error uploading blob {blob_name} to container {container_name}")
+        
+        print(f"DONE")
 
         return blob_client.url
 
