@@ -30,13 +30,13 @@ def make_playlists():
         "name": "playlists",
         "playlists": [
             {"id": str(uuid.uuid4()), "name": "Doing business in the marketplace", "short_name": "The business of marketplace"},
+            {"id": str(uuid.uuid4()), "name": "The marketplace for customers", "short_name": "For customers"},
             {"id": str(uuid.uuid4()), "name": "Mastering Container offers", "short_name": "Container offers"},
             {"id": str(uuid.uuid4()), "name": "Mastering Managed Application offers", "short_name": "Managed Application offers"},
             {"id": str(uuid.uuid4()), "name": "Mastering Partner Center", "short_name": "Partner Center"},
             {"id": str(uuid.uuid4()), "name": "Mastering SaaS Offers", "short_name": "SaaS Offers"},
             {"id": str(uuid.uuid4()), "name": "Mastering the SaaS Accelerator", "short_name": "SaaS Accelerator"},
             {"id": str(uuid.uuid4()), "name": "Mastering Virtual Machine offers", "short_name": "Virtual Machine offers"},
-            {"id": str(uuid.uuid4()), "name": "The marketplace for customers", "short_name": "For customers"},
         ],
     }
 
@@ -108,10 +108,7 @@ def _content_is_already_in_playlist(content, playlist):
         
     return False
 
-if __name__ == "__main__":
-
-
-
+def _insert_sample_content_and_playlists():
     # ================================
     # put in sample content
     # ================================
@@ -134,6 +131,18 @@ if __name__ == "__main__":
     
     print("Adding playlists")
     write_playlist_to_mongo(playlists_doc)
+
+def _insert_playlist_only():
+    playlists_doc = make_playlists()
+    write_playlist_to_mongo(playlists_doc)
+
+if __name__ == "__main__":
+
+    _insert_sample_content_and_playlists()
+    
+    _insert_playlist_only()
+
+    
 
     
     

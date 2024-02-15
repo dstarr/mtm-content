@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Provide your resource group and web app name
-resource_group="ds-mtm-content-mgmt"
+resource_group="ds-mtam"
 webapp_name="mtam-admin"
 
 # Read the .env file and set the environment variables
