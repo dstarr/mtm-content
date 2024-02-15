@@ -1,20 +1,26 @@
+import os
 from azure.mgmt.web import WebSiteManagementClient
 from azure.identity import DefaultAzureCredential
 from azure.mgmt.resource import ResourceManagementClient
+from dotenv import load_dotenv
+
+load_dotenv()
+
+AZURE_SUBSCRIPTION_ID = os.environ.get("AZURE_SUBSCRIPTION_ID")
 
 # Provide your resource group and web app name
 resource_group = "ds-mtam"
 webapp_name = "mtam-admin"
-env_file_path='../.env'
+env_file_path='.env'
 
 # Get Azure credentials
 credential = DefaultAzureCredential()
 
 # Create a client to manage resources
-resource_client = ResourceManagementClient(credential, "<your_subscription_id>")
+resource_client = ResourceManagementClient(credential, AZURE_SUBSCRIPTION_ID)
 
 # Create a client to manage web apps
-web_client = WebSiteManagementClient(credential, "<your_subscription_id>")
+web_client = WebSiteManagementClient(credential, AZURE_SUBSCRIPTION_ID)
 
 # Get the web app
 webapp = web_client.web_apps.get(resource_group, webapp_name)
