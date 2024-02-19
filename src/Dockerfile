@@ -11,7 +11,7 @@ RUN useradd -r -g app_group app_user
 WORKDIR /app
 
 # Copy the requirements file into the container
-COPY requirements.txt /app
+COPY requirements.txt .
 
 
 # Install the Python dependencies
