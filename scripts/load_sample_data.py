@@ -1,13 +1,9 @@
 from datetime import datetime
 import random
-import time
 from dotenv import load_dotenv
 import os
 import pymongo
 import uuid
-
-from azure.storage.blob import BlobServiceClient, PublicAccess
-from typing import List, Dict
 
 load_dotenv()
 
@@ -16,27 +12,18 @@ COSMOS_DB_NAME = os.environ.get("COSMOS_DB_NAME")
 COSMOS_DB_CONTENT_COLLECTION_NAME = os.environ.get("COSMOS_DB_CONTENT_COLLECTION_NAME")
 COSMOS_DB_METADATA_COLLECTION_NAME = os.environ.get("COSMOS_DB_METADATA_COLLECTION_NAME")
 
-BLOB_STORAGE_CONNECTION_STRING=os.environ.get("BLOB_STORAGE_CONNECTION_STRING")
-BLOB_STORAGE_NAME=os.environ.get("BLOB_STORAGE_NAME")
-BLOB_STORAGE_CONTAINER_NAME_SLIDES=os.environ.get("BLOB_STORAGE_CONTAINER_NAME_SLIDES")
-BLOB_STORAGE_CONTAINER_NAME_PDFS=os.environ.get("BLOB_STORAGE_CONTAINER_NAME_PDFS")
-BLOB_STORAGE_CONTAINER_NAME_VIDEO=os.environ.get("BLOB_STORAGE_CONTAINER_NAME_VIDEO")
-BLOB_STORAGE_CONTAINER_NAME_TRANSCRIPTS=os.environ.get("BLOB_STORAGE_CONTAINER_NAME_TRANSCRIPTS")
-
-FILE_DIR=os.environ.get("FILE_DIR")
-
 def make_playlists():
     playlists = {
         "name": "playlists",
         "playlists": [
-            {"id": str(uuid.uuid4()), "name": "Doing business in the marketplace", "short_name": "The business of marketplace"},
-            {"id": str(uuid.uuid4()), "name": "Mastering Container offers", "short_name": "Container offers"},
-            {"id": str(uuid.uuid4()), "name": "Mastering Managed Application offers", "short_name": "Managed Application offers"},
-            {"id": str(uuid.uuid4()), "name": "Mastering Partner Center", "short_name": "Partner Center"},
-            {"id": str(uuid.uuid4()), "name": "Mastering SaaS Offers", "short_name": "SaaS Offers"},
-            {"id": str(uuid.uuid4()), "name": "Mastering the SaaS Accelerator", "short_name": "SaaS Accelerator"},
-            {"id": str(uuid.uuid4()), "name": "Mastering Virtual Machine offers", "short_name": "Virtual Machine offers"},
-            {"id": str(uuid.uuid4()), "name": "The marketplace for customers", "short_name": "For customers"},
+            {"id": str(uuid.uuid4()), "name": "Doing business in the marketplace", "short_name": "The business of marketplace", "content": []},
+            {"id": str(uuid.uuid4()), "name": "The marketplace for customers", "short_name": "For customers", "content": []},
+            {"id": str(uuid.uuid4()), "name": "Mastering Container offers", "short_name": "Container offers", "content": []},
+            {"id": str(uuid.uuid4()), "name": "Mastering Managed Application offers", "short_name": "Managed Application offers", "content": []},
+            {"id": str(uuid.uuid4()), "name": "Mastering Partner Center", "short_name": "Partner Center", "content": []},
+            {"id": str(uuid.uuid4()), "name": "Mastering SaaS Offers", "short_name": "SaaS Offers", "content": []},
+            {"id": str(uuid.uuid4()), "name": "Mastering the SaaS Accelerator", "short_name": "SaaS Accelerator", "content": []},
+            {"id": str(uuid.uuid4()), "name": "Mastering Virtual Machine offers", "short_name": "Virtual Machine offers", "content": []},
         ],
     }
 
@@ -108,10 +95,7 @@ def _content_is_already_in_playlist(content, playlist):
         
     return False
 
-if __name__ == "__main__":
-
-
-
+def _insert_sample_content_and_playlists():
     # ================================
     # put in sample content
     # ================================
@@ -134,6 +118,18 @@ if __name__ == "__main__":
     
     print("Adding playlists")
     write_playlist_to_mongo(playlists_doc)
+
+def _insert_playlist_only():
+    playlists_doc = make_playlists()
+    write_playlist_to_mongo(playlists_doc)
+
+if __name__ == "__main__":
+
+    # _insert_sample_content_and_playlists()
+    
+    _insert_playlist_only()
+
+    
 
     
     
