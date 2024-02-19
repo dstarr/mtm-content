@@ -11,7 +11,7 @@ RUN useradd -r -g app_group app_user
 WORKDIR /app
 
 # Copy the requirements file into the container
-COPY requirements.txt .
+COPY requirements.txt /app
 
 
 # Install the Python dependencies
@@ -25,11 +25,6 @@ EXPOSE 5000
 
 # Set the ownership of the working directory to the non-root user
 RUN chown -R app_user:app_group /app
-
-# set up logs
-# RUN mkdir -p /app/log
-# RUN touch /app/log/app.log
-# RUN chown -R app_user:app_group /app/log/app.log
 
 # Switch to the non-root user
 USER app_user
