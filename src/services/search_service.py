@@ -8,7 +8,7 @@ class SearchService:
         pass
 
     def search_content(self, search_term):
-        client = pymongo.MongoClient(config.COSMOS_DB_CONNECTION_STRING)
+        client = pymongo.MongoClient(config.CUSTOMCONNSTR_COSMOS_DB_CONNECTION_STRING)
         db = client[config.COSMOS_DB_NAME]
 
         content_collection = None

@@ -7,7 +7,7 @@ import uuid
 
 load_dotenv()
 
-COSMOS_DB_CONNECTION_STRING = os.environ.get("COSMOS_DB_CONNECTION_STRING")
+CUSTOMCONNSTR_COSMOS_DB_CONNECTION_STRING = os.environ.get("CUSTOMCONNSTR_COSMOS_DB_CONNECTION_STRING")
 COSMOS_DB_NAME = os.environ.get("COSMOS_DB_NAME")
 COSMOS_DB_CONTENT_COLLECTION_NAME = os.environ.get("COSMOS_DB_CONTENT_COLLECTION_NAME")
 COSMOS_DB_METADATA_COLLECTION_NAME = os.environ.get("COSMOS_DB_METADATA_COLLECTION_NAME")
@@ -69,7 +69,7 @@ def assign_content_to_playlist(playlist, content):
     return playlist
 
 def write_content_to_mongo(content):
-    client = pymongo.MongoClient(COSMOS_DB_CONNECTION_STRING)
+    client = pymongo.MongoClient(CUSTOMCONNSTR_COSMOS_DB_CONNECTION_STRING)
     db = client[COSMOS_DB_NAME]
     content_collection = db[COSMOS_DB_CONTENT_COLLECTION_NAME]
 
@@ -79,7 +79,7 @@ def write_content_to_mongo(content):
     client.close()
     
 def write_playlist_to_mongo(playlists):
-    client = pymongo.MongoClient(COSMOS_DB_CONNECTION_STRING)
+    client = pymongo.MongoClient(CUSTOMCONNSTR_COSMOS_DB_CONNECTION_STRING)
     db = client[COSMOS_DB_NAME]
     metadata_collection = db[COSMOS_DB_METADATA_COLLECTION_NAME]
 
