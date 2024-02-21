@@ -112,6 +112,16 @@ def content_edit(content_id):
         model = EditModel(playlists=playlists_infos, content=content)
     
         return render_template('content_edit.html', model=model)
+
+@content_bp.route('delete/<content_id>')
+def content_delete(content_id):
+    
+    content_to_delete = content_service.get_content(content_id)
+    
+    file_service.delete_all_blobs_for_content(content_to_delete)
+    content_service.delete_content(content_id)
+        
+    return redirect(url_for('content.index'))
     
 @content_bp.route('add_attachment', methods=['POST'])
 def content_attachment_add():

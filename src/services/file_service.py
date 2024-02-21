@@ -72,3 +72,15 @@ class FileService():
 
         if blob_client.exists():
             blob_client.delete_blob()
+            
+    def delete_all_blobs_for_content(self, content):
+        
+        if content.get("video_url") is not None:
+            self.delete_blob_in_storage(file_type=FileType.VIDEO, blob_name=content["video_url"].split("/")[-1])
+        if content.get("slides_url") is not None:
+            self.delete_blob_in_storage(file_type=FileType.SLIDE, blob_name=content["slides_url"].split("/")[-1])
+        if content.get("pdf_url") is not None:
+            self.delete_blob_in_storage(file_type=FileType.PDF, blob_name=content["pdf_url"].split("/")[-1])
+        if content.get("sample_code_url") is not None:
+            self.delete_blob_in_storage(file_type=FileType.SAMPLE_CODE, blob_name=content["sample_code_url"].split("/")[-1])
+        

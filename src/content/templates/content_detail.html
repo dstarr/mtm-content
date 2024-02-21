@@ -2,6 +2,7 @@
 {% block content %}
   <div class="mb-3">
     <a class="btn btn-primary" href="{{ url_for('content.content_edit', content_id = model.content['id']) }}">Edit</a>
+    <a class="btn btn-primary" href="{{ url_for('content.content_delete', content_id = model.content['id']) }}" onclick="return confirm('Are you sure?')">Delete</a>
   </div>
 
   <div class="mb-3">

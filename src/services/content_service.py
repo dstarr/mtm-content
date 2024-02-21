@@ -1,8 +1,5 @@
-from datetime import datetime
-import os
 import uuid
 import pymongo
-
 import config
 
 
@@ -160,6 +157,21 @@ class ContentService:
                 break
         
         metadata_collection.update_one({"name": "playlists"}, {"$set": playlists_doc})
+
+    def delete_content(self, content_id):
+        meta_data_collection, content_collection = self._get_collections()
+        
+        # delete the content from any playlists
+        playlists = self.get_playlists()
+        for playlist in playlists:
+            content_to_keep = [item for item in playlist["content"] if item["id"] != content_id]
+            playlist["content"] = content_to_keep
+        
+        # write the updated playlists doc back to the database
+        meta_data_collection.update_one({"name": "playlists"}, {"$set": {"playlists": playlists}})
+        
+        # delete the actual content
+        content_collection.delete_one({"id": content_id})
 
     def _get_collections(self):
         
