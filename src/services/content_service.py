@@ -175,7 +175,7 @@ class ContentService:
 
     def _get_collections(self):
         
-        client = pymongo.MongoClient(config.CUSTOMCONNSTR_COSMOS_DB_CONNECTION_STRING)
+        client = pymongo.MongoClient(config.COSMOS_DB_CONNECTION_STRING)
         db = client[config.COSMOS_DB_NAME]
 
         content_collection = db[config.COSMOS_DB_CONTENT_COLLECTION_NAME]

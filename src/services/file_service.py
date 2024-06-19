@@ -35,7 +35,7 @@ class FileService():
         container_name = file_type.value["container_name"]
         
         # set up client
-        blob_service_client = BlobServiceClient.from_connection_string(config.CUSTOMCONNSTR_BLOB_STORAGE_CONNECTION_STRING)
+        blob_service_client = BlobServiceClient.from_connection_string(config.BLOB_STORAGE_CONNECTION_STRING)
         
         # create the container if it doesn't exist
         if container_name not in [container.name for container in blob_service_client.list_containers()]:
@@ -59,7 +59,7 @@ class FileService():
         return blob_client.url
 
     def get_blob_from_storage(self, blob_name, file_type: FileType):
-        blob_client = BlobServiceClient.from_connection_string(config.CUSTOMCONNSTR_BLOB_STORAGE_CONNECTION_STRING).get_blob_client(container=file_type, blob=blob_name)
+        blob_client = BlobServiceClient.from_connection_string(config.BLOB_STORAGE_CONNECTION_STRING).get_blob_client(container=file_type, blob=blob_name)
 
         blob_data = blob_client.download_blob().readall()
 
@@ -67,7 +67,7 @@ class FileService():
 
     def delete_blob_in_storage(self, blob_name, file_type: FileType):
         container_name = file_type.value["container_name"]
-        blob_service_client = BlobServiceClient.from_connection_string(config.CUSTOMCONNSTR_BLOB_STORAGE_CONNECTION_STRING)
+        blob_service_client = BlobServiceClient.from_connection_string(config.BLOB_STORAGE_CONNECTION_STRING)
         blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
 
         if blob_client.exists():
