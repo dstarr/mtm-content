@@ -13,6 +13,7 @@ AZURE_ENDPOINT = 'https://graph.microsoft.com/v1.0/users'
 AZURE_SCOPE = ["User.Read"]
 
 COSMOS_DB_NAME = os.environ.get("COSMOS_DB_NAME")
+COSMOS_DB_CONNECTION_STRING = os.environ.get("COSMOS_DB_CONNECTION_STRING") 
 COSMOS_DB_CONTENT_COLLECTION_NAME = os.environ.get("COSMOS_DB_CONTENT_COLLECTION_NAME")
 COSMOS_DB_METADATA_COLLECTION_NAME = os.environ.get("COSMOS_DB_METADATA_COLLECTION_NAME")
 
@@ -56,6 +57,10 @@ if AZURE_CLIENT_SECRET == None:
 
 if BLOB_STORAGE_CONNECTION_STRING == None:
     print("BLOB_STORAGE_CONNECTION_STRING is not set")
+    env_vars_set = False
+
+if COSMOS_DB_CONNECTION_STRING == None:
+    print("COSMOS_DB_CONNECTION_STRING is not set")
     env_vars_set = False
 
 if COSMOS_DB_NAME == None:
