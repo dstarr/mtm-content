@@ -69,7 +69,7 @@ def assign_content_to_playlist(playlist, content):
     return playlist
 
 def write_content_to_mongo(content):
-    client = pymongo.MongoClient(CUSTOMCONNSTR_COSMOS_DB_CONNECTION_STRING)
+    client = pymongo.MongoClient(COSMOS_DB_CONNECTION_STRING)
     db = client[COSMOS_DB_NAME]
     content_collection = db[COSMOS_DB_CONTENT_COLLECTION_NAME]
 
@@ -79,7 +79,7 @@ def write_content_to_mongo(content):
     client.close()
     
 def write_playlist_to_mongo(playlists):
-    client = pymongo.MongoClient(CUSTOMCONNSTR_COSMOS_DB_CONNECTION_STRING)
+    client = pymongo.MongoClient(COSMOS_DB_CONNECTION_STRING)
     db = client[COSMOS_DB_NAME]
     metadata_collection = db[COSMOS_DB_METADATA_COLLECTION_NAME]
 
@@ -125,9 +125,9 @@ def _insert_playlist_only():
 
 if __name__ == "__main__":
 
-    # _insert_sample_content_and_playlists()
+    _insert_sample_content_and_playlists()
     
-    _insert_playlist_only()
+    # _insert_playlist_only()
 
     
 
